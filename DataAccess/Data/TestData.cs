@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Data
 {
-    public class TestData
+    public class TestData : ITestData
     {
         private readonly IDatabase _db;
         public TestData(IDatabase db)
@@ -20,6 +20,6 @@ namespace DataAccess.Data
             _db.LoadData<TestModel, dynamic>("spTest_GetAll", new { });
 
         public Task InsertTest(TestModel test) =>
-            _db.SaveData("dbo.spTest_Insert", new { test.TestProperty });
+            _db.SaveData("dbo.spTest_Insert", new { TestValue = test.TestProperty });
     }
 }
