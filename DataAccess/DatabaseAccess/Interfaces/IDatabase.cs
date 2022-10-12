@@ -1,4 +1,4 @@
-﻿namespace DataAccess.DatabaseAccess
+﻿namespace DataAccess.DatabaseAccess.Interfaces
 {
     public interface IDatabase
     {

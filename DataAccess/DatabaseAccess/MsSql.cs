@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Data;
 using Dapper;
+using DataAccess.DatabaseAccess.Interfaces;
 
 namespace DataAccess.DatabaseAccess
 {

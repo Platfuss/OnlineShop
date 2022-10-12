@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class TestModel
+    internal class AddressModel
     {
         public int Id { get; set; }
-        public string TestProperty { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string PostalCode { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 using DataAccess.DatabaseAccess;
-using DataAccess.Models;
+using DataAccess.DatabaseAccess.Interfaces;
 
 internal class Program
 {
@@ -14,7 +14,7 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddSingleton<IDatabase, MsSql>();
-        builder.Services.AddSingleton<ITestData, TestData>();
+        //builder.Services.AddSingleton<ITestData, TestData>();
 
         var app = builder.Build();
 

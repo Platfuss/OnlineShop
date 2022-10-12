@@ -61,11 +61,35 @@
     <Folder Include="dbo\StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\Test.sql" />
-    <Build Include="dbo\StoredProcedures\spTest_GetAll.sql" />
-    <Build Include="dbo\StoredProcedures\spTest_Insert.sql" />
+    <Build Include="dbo\Tables\Address.sql" />
+    <Build Include="dbo\Tables\Clients.sql" />
+    <Build Include="dbo\Tables\Items.sql" />
+    <Build Include="dbo\Tables\OrderDetails.sql" />
+    <Build Include="dbo\Tables\Orders.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Address_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Address_GetOne.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Address_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Address_Update.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Clients_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Clients_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Clients_GetOne.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Clients_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Clients_Update.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Items_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Items_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Items_GetOne.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Items_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Items_Update.sql" />
+    <Build Include="dbo\StoredProcedures\sp_OrderDetails_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\sp_OrderDetails_GetOne.sql" />
+    <Build Include="dbo\StoredProcedures\sp_OrderDetails_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\sp_OrderDetails_Update.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Orders_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Orders_GetOne.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Orders_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Orders_Update.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Database.publish.xml" />
+    <None Include="Shop.publish.xml" />
   </ItemGroup>
 </Project>
