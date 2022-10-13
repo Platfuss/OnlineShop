@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Data.Interfaces
 {
-    internal class ItemsData : IItemsData
+    public class ItemsData : IItemsData
     {
         private readonly IDatabase _db;
 

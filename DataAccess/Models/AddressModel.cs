@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    internal class AddressModel
+    public class AddressModel
     {
         public int Id { get; set; }
         public string City { get; set; }

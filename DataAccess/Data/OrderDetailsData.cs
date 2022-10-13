@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Data
 {
-    internal class OrderDetailsData : IOrderDetailsData
+    public class OrderDetailsData : IOrderDetailsData
     {
         private readonly IDatabase _db;
 

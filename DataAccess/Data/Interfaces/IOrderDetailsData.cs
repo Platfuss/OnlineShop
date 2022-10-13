@@ -2,7 +2,7 @@
 
 namespace DataAccess.Data
 {
-    internal interface IOrderDetailsData
+    public interface IOrderDetailsData
     {
         Task DeleteOrderDetail(int id);
         Task<OrderDetailModel> GetOrderDetail(int id);

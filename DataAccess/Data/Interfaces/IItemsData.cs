@@ -2,7 +2,7 @@
 
 namespace DataAccess.Data.Interfaces
 {
-    internal interface IItemsData
+    public interface IItemsData
     {
         Task DeleteItem(int id);
         Task<ItemModel> GetItem(int id);

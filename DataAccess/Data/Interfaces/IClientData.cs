@@ -2,7 +2,7 @@
 
 namespace DataAccess.Data.Interfaces
 {
-    internal interface IClientData
+    public interface IClientData
     {
         Task DeleteClient(int id);
         Task<ClientModel> GetClient(int id);

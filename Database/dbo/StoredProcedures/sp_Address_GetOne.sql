@@ -1,6 +1,8 @@
-﻿--CREATE PROCEDURE [dbo].[sp_Adress_GetOne]
---	@param1 int = 0,
---	@param2 int
---AS
---	SELECT @param1, @param2
---RETURN 0
+﻿CREATE PROCEDURE [dbo].[sp_Address_GetOne]
+	@Id int = 0
+AS
+BEGIN
+	SELECT Id, City, Street, PostalCode
+	FROM [dbo].[Address]
+	WHERE Id = @Id;
+END
