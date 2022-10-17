@@ -1,4 +1,4 @@
-﻿--CREATE PROCEDURE [dbo].[sp_Clients_GetAll]
+﻿--CREATE PROCEDURE [dbo].[sp_Customers_GetOne]
 --	@param1 int = 0,
 --	@param2 int
 --AS

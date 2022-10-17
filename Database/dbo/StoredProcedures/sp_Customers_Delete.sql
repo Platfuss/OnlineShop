@@ -1,4 +1,4 @@
-﻿--CREATE PROCEDURE [dbo].[sp_Clients_Insert]
+﻿--CREATE PROCEDURE [dbo].[sp_Customers_Delete]
 --	@param1 int = 0,
 --	@param2 int
 --AS

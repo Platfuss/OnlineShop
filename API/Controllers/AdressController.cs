@@ -1,6 +1,5 @@
-﻿
-using DataAccess.Data.Interfaces;
-using DataAccess.DatabaseAccess.Interfaces;
+﻿using DataAccess.DatabaseAccess.Interfaces;
+using DataAccess.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,13 +7,13 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdressController : ControllerBase
+    public class AddressController : ControllerBase
     {
-        private readonly IAddressData _address;
+        private readonly IAddressService _address;
 
-        public AdressController(IDatabase db)
+        public AddressController(IAddressService address)
         {
-            _address = new AddressData(db);
+            _address = address;
         }
 
         [Route("api/[controller]/GetAddress")]

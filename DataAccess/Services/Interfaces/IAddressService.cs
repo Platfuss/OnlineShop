@@ -1,8 +1,8 @@
 ﻿using DataAccess.Models;
 
-namespace DataAccess.Data.Interfaces
+namespace DataAccess.Services.Interfaces
 {
-    public interface IAddressData
+    public interface IAddressService
     {
         Task DeleteAddress(int id);
         Task<AddressModel> GetAddress(int id);

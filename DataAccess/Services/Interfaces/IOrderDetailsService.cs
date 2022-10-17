@@ -1,8 +1,8 @@
 ﻿using DataAccess.Models;
 
-namespace DataAccess.Data
+namespace DataAccess.Services.Interfaces
 {
-    public interface IOrderDetailsData
+    public interface IOrderDetailsService
     {
         Task DeleteOrderDetail(int id);
         Task<OrderDetailModel> GetOrderDetail(int id);

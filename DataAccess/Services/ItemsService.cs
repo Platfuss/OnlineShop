@@ -1,18 +1,19 @@
 ﻿using DataAccess.DatabaseAccess.Interfaces;
 using DataAccess.Models;
+using DataAccess.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Data.Interfaces
+namespace DataAccess.Services
 {
-    public class ItemsData : IItemsData
+    public class ItemsService : IItemsService
     {
         private readonly IDatabase _db;
 
-        public ItemsData(IDatabase db)
+        public ItemsService(IDatabase db)
         {
             _db = db;
         }
@@ -22,6 +23,12 @@ namespace DataAccess.Data.Interfaces
             var results = await _db.LoadData<ItemModel, dynamic>("dbo.sp_Items_GetOne", new { Id = id });
             return results.FirstOrDefault();
         }
+
+        public Task<IEnumerable<ItemModel>> GetItemsInCategory(string categoryName)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<ItemModel>> GetItemsAll() =>
             _db.LoadData<ItemModel, dynamic>("dbo.sp_Items_GetAll", new { });
 

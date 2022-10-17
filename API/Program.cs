@@ -1,5 +1,6 @@
 using DataAccess.DatabaseAccess;
 using DataAccess.DatabaseAccess.Interfaces;
+using DataAccess.Services.Interfaces;
 
 internal class Program
 {
@@ -23,7 +24,7 @@ internal class Program
                 });
         });
         builder.Services.AddSingleton<IDatabase, MsSql>();
-        //builder.Services.AddSingleton<ITestData, TestData>();
+        builder.Services.AddSingleton<IAddressService, AddressService>();
 
         var app = builder.Build();
 

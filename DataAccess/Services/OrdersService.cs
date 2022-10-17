@@ -1,18 +1,19 @@
 ﻿using DataAccess.DatabaseAccess.Interfaces;
 using DataAccess.Models;
+using DataAccess.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Data.Interfaces
+namespace DataAccess.Services
 {
-    public class OrdersData : IOrdersData
+    public class OrdersService : IOrdersService
     {
         private readonly IDatabase _db;
 
-        public OrdersData(IDatabase db)
+        public OrdersService(IDatabase db)
         {
             _db = db;
         }

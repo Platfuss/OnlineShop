@@ -1,6 +1,6 @@
-﻿using DataAccess.Data.Interfaces;
-using DataAccess.DatabaseAccess.Interfaces;
+﻿using DataAccess.DatabaseAccess.Interfaces;
 using DataAccess.Models;
+using DataAccess.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +8,18 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Data
+namespace DataAccess.Services
 {
-    public class AddressData : IAddressData
+    public class AddressService : IAddressService
     {
         private readonly IDatabase _db;
 
-        public AddressData(IDatabase db)
+        public AddressService(IDatabase db)
         {
             _db = db;
         }
 
-        public async Task<AddressModel?> GetAddress(int id)
+        public async Task<AddressModel> GetAddress(int id)
         {
             var results = await _db.LoadData<AddressModel, dynamic>("sp_Address_GetOne", new { Id = id });
             return results.FirstOrDefault();

@@ -1,8 +1,8 @@
 ﻿using DataAccess.Models;
 
-namespace DataAccess.Data.Interfaces
+namespace DataAccess.Services.Interfaces
 {
-    public interface IClientData
+    public interface IClientService
     {
         Task DeleteClient(int id);
         Task<ClientModel> GetClient(int id);
