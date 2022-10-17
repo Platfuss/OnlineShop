@@ -11,7 +11,7 @@ export default class Fetcher extends Component {
   }
 
   componentDidMount() {
-    fetch("https://localhost:7177/api/Adress/api/Adress/GetAddress?id=2")
+    fetch("https://localhost:7177/api/Address/api/Address/GetAddress?id=2")
       .then((result) => result.json())
       .then((json) => {
         this.setState({

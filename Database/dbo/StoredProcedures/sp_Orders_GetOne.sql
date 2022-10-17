@@ -1,6 +1,9 @@
-﻿--CREATE PROCEDURE [dbo].[sp_Orders_Get]
---	@param1 int = 0,
---	@param2 int
---AS
---	SELECT @param1, @param2
---RETURN 0
+﻿CREATE PROCEDURE [dbo].[sp_Orders_GetOne]
+	@Id int
+AS
+BEGIN
+	SELECT Id, CustomerId, InvoiceAddressId, ShipmentAddressId, ShipmentType
+	FROM [dbo].[Orders]
+	WHERE Id = @Id
+END
+

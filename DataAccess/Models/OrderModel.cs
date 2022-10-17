@@ -9,9 +9,9 @@ namespace DataAccess.Models
     public class OrderModel
     {
         public int Id { get; set; }
-        public int ClientId { get; set; }
-        public int InvoiceAdressId { get; set; }
-        public int ShipmentAdressId { get; set; }
+        public int CustomerId { get; set; }
+        public int InvoiceAddressId { get; set; }
+        public int ShipmentAddressId { get; set; }
         public string ShipmentType { get; set; }
     }
 }

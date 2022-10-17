@@ -27,7 +27,7 @@ namespace DataAccess.Services
             _db.LoadData<ItemModel, dynamic>("dbo.sp_Items_GetAll", new { });
 
         public Task<IEnumerable<ItemModel>> GetItemsInCategory(string categoryName) =>
-            _db.LoadData<ItemModel, dynamic>("dbo.sp_Items_InCategory", new { CategoryName = categoryName });
+            _db.LoadData<ItemModel, dynamic>("dbo.sp_Items_InCategory", new { Category = categoryName });
 
         public Task InsertItem(ItemModel model) =>
             _db.SaveData("dbo.sp_Items_Insert", model);

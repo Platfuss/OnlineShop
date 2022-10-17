@@ -1,6 +1,11 @@
-﻿--CREATE PROCEDURE [dbo].[sp_Orders_Insert]
---	@param1 int = 0,
---	@param2 int
---AS
---	SELECT @param1, @param2
---RETURN 0
+﻿CREATE PROCEDURE [dbo].[sp_Orders_Insert]
+	@Id INT,
+	@CustomerId INT, 
+    @InvoiceAddressId INT, 
+    @ShipmentAddressId INT,
+    @ShipmentType VARCHAR(50)
+AS
+BEGIN
+	INSERT INTO [dbo].[Orders] (CustomerId, InvoiceAddressId, ShipmentAddressId, ShipmentType) 
+		VALUES (@CustomerId, @InvoiceAddressId, @ShipmentAddressId, @ShipmentType)
+END

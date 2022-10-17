@@ -1,6 +1,9 @@
-﻿--CREATE PROCEDURE [dbo].[sp_Items_InCategory]
---	@param1 int = 0,
---	@param2 int
---AS
---	SELECT @param1, @param2
---RETURN 0
+﻿CREATE PROCEDURE [dbo].[sp_Items_InCategory]
+	@Category NCHAR(100)
+AS
+BEGIN
+	SELECT Id, [Name], [Description], Price, Amount, Category, ImagePaths
+	FROM [dbo].[Items]
+	WHERE Category = @Category
+END
+

@@ -90,8 +90,15 @@
     <Build Include="dbo\StoredProcedures\sp_Orders_Update.sql" />
     <Build Include="dbo\Tables\Carts.sql" />
     <Build Include="dbo\StoredProcedures\sp_Items_InCategory.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Carts_GetUserCart.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Carts_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Carts_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Carts_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shop.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
 </Project>

@@ -13,14 +13,19 @@ namespace API.Controllers
         public CartController(ICartsService cartsService) => _cartsService = cartsService;
 
         [HttpGet("GetUserCart/id")]
-        public async Task<CartModel> GetUserCart(int id)
+        public async Task<IEnumerable<CartModel>> GetUserCart(int id)
         {
             return await _cartsService.GetUserCart(id);
         }
 
-        [HttpPut("InsertIntoCart")]
+        // TODO: Validate if amount isn't greater that amount in stock
+        [HttpPost("InsertIntoCart")]
         public void InsertItemIntoCart(CartModel model) =>
             _cartsService.InsertIntoCart(model);
+
+        [HttpPatch("UpdateCart")]
+        public void UpdateCart(CartModel model) =>
+            _cartsService.UpdateCart(model);
 
         [HttpDelete("DeleteItemFromCart/{customerId}/{itemId}")]
         public void DeleteItemFromCart(int customerId, int itemId) =>

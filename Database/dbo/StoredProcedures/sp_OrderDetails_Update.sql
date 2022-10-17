@@ -1,6 +1,11 @@
-﻿--CREATE PROCEDURE [dbo].[sp_OrderDetails_Update]
---	@param1 int = 0,
---	@param2 int
---AS
---	SELECT @param1, @param2
---RETURN 0
+﻿CREATE PROCEDURE [dbo].[sp_OrderDetails_Update]
+	@Id INT, 
+    @OrderId INT, 
+    @ItemId INT, 
+    @Amount INT
+AS
+BEGIN
+	UPDATE [dbo].[OrderDetails]
+	SET OrderId = @OrderId, ItemId = @ItemId, Amount = @Amount
+	WHERE Id = @Id;
+END

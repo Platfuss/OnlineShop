@@ -1,6 +1,12 @@
-﻿--CREATE PROCEDURE [dbo].[sp_Orders_Update]
---	@param1 int = 0,
---	@param2 int
---AS
---	SELECT @param1, @param2
---RETURN 0
+﻿CREATE PROCEDURE [dbo].[sp_Orders_Update]
+	@Id INT,
+	@CustomerId INT, 
+    @InvoiceAddressId INT, 
+    @ShipmentAddressId INT,
+    @ShipmentType VARCHAR(50)
+AS
+BEGIN
+	UPDATE [dbo].[Orders]
+	SET CustomerId = @CustomerId, InvoiceAddressId = @InvoiceAddressId, ShipmentAddressId = @ShipmentAddressId, ShipmentType = @ShipmentType
+	WHERE Id = @Id;
+END

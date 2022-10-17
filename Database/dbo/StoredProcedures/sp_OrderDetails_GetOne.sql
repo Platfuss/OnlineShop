@@ -1,6 +1,9 @@
-﻿--CREATE PROCEDURE [dbo].[sp_OrderDetails_Get]
---	@param1 int = 0,
---	@param2 int
---AS
---	SELECT @param1, @param2
---RETURN 0
+﻿CREATE PROCEDURE [dbo].[sp_OrderDetails_GetOne]
+	@Id int
+AS
+BEGIN
+	SELECT Id, OrderId, ItemId, Amount
+	FROM [dbo].[OrderDetails]
+	WHERE Id = @Id
+END
+

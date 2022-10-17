@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[sp_Address_GetOne]
-	@Id int = 0
+	@Id int
 AS
 BEGIN
 	SELECT Id, City, Street, PostalCode

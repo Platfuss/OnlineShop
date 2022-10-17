@@ -12,7 +12,7 @@ namespace DataAccess.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public int InvoiceAdressId { get; set; }
-        public int ShipmentAdressId { get; set; }
+        public int InvoiceAddressId { get; set; }
+        public int? ShipmentAddressId { get; set; }
     }
 }

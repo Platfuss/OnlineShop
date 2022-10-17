@@ -18,16 +18,17 @@ namespace DataAccess.Services
             _db = db;
         }
 
-        public async Task<CartModel> GetUserCart(int id)
-        {
-            var results = await _db.LoadData<CartModel, dynamic>("dbo.sp_Cart_GetOne", new { Id = id });
-            return results.FirstOrDefault();
-        }
+        public async Task<IEnumerable<CartModel>> GetUserCart(int customerId) => 
+            await _db.LoadData<CartModel, dynamic>("dbo.sp_Carts_GetUserCart", new { CustomerId = customerId });
 
         public Task InsertIntoCart(CartModel model) =>
-            _db.SaveData("dbo.sp_Cart_Insert", model);
+            _db.SaveData("dbo.sp_Carts_Insert", model);
+
+        public Task UpdateCart(CartModel model) =>
+            _db.SaveData("dbo_Carts_Update", model);
 
         public Task DeleteFromCart(int customerId, int itemId) =>
-            _db.SaveData("dbo.sp_Cart_Delete", new { CustomerId = customerId, ItemId = itemId });
+            _db.SaveData("dbo.sp_Carts_Delete", new { CustomerId = customerId, ItemId = itemId });
+
     }
 }
