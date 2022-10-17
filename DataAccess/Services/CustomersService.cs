@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Services
 {
-    public class CustomersService : IClientService
+    public class CustomersService : ICustomersService
     {
         private readonly IDatabase _db;
 
@@ -18,21 +18,21 @@ namespace DataAccess.Services
             _db = db;
         }
 
-        public async Task<ClientModel> GetClient(int id)
+        public async Task<CustomerModel> GetCustomer(int id)
         {
-            var results = await _db.LoadData<ClientModel, dynamic>("dbo.sp_Clients_GetOne", new { Id = id });
+            var results = await _db.LoadData<CustomerModel, dynamic>("dbo.sp_Customers_GetOne", new { Id = id });
             return results.FirstOrDefault();
         }
-        public Task<IEnumerable<ClientModel>> GetClientsAll() =>
-            _db.LoadData<ClientModel, dynamic>("dbo.sp_Clients_GetAll", new { });
+        public Task<IEnumerable<CustomerModel>> GetCustomersAll() =>
+            _db.LoadData<CustomerModel, dynamic>("dbo.sp_Customers_GetAll", new { });
 
-        public Task InsertClient(ClientModel model) =>
-            _db.SaveData("dbo.sp_Clients_Insert", model);
+        public Task InsertCustomer(CustomerModel model) =>
+            _db.SaveData("dbo.sp_Customers_Insert", model);
 
-        public Task UpdateClient(ClientModel model) =>
-            _db.SaveData("dbo.sp_Clients_Update", model);
+        public Task UpdateCustomer(CustomerModel model) =>
+            _db.SaveData("dbo.sp_Customers_Update", model);
 
-        public Task DeleteClient(int id) =>
-            _db.SaveData("dbo.sp_Clients_Delete", new { Id = id });
+        public Task DeleteCustomer(int id) =>
+            _db.SaveData("dbo.sp_Customers_Delete", new { Id = id });
     }
 }

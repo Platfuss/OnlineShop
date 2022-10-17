@@ -6,29 +6,9 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
         const string policyName = "DevelopmentPolicy";
+        var app = GetBuilder(args, policyName).Build();
 
-        // Add services to the container.
-
-        builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-        builder.Services.AddCors(options =>
-        {
-            options.AddPolicy(policyName,
-                policy =>
-                {
-                    policy.WithOrigins("http://localhost:3000");
-                });
-        });
-        builder.Services.AddSingleton<IDatabase, MsSql>();
-        builder.Services.AddSingleton<IAddressService, AddressService>();
-
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -44,5 +24,32 @@ internal class Program
         app.UseCors(policyName);
 
         app.Run();
+    }
+
+    private static WebApplicationBuilder GetBuilder(string[] args, string policyName)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Add services to the container.
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(policyName,
+                policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000");
+                });
+        });
+        builder.Services.AddSingleton<IDatabase, MsSql>();
+        builder.Services.AddSingleton<IAddressService, AddressService>();
+        builder.Services.AddSingleton<ICartsService, CartsService>();
+        builder.Services.AddSingleton<ICustomersService, CustomersService>();
+        builder.Services.AddSingleton<IItemsService, ItemsService>();
+        builder.Services.AddSingleton<IOrderDetailsService, OrderDetailsService>();
+        builder.Services.AddSingleton<IOrdersService, OrdersService>();
+
+        return builder;
     }
 }

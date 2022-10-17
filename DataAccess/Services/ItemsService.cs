@@ -23,14 +23,11 @@ namespace DataAccess.Services
             var results = await _db.LoadData<ItemModel, dynamic>("dbo.sp_Items_GetOne", new { Id = id });
             return results.FirstOrDefault();
         }
-
-        public Task<IEnumerable<ItemModel>> GetItemsInCategory(string categoryName)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<IEnumerable<ItemModel>> GetItemsAll() =>
             _db.LoadData<ItemModel, dynamic>("dbo.sp_Items_GetAll", new { });
+
+        public Task<IEnumerable<ItemModel>> GetItemsInCategory(string categoryName) =>
+            _db.LoadData<ItemModel, dynamic>("dbo.sp_Items_InCategory", new { CategoryName = categoryName });
 
         public Task InsertItem(ItemModel model) =>
             _db.SaveData("dbo.sp_Items_Insert", model);

@@ -1,5 +1,6 @@
 ﻿using DataAccess.DatabaseAccess.Interfaces;
 using DataAccess.Models;
+using DataAccess.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Services
 {
-    public class CartsService
+    public class CartsService : ICartsService
     {
         private readonly IDatabase _db;
 
@@ -26,7 +27,7 @@ namespace DataAccess.Services
         public Task InsertIntoCart(CartModel model) =>
             _db.SaveData("dbo.sp_Cart_Insert", model);
 
-        public Task DeleteFromCart(int id) =>
-            _db.SaveData("dbo.sp_Cart_Delete", new { Id = id });
+        public Task DeleteFromCart(int customerId, int itemId) =>
+            _db.SaveData("dbo.sp_Cart_Delete", new { CustomerId = customerId, ItemId = itemId });
     }
 }

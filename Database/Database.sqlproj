@@ -88,7 +88,8 @@
     <Build Include="dbo\StoredProcedures\sp_Orders_GetOne.sql" />
     <Build Include="dbo\StoredProcedures\sp_Orders_Insert.sql" />
     <Build Include="dbo\StoredProcedures\sp_Orders_Update.sql" />
-    <Build Include="dbo\Tables\CartsDetails.sql" />
+    <Build Include="dbo\Tables\Carts.sql" />
+    <Build Include="dbo\StoredProcedures\sp_Items_InCategory.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shop.publish.xml" />

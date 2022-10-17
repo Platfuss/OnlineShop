@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class ClientModel
+    public class CustomerModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string Email { get; set; }
         public int InvoiceAdressId { get; set; }
         public int ShipmentAdressId { get; set; }
     }

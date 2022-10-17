@@ -9,39 +9,32 @@ namespace API.Controllers
     [ApiController]
     public class AddressController : ControllerBase
     {
-        private readonly IAddressService _address;
+        private readonly IAddressService _addressService;
 
-        public AddressController(IAddressService address)
-        {
-            _address = address;
-        }
+        public AddressController(IAddressService addressService) => _addressService = addressService;
 
-        [Route("api/[controller]/GetAddress")]
-        [HttpGet]
+        [HttpGet("GetAddress/{id}")]
         public async Task<AddressModel> GetAdress(int id)
         {
-            return await _address.GetAddress(id);
+            return await _addressService.GetAddress(id);
         }
 
-        [Route("api/[controller]/InsertAddress")]
-        [HttpPut]
+        [HttpPut("InsertAddress")]
         public async Task InsertAdress(AddressModel model)
         {
-            await _address.InsertAddress(model);
+            await _addressService.InsertAddress(model);
         }
 
-        [Route("api/[controller]/UpdateAddress")]
-        [HttpPatch]
+        [HttpPatch("UpdateAddress")]
         public async Task UpdateAdress(AddressModel model)
         {
-            await _address.UpdateAddress(model);
+            await _addressService.UpdateAddress(model);
         }
 
-        [Route("api/[controller]/DeleteAddress")]
-        [HttpDelete]
+        [HttpDelete("DeleteAddress/{id}")]
         public async Task DeleteAdress(int id)
         {
-            await _address.DeleteAddress(id);
+            await _addressService.DeleteAddress(id);
         }
     }
 }
