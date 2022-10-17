@@ -6,6 +6,7 @@ internal class Program
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        const string policyName = "DevelopmentPolicy";
 
         // Add services to the container.
 
@@ -13,6 +14,14 @@ internal class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(policyName,
+                policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000");
+                });
+        });
         builder.Services.AddSingleton<IDatabase, MsSql>();
         //builder.Services.AddSingleton<ITestData, TestData>();
 
@@ -30,6 +39,8 @@ internal class Program
         app.UseAuthorization();
 
         app.MapControllers();
+
+        app.UseCors(policyName);
 
         app.Run();
     }
