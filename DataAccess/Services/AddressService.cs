@@ -21,19 +21,23 @@ namespace DataAccess.Services
 
         public async Task<AddressModel> GetAddress(int id)
         {
-            var results = await _db.LoadData<AddressModel, dynamic>("sp_Address_GetOne", new { Id = id });
+            var results = await _db.ExecuteProcedure<AddressModel, dynamic>("sp_Address_GetOne", new { Id = id });
             return results.FirstOrDefault();
         }
 
-        public Task InsertAddress(AddressModel model) =>
-        _db.SaveData("sp_Address_Insert", model);
+        public async Task<AddressModel> InsertAddress(AddressModel model)
+        {
+            var results = await _db.ExecuteProcedure<AddressModel, AddressModel>("sp_Address_Insert", model);
+            return results.FirstOrDefault();
+        }
 
-        public Task UpdateAddress(AddressModel model) =>
-            _db.SaveData("sp_Address_Update", model);
+        public async Task<AddressModel> UpdateAddress(AddressModel model)
+        {
+            var results = await _db.ExecuteProcedure<AddressModel, AddressModel>("sp_Address_Update", model);
+            return results.FirstOrDefault();
+        }
 
         public Task DeleteAddress(int id) =>
-            _db.SaveData("sp_Address_Delete", new { Id = id });
-
-
+             _db.ExecuteProcedure("sp_Address_Delete", new { Id = id });
     }
 }

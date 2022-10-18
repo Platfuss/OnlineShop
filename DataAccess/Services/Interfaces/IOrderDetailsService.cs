@@ -6,7 +6,7 @@ namespace DataAccess.Services.Interfaces
     {
         Task DeleteOrderDetail(int id);
         Task<OrderDetailModel> GetOrderDetail(int id);
-        Task InsertOrderDetail(OrderDetailModel model);
-        Task UpdateOrderDetail(OrderDetailModel model);
+        Task<OrderDetailModel> InsertOrderDetail(OrderDetailModel model);
+        Task<OrderDetailModel> UpdateOrderDetail(OrderDetailModel model);
     }
 }

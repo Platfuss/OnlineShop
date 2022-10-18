@@ -34,15 +34,15 @@ namespace API.Controllers
         }
 
         [HttpPost("InsertItem")]
-        public async Task InsertItem(ItemModel model)
+        public async Task<ItemModel> InsertItem(ItemModel model)
         {
-            await _itemsService.InsertItem(model);
+            return await _itemsService.InsertItem(model);
         }
 
         [HttpPatch("UpdateItem")]
-        public async Task UpdateItem(ItemModel model)
+        public async Task<ItemModel> UpdateItem(ItemModel model)
         {
-            await _itemsService.UpdateItem(model);
+            return await _itemsService.UpdateItem(model);
         }
 
         [HttpDelete("DeleteItem/{id}")]

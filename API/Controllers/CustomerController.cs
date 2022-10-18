@@ -28,15 +28,15 @@ namespace API.Controllers
         }
 
         [HttpPost("InsertCustomer")]
-        public async Task InsertCustomer(CustomerModel model)
+        public async Task<CustomerModel> InsertCustomer(CustomerModel model)
         {
-           await _customers.InsertCustomer(model);
+           return await _customers.InsertCustomer(model);
         }
 
         [HttpPatch("UpdateCustomer")]
-        public async Task UpdateCustomer(CustomerModel model)
+        public async Task<CustomerModel> UpdateCustomer(CustomerModel model)
         {
-            await _customers.UpdateCustomer(model);
+            return await _customers.UpdateCustomer(model);
         }
 
         [HttpDelete("DeleteCustomer/{id}")]

@@ -10,7 +10,7 @@ namespace DataAccess.Services.Interfaces
         Task<IEnumerable<ItemModel>> GetItemsInCategory(string categoryName);
 
         Task<IEnumerable<ItemModel>> GetItemsAll();
-        Task InsertItem(ItemModel model);
-        Task UpdateItem(ItemModel model);
+        Task<ItemModel> InsertItem(ItemModel model);
+        Task<ItemModel> UpdateItem(ItemModel model);
     }
 }

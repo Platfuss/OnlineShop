@@ -7,7 +7,7 @@ namespace DataAccess.Services.Interfaces
         Task DeleteCustomer(int id);
         Task<CustomerModel> GetCustomer(int id);
         Task<IEnumerable<CustomerModel>> GetCustomersAll();
-        Task InsertCustomer(CustomerModel model);
-        Task UpdateCustomer(CustomerModel model);
+        Task<CustomerModel> InsertCustomer(CustomerModel model);
+        Task<CustomerModel> UpdateCustomer(CustomerModel model);
     }
 }

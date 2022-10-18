@@ -23,15 +23,15 @@ namespace API.Controllers
         }
 
         [HttpPost("InsertOrder")]
-        public async Task InsertOrder(OrderModel model)
+        public async Task<OrderModel> InsertOrder(OrderModel model)
         {
-            await _ordersService.InsertOrder(model);
+            return await _ordersService.InsertOrder(model);
         }
 
         [HttpPatch("UpdateOrder")]
-        public async Task UpdateOrder(OrderModel model)
+        public async Task<OrderModel> UpdateOrder(OrderModel model)
         {
-            await _ordersService.UpdateOrder(model);
+            return await _ordersService.UpdateOrder(model);
         }
 
         [HttpDelete("DeleteOrder/{id}")]

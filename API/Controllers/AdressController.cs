@@ -20,15 +20,15 @@ namespace API.Controllers
         }
 
         [HttpPost("InsertAddress")]
-        public async Task InsertAddress(AddressModel model)
+        public async Task<AddressModel> InsertAddress(AddressModel model)
         {
-            await _addressService.InsertAddress(model);
+            return await _addressService.InsertAddress(model);
         }
 
         [HttpPatch("UpdateAddress")]
-        public async Task UpdateAddress(AddressModel model)
+        public async Task<AddressModel> UpdateAddress(AddressModel model)
         {
-            await _addressService.UpdateAddress(model);
+            return await _addressService.UpdateAddress(model);
         }
 
         [HttpDelete("DeleteAddress/{id}")]

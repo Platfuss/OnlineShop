@@ -6,7 +6,7 @@ namespace DataAccess.Services.Interfaces
     {
         Task DeleteOrder(int id);
         Task<OrderModel> GetOrder(int id);
-        Task InsertOrder(OrderModel model);
-        Task UpdateOrder(OrderModel model);
+        Task<OrderModel> InsertOrder(OrderModel model);
+        Task<OrderModel> UpdateOrder(OrderModel model);
     }
 }

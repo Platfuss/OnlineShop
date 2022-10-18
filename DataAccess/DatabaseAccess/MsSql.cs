@@ -15,11 +15,10 @@ namespace DataAccess.DatabaseAccess
             _config = config;
         }
 
-        public async Task<IEnumerable<T>> LoadData<T, U>(
+        public async Task<IEnumerable<T>> ExecuteProcedure<T, U>(
             string storedProcedure,
             U parameters,
             string connectionID = "Default")
-
         {
             using IDbConnection connection = new SqlConnection(_config.GetConnectionString(connectionID));
 
@@ -27,7 +26,7 @@ namespace DataAccess.DatabaseAccess
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task SaveData<T>(
+        public async Task ExecuteProcedure<T>(
             string storedProcedure,
             T parameters,
             string connectionID = "Default")

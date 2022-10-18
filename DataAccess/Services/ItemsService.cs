@@ -20,22 +20,28 @@ namespace DataAccess.Services
 
         public async Task<ItemModel> GetItem(int id)
         {
-            var results = await _db.LoadData<ItemModel, dynamic>("dbo.sp_Items_GetOne", new { Id = id });
+            var results = await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_GetOne", new { Id = id });
             return results.FirstOrDefault();
         }
         public Task<IEnumerable<ItemModel>> GetItemsAll() =>
-            _db.LoadData<ItemModel, dynamic>("dbo.sp_Items_GetAll", new { });
+            _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_GetAll", new { });
 
         public Task<IEnumerable<ItemModel>> GetItemsInCategory(string categoryName) =>
-            _db.LoadData<ItemModel, dynamic>("dbo.sp_Items_InCategory", new { Category = categoryName });
+            _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_InCategory", new { Category = categoryName });
 
-        public Task InsertItem(ItemModel model) =>
-            _db.SaveData("dbo.sp_Items_Insert", model);
+        public async Task<ItemModel> InsertItem(ItemModel model)
+        {
+            var results = await _db.ExecuteProcedure<ItemModel, ItemModel>("dbo.sp_Items_Insert", model);
+            return results.FirstOrDefault();
+        }
 
-        public Task UpdateItem(ItemModel model) =>
-            _db.SaveData("dbo.sp_Items_Update", model);
-
+        public async Task<ItemModel> UpdateItem(ItemModel model)
+        {
+            var results = await _db.ExecuteProcedure<ItemModel, ItemModel>("dbo.sp_Items_Update", model);
+            return results.FirstOrDefault();
+        }
+            
         public Task DeleteItem(int id) =>
-            _db.SaveData("dbo.sp_Items_Delete", new { Id = id });
+            _db.ExecuteProcedure("dbo.sp_Items_Delete", new { Id = id });
     }
 }

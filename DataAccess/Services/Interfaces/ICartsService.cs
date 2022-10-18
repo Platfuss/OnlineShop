@@ -6,7 +6,7 @@ namespace DataAccess.Services.Interfaces
     {
         Task DeleteFromCart(int userId, int itemId);
         Task<IEnumerable<CartModel>> GetUserCart(int id);
-        Task InsertIntoCart(CartModel model);
-        Task UpdateCart(CartModel model);
+        Task<CartModel> InsertIntoCart(CartModel model);
+        Task<CartModel> UpdateCart(CartModel model);
     }
 }

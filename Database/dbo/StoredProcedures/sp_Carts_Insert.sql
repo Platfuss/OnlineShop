@@ -5,6 +5,15 @@
     @Amount INT
 AS
 BEGIN
-	INSERT INTO [dbo].[Carts] (CustomerId, ItemId, Amount)
-        VALUES (@CustomerId, @ItemId, @Amount)
+	DECLARE @TableHelper TABLE (Id INT,
+                                CustomerId INT,
+                                ItemId INT,
+                                Amount INT);
+
+	INSERT INTO [dbo].[Carts] 
+    	OUTPUT INSERTED.Id, INSERTED.CustomerId, INSERTED.ItemId, INSERTED.Amount
+		INTO @TableHelper
+    VALUES (@CustomerId, @ItemId, @Amount);
+
+    SELECT * FROM @TableHelper;
 END

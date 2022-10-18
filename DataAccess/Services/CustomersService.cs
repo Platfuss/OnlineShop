@@ -20,19 +20,25 @@ namespace DataAccess.Services
 
         public async Task<CustomerModel> GetCustomer(int id)
         {
-            var results = await _db.LoadData<CustomerModel, dynamic>("dbo.sp_Customers_GetOne", new { Id = id });
+            var results = await _db.ExecuteProcedure<CustomerModel, dynamic>("dbo.sp_Customers_GetOne", new { Id = id });
             return results.FirstOrDefault();
         }
         public Task<IEnumerable<CustomerModel>> GetCustomersAll() =>
-            _db.LoadData<CustomerModel, dynamic>("dbo.sp_Customers_GetAll", new { });
+            _db.ExecuteProcedure<CustomerModel, dynamic>("dbo.sp_Customers_GetAll", new { });
 
-        public Task InsertCustomer(CustomerModel model) =>
-            _db.SaveData("dbo.sp_Customers_Insert", model);
+        public async Task<CustomerModel> InsertCustomer(CustomerModel model)
+        {
+            var results = await _db.ExecuteProcedure<CustomerModel, CustomerModel>("dbo.sp_Customers_Insert", model);
+            return results.FirstOrDefault();
+        }
 
-        public Task UpdateCustomer(CustomerModel model) =>
-            _db.SaveData("dbo.sp_Customers_Update", model);
+        public async Task<CustomerModel> UpdateCustomer(CustomerModel model)
+        {
+            var results = await _db.ExecuteProcedure<CustomerModel, CustomerModel>("dbo.sp_Customers_Update", model);
+            return results.FirstOrDefault();
+        }
 
         public Task DeleteCustomer(int id) =>
-            _db.SaveData("dbo.sp_Customers_Delete", new { Id = id });
+            _db.ExecuteProcedure("dbo.sp_Customers_Delete", new { Id = id });
     }
 }

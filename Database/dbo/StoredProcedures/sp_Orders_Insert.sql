@@ -6,6 +6,16 @@
     @ShipmentType VARCHAR(50)
 AS
 BEGIN
-	INSERT INTO [dbo].[Orders] (CustomerId, InvoiceAddressId, ShipmentAddressId, ShipmentType) 
-		VALUES (@CustomerId, @InvoiceAddressId, @ShipmentAddressId, @ShipmentType)
+	DECLARE @TableHelper TABLE (Id INT,
+								CustomerId INT, 
+								InvoiceAddressId INT, 
+								ShipmentAddressId INT,
+								ShipmentType VARCHAR(50));
+
+	INSERT INTO [dbo].[Orders]
+		OUTPUT INSERTED.Id, INSERTED.CustomerId, INSERTED.InvoiceAddressId, INSERTED.ShipmentAddressId, INSERTED.ShipmentAddressId
+		INTO @TableHelper
+	VALUES (@CustomerId, @InvoiceAddressId, @ShipmentAddressId, @ShipmentType);
+
+	SELECT * FROM @TableHelper;
 END

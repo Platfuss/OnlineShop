@@ -20,15 +20,19 @@ namespace API.Controllers
 
         // TODO: Validate if amount isn't greater that amount in stock
         [HttpPost("InsertIntoCart")]
-        public void InsertItemIntoCart(CartModel model) =>
-            _cartsService.InsertIntoCart(model);
+        public async Task<CartModel> InsertItemIntoCart(CartModel model)
+        {
+            return await _cartsService.InsertIntoCart(model);
+        }
 
         [HttpPatch("UpdateCart")]
-        public void UpdateCart(CartModel model) =>
-            _cartsService.UpdateCart(model);
+        public async Task<CartModel> UpdateCart(CartModel model)
+        {
+            return await _cartsService.UpdateCart(model);
+        }
 
         [HttpDelete("DeleteItemFromCart/{customerId}/{itemId}")]
-        public void DeleteItemFromCart(int customerId, int itemId) =>
+        public Task DeleteItemFromCart(int customerId, int itemId) =>
             _cartsService.DeleteFromCart(customerId, itemId);
 
     }

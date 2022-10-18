@@ -5,5 +5,15 @@
 	@PostalCode NCHAR(6)
 AS
 BEGIN
-	INSERT INTO [dbo].[Address] (City, Street, PostalCode) VALUES (@City, @Street, @PostalCode);
+	DECLARE @TableHelper TABLE (Id int,
+								City NVARCHAR(50),
+								Street NVARCHAR(50),
+								PostalCode NCHAR(6));
+
+	INSERT [dbo].[Address] 
+		OUTPUT INSERTED.Id, INSERTED.City, INSERTED.Street, INSERTED.PostalCode
+		INTO @TableHelper
+	VALUES (@City, @Street, @PostalCode);
+
+	SELECT * FROM @TableHelper;
 END

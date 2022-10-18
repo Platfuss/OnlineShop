@@ -6,8 +6,8 @@ namespace DataAccess.Services.Interfaces
     {
         Task DeleteAddress(int id);
         Task<AddressModel> GetAddress(int id);
-        Task InsertAddress(AddressModel model);
+        Task<AddressModel> InsertAddress(AddressModel model);
 
-        Task UpdateAddress(AddressModel model);
+        Task<AddressModel> UpdateAddress(AddressModel model);
     }
 }
