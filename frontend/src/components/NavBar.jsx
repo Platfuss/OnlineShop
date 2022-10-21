@@ -30,6 +30,11 @@ const MenuExpander = () => {
 	return (
 		<ul className="submenu">
 			<li>
+				<NavLink end to={"/products"}>
+					Wszystkie
+				</NavLink>
+			</li>
+			<li>
 				<div>Do kupienia</div>
 				<ul className="submenu2">
 					<li>
@@ -45,11 +50,6 @@ const MenuExpander = () => {
 					<li>
 						<NavLink end to={"/products/spozywcze"}>
 							Spożywcze
-						</NavLink>
-					</li>
-					<li>
-						<NavLink end to={"/products/wirtualne"}>
-							Wirtualne
 						</NavLink>
 					</li>
 				</ul>
@@ -70,6 +70,11 @@ const MenuExpander = () => {
 					<li>
 						<NavLink end to={"/products/imprezowe"}>
 							Na imprezę
+						</NavLink>
+					</li>
+					<li>
+						<NavLink end to={"/products/wirtualne"}>
+							Wirtualne
 						</NavLink>
 					</li>
 				</ul>
