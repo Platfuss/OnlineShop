@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-const Fetcher = (url, method, body) => {
+const useFetch = (url, method, body) => {
 	const [data, setData] = useState(null);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [error, setError] = useState(null);
 
-	useEffect(() => {
+	const CallApi = () => {
 		const aborter = new AbortController();
-
 		fetch(url, {
 			method: method,
 			body: body,
@@ -33,9 +32,9 @@ const Fetcher = (url, method, body) => {
 			});
 
 		return () => aborter.abort();
-	}, [url]);
+	};
 
-	return { data, isLoaded, error };
+	return { CallApi, data, isLoaded, error };
 };
 
 const METHOD = Object.freeze({
@@ -46,5 +45,5 @@ const METHOD = Object.freeze({
 	DELETE: "DELETE",
 });
 
-export default Fetcher;
+export default useFetch;
 export { METHOD };

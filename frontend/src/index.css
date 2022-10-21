@@ -108,7 +108,7 @@ li.contact {
 }
 
 .singleProduct {
-	width: 3rem;
+	height: 20rem;
 }
 
 .imageContainer {
@@ -125,8 +125,8 @@ li.contact {
 	width: 250px;
 }
 
-.homePage {
-	min-height: 500px;
+.wholePage {
+	min-height: 200vh;
 }
 
 .menu li:hover > .submenu {

@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SingleProduct from "../components/SingleProduct";
-import Fetcher, { METHOD } from "../utils/Fetcher";
+import useFetch, { METHOD } from "../utils/useFetch";
 
 const Home = () => {
-	const { data: products, isLoaded } = Fetcher(
-		"https://fakestoreapi.com/products",
-		METHOD.GET
-	);
+	const {
+		CallApi,
+		data: products,
+		isLoaded,
+	} = useFetch("https://fakestoreapi.com/products", METHOD.GET);
+
+	useEffect(() => CallApi(), []);
 
 	return (
 		<>
-			<div className="homePage">
+			<div className="homePage wholePage">
 				{isLoaded &&
 					products.map((item) => {
-						return <SingleProduct product={item} />;
+						return <SingleProduct key={item.id} product={item} />;
 					})}
 			</div>
 		</>
