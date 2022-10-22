@@ -41,8 +41,8 @@ const beginning = "https://fakestoreapi.com";
 
 const apiEndpoints = (...props) => {
 	let address = beginning;
-	for (const property in props) {
-		address += "/" + props[property];
+	for (const i in props) {
+		address += "/" + props[i];
 	}
 	return address;
 };

@@ -35,16 +35,16 @@ const MenuExpander = () => {
 				</NavLink>
 			</li>
 			<li>
-				<div>Do kupienia</div>
+				<div>Przedmioty</div>
 				<ul className="submenu2">
 					<li>
-						<NavLink end to={"/products/budowlane"}>
-							Budowlane
+						<NavLink end to={"/products/electronics"}>
+							Elektronika
 						</NavLink>
 					</li>
 					<li>
-						<NavLink end to={"/products/zabawki"}>
-							Zabawki
+						<NavLink end to={"/products/jewelery"}>
+							Biżuteria
 						</NavLink>
 					</li>
 					<li>
@@ -55,16 +55,16 @@ const MenuExpander = () => {
 				</ul>
 			</li>
 			<li>
-				<div>Do wypożyczenia</div>
+				<div>Ubrania</div>
 				<ul className="submenu2">
 					<li>
-						<NavLink end to={"/products/sportowe"}>
-							Sportowe
+						<NavLink end to={"/products/men's clothing"}>
+							Ubrania męskie
 						</NavLink>
 					</li>
 					<li>
-						<NavLink end to={"/products/agd"}>
-							AGD
+						<NavLink end to={"/products/women's clothing"}>
+							Ubrania kobiece
 						</NavLink>
 					</li>
 					<li>
