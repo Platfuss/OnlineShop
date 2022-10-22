@@ -1,11 +1,12 @@
 import { useState } from "react";
 
-const useFetch = (url, method, body) => {
+const useFetch = () => {
 	const [data, setData] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 
-	const CallApi = () => {
+	const CallApi = (url, method, body) => {
+		console.log(url);
 		setIsLoading(true);
 		const aborter = new AbortController();
 		fetch(url, {

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import useAddToCart from "../utils/useAddToCart";
+import useFetch, { METHOD, apiEndpoints } from "../utils/useFetch";
 
 const SingleProduct = ({ product }) => {
 	const route = `/products/details/${product.id}`;
@@ -11,10 +11,10 @@ const SingleProduct = ({ product }) => {
 		products: [{ productId: product.id, quantity: 1 }],
 	});
 
-	const { CallApi, isLoading } = useAddToCart(body);
+	const { CallApi, isLoading } = useFetch();
 
 	const OnButtonClick = () => {
-		CallApi();
+		CallApi(apiEndpoints("carts"), METHOD.POST, body);
 	};
 
 	return (
@@ -33,6 +33,7 @@ const SingleProduct = ({ product }) => {
 				<div>{product.title}</div>
 			</NavLink>
 			<div>{product.price} zł</div>
+			<div>Dostępny/Niedostępny</div>
 			<button
 				className="addToCartButton"
 				onClick={OnButtonClick}

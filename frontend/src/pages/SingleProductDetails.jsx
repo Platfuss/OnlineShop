@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
 import useFetch, { METHOD, apiEndpoints } from "../utils/useFetch";
-import useAddToCart from "../utils/useAddToCart";
 import { useParams } from "react-router-dom";
 
 const SingleProductDetails = () => {
 	const params = useParams();
-	const { CallApi: GetDetails, data: product } = useFetch(
-		apiEndpoints("products", params.id),
-		METHOD.GET
-	);
+	const { CallApi: GetDetails, data: product } = useFetch();
 
 	const date = new Date().toUTCString();
 	const body = JSON.stringify({
@@ -17,13 +13,16 @@ const SingleProductDetails = () => {
 		products: [{ productId: product?.id, quantity: 1 }],
 	});
 
-	const { CallApi: AddToCart, isLoading: isAddingToCart } = useAddToCart(body);
+	const { CallApi: AddToCart, isLoading: isAddingToCart } = useFetch();
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	useEffect(() => GetDetails(), []);
+	useEffect(
+		() => GetDetails(apiEndpoints("products", params.id), METHOD.GET),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[]
+	);
 
 	const OnButtonClick = () => {
-		AddToCart();
+		AddToCart(apiEndpoints("carts"), METHOD.POST, body);
 	};
 
 	return (

@@ -5,13 +5,17 @@ import SingleProduct from "../components/SingleProduct";
 
 const Category = () => {
 	let param = useParams();
-	const { CallApi, data: products } = useFetch(
-		apiEndpoints("products", "category", param.category),
-		METHOD.GET
-	);
+	const { CallApi, data: products } = useFetch();
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	useEffect(() => CallApi(), [param]);
+	useEffect(
+		() =>
+			CallApi(
+				apiEndpoints("products", "category", param.category),
+				METHOD.GET
+			),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[param]
+	);
 
 	return (
 		<>

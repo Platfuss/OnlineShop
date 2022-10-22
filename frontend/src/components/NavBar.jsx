@@ -5,9 +5,6 @@ import { NavLink } from "react-router-dom";
 const NavBar = () => {
 	return (
 		<nav>
-			<NavLink end to={"/"}>
-				<h1 className="logo">Misz Masz</h1>
-			</NavLink>
 			<ul className="menu">
 				<li>
 					<div>Menu</div>
@@ -15,6 +12,9 @@ const NavBar = () => {
 				</li>
 				<li>
 					<div>Nowości</div>
+				</li>
+				<li>
+					<div>Promocje</div>
 				</li>
 				<li className="contact">
 					<NavLink end to={"/contact"}>
