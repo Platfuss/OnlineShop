@@ -3,7 +3,11 @@ import { useParams } from "react-router-dom";
 
 const Category = () => {
 	let param = useParams();
-	return <h1>{param.category}</h1>;
+	return (
+		<div className="wholePage">
+			<h1>{param.category}</h1>
+		</div>
+	);
 };
 
 export default Category;

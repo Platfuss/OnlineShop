@@ -2,10 +2,11 @@ import { useState } from "react";
 
 const useFetch = (url, method, body) => {
 	const [data, setData] = useState(null);
-	const [isLoaded, setIsLoaded] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 
 	const CallApi = () => {
+		setIsLoading(true);
 		const aborter = new AbortController();
 		fetch(url, {
 			method: method,
@@ -20,21 +21,30 @@ const useFetch = (url, method, body) => {
 			})
 			.then((result) => {
 				setData(result);
-				setIsLoaded(true);
 				setError(null);
 			})
 			.catch((e) => {
 				if (e.name !== "AbortError") {
-					setIsLoaded(false);
 					setError(e.message);
 					console.log("Unknown error from fetcher: " + e.message);
 				}
-			});
+			})
+			.finally(() => setIsLoading(false));
 
 		return () => aborter.abort();
 	};
 
-	return { CallApi, data, isLoaded, error };
+	return { CallApi, data, isLoading, error };
+};
+
+const beginning = "https://fakestoreapi.com";
+
+const apiEndpoints = (...props) => {
+	let address = beginning;
+	for (const property in props) {
+		address += "/" + props[property];
+	}
+	return address;
 };
 
 const METHOD = Object.freeze({
@@ -46,4 +56,4 @@ const METHOD = Object.freeze({
 });
 
 export default useFetch;
-export { METHOD };
+export { METHOD, apiEndpoints };

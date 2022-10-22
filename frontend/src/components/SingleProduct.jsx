@@ -1,7 +1,9 @@
 import React from "react";
-import useFetch, { METHOD } from "../utils/useFetch";
+import { NavLink } from "react-router-dom";
+import useAddToCart from "../utils/useAddToCart";
 
 const SingleProduct = ({ product }) => {
+	const route = `/products/details/${product.id}`;
 	const date = new Date().toUTCString();
 	const body = JSON.stringify({
 		userId: 1,
@@ -9,11 +11,7 @@ const SingleProduct = ({ product }) => {
 		products: [{ productId: product.id, quantity: 1 }],
 	});
 
-	const {
-		CallApi,
-		data: addedItemId,
-		isLoaded,
-	} = useFetch("https://fakestoreapi.com/carts", METHOD.POST, body);
+	const { CallApi, isLoading } = useAddToCart(body);
 
 	const OnButtonClick = () => {
 		CallApi();
@@ -22,19 +20,26 @@ const SingleProduct = ({ product }) => {
 	return (
 		<div className="singleProduct">
 			<figure className="imageContainer">
-				<img
-					className="singleProductImage"
-					src={`${product.image}`}
-					alt="productImage"
-				></img>
+				<NavLink end to={route}>
+					<img
+						className="singleProductImage"
+						src={`${product.image}`}
+						alt="productImage"
+					></img>
+				</NavLink>
 			</figure>
 			<div>{product.category}</div>
-			<div>{product.title}</div>
+			<NavLink end to={route}>
+				<div>{product.title}</div>
+			</NavLink>
 			<div>{product.price} zł</div>
-			<button className="addToCartButton" onClick={OnButtonClick}>
+			<button
+				className="addToCartButton"
+				onClick={OnButtonClick}
+				disabled={isLoading}
+			>
 				Dodaj do koszyka
 			</button>
-			{/* {isLoaded && console.log(cartConfirm)} */}
 		</div>
 	);
 };

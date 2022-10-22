@@ -72,7 +72,7 @@ nav {
 
 li.contact {
 	position: absolute;
-	right: 1rem;
+	right: 20rem;
 	text-align: right;
 }
 
@@ -126,7 +126,7 @@ li.contact {
 }
 
 .wholePage {
-	min-height: 200vh;
+	min-height: 75vh;
 }
 
 .menu li:hover > .submenu {
