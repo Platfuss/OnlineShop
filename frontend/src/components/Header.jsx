@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 const Header = () => {
 	return (
 		<header>
-			<div>Szybki dostęp</div>
+			<div>Moje konto - Zaloguj/Zarejestruj/Wyloguj</div>
 			<div>
 				<NavLink end to={"/"}>
 					<h1 className="logo">Misz Masz</h1>

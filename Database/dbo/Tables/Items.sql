@@ -5,6 +5,7 @@
     [Description] NVARCHAR(2000) NULL, 
     [Price] SMALLMONEY NOT NULL, 
     [Amount] INT NOT NULL, 
-    [Category] NCHAR(100) NULL, 
-    [ImagePaths] NCHAR(500) NULL
+    [Category] NCHAR(100) NOT NULL, 
+    [ImagePaths] NCHAR(500) NULL, 
+    [AddedToShop] DATETIME2 NOT NULL
 )

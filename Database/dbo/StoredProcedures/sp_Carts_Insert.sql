@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[sp_Carts_Insert]
-	@Id INT,
+	@Id INT = 0,
     @CustomerId INT,
     @ItemId INT,
     @Amount INT

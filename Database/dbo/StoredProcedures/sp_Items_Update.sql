@@ -5,7 +5,8 @@
     @Price SMALLMONEY, 
     @Amount INT, 
     @Category NCHAR(100), 
-    @ImagePaths NCHAR(500) 
+    @ImagePaths NCHAR(500),
+    @AddedToShop DATETIME2
 AS
 BEGIN
 	DECLARE @TableHelper TABLE (Id INT, 
@@ -14,11 +15,12 @@ BEGIN
                                 Price SMALLMONEY, 
                                 Amount INT, 
                                 Category NCHAR(100), 
-                                ImagePaths NCHAR(500));
+                                ImagePaths NCHAR(500),
+                                AddedToShop DATETIME2);
 
 	UPDATE [dbo].[Items]
-	SET [Name] = @Name, [Description] = @Description, Price = @Price, Amount = @Amount, Category = @Category, ImagePaths = @ImagePaths
-        OUTPUT INSERTED.Id, INSERTED.[Name], INSERTED.[Description], INSERTED.Price, INSERTED.Amount, INSERTED.Category, INSERTED.ImagePaths
+	SET [Name] = @Name, [Description] = @Description, Price = @Price, Amount = @Amount, Category = @Category, ImagePaths = @ImagePaths, AddedToShop = @AddedToShop
+        OUTPUT INSERTED.Id, INSERTED.[Name], INSERTED.[Description], INSERTED.Price, INSERTED.Amount, INSERTED.Category, INSERTED.ImagePaths, INSERTED.AddedToShop
         INTO @TableHelper
 	WHERE Id = @Id;
 

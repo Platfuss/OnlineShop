@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[sp_OrderDetails_Insert]
-	@Id INT, 
+	@Id INT = 0, 
     @OrderId INT, 
     @ItemId INT, 
     @Amount INT

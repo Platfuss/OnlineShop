@@ -94,11 +94,9 @@
     <Build Include="dbo\StoredProcedures\sp_Carts_Insert.sql" />
     <Build Include="dbo\StoredProcedures\sp_Carts_Delete.sql" />
     <Build Include="dbo\StoredProcedures\sp_Carts_Update.sql" />
+    <Build Include="dbo\StoredProcedures\sp_PopulateData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shop.publish.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
 </Project>
