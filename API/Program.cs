@@ -47,6 +47,7 @@ internal class Program
         builder.Services.AddSingleton<ICartsService, CartsService>();
         builder.Services.AddSingleton<ICustomersService, CustomersService>();
         builder.Services.AddSingleton<IItemsService, ItemsService>();
+        builder.Services.AddTransient<IFileService, ImageService>();
         builder.Services.AddSingleton<IOrderDetailsService, OrderDetailsService>();
         builder.Services.AddSingleton<IOrdersService, OrdersService>();
 

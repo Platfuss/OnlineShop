@@ -9,10 +9,12 @@ namespace API.Controllers
     public class ItemsController : ControllerBase
     {
         private readonly IItemsService _itemsService;
+        private readonly IFileService _fileService;
 
-        public ItemsController(IItemsService itemsService)
+        public ItemsController(IItemsService itemsService, IFileService fileService)
         {
             _itemsService = itemsService;
+            _fileService = fileService;
         }
 
         [HttpGet("GetItem/{id}")]
@@ -34,8 +36,9 @@ namespace API.Controllers
         }
 
         [HttpPost("InsertItem")]
-        public async Task<ItemModel> InsertItem(ItemModel model)
+        public async Task<ItemModel> InsertItem([FromForm] ItemModel model, [FromForm] List<string> dir, [FromForm] List<IFormFile> files)
         {
+            _fileService.Save(dir, files);
             return await _itemsService.InsertItem(model);
         }
 
