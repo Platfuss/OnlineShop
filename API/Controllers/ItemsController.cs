@@ -42,6 +42,12 @@ namespace API.Controllers
             return await _itemsService.InsertItem(model);
         }
 
+        [HttpPost("AbcdEF")]
+        public async Task<List<byte[]>> ABCDEF([FromForm] ItemModel model, [FromForm] List<string> dir)
+        {
+            return await _fileService.Read(dir, false);
+        }
+
         [HttpPatch("UpdateItem")]
         public async Task<ItemModel> UpdateItem(ItemModel model)
         {
