@@ -22,12 +22,9 @@ namespace DataAccess.Services
             _startingDirectory = Path.Combine(_hostingEnvironment.ContentRootPath, "wwwroot", "assets");
         }
 
-        public void Save(List<string> dirParts, List<IFormFile> images)
+        public void Save(string path, List<IFormFile> images)
         {
-            var directory = _startingDirectory;
-            dirParts.ForEach((p) => {
-                directory = Path.Combine(directory, p);
-            });
+            var directory = Path.Combine(_startingDirectory, path);
 
             if (!Directory.Exists(directory))
             {
@@ -47,46 +44,24 @@ namespace DataAccess.Services
             });
         }
 
-        public async Task<List<byte[]>> Read(List<string> dirParts, bool onlyFirst = true)
+        public List<byte[]> Read(List<string> paths, bool onlyFirst)
         {
-            var directory = _startingDirectory;
-            dirParts.ForEach((p) => {
-                directory = Path.Combine(directory, p);
+            if (paths is null) return null; 
+
+            var output = new List<byte[]>();
+            paths.ForEach(async p => {
+                var filePath = Path.Combine(_startingDirectory, p);
+
+                if (!File.Exists(filePath))
+                {
+                    throw new FileNotFoundException($"File {filePath} does not exist.");
+                }
+
+                using var fileStream = File.Open(filePath, FileMode.Open);
+                byte[] result = new byte[fileStream.Length];
+                await fileStream.ReadAsync(result.AsMemory(0, (int)fileStream.Length));
+                output.Add(result);
             });
-
-            if (!Directory.Exists(directory))
-            {
-                throw new FileNotFoundException($"Folder {directory} does not exist.");
-            }
-
-            var regex = new Regex(@"^.*(\d{5})_.*\.(?:jpg|png|jpeg)$");
-            var imageFiles = Directory.GetFiles(directory).Where(fileName => regex.IsMatch(fileName)).ToList();
-
-            var orderToNames = new Dictionary<int, string>();
-            foreach (var imageFile in imageFiles)
-            {
-                var result = int.Parse(regex.Match(imageFile).Groups[1].ToString());
-                orderToNames[result] = imageFile;
-            }
-
-            var keysInOrder = orderToNames.Keys.ToList();
-            keysInOrder.Sort();
-
-            var output = Enumerable.Repeat(default(byte[]), keysInOrder.Count).ToList();
-            for (int i = 0; i < keysInOrder.Count; i++)
-            {
-                var fileName = orderToNames[keysInOrder[i]];
-                using (var fileStream = File.Open(fileName, FileMode.Open))
-                {
-                    byte[] result = new byte[fileStream.Length];
-                    await fileStream.ReadAsync(result, 0, (int)fileStream.Length);
-                    output[i] = result;
-                }
-                if (onlyFirst)
-                {
-                    break;
-                }
-            }
             return output;
         }
     }

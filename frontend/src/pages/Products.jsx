@@ -4,16 +4,18 @@ import useFetch, { METHOD, apiEndpoints } from "../utils/useFetch";
 
 const Products = () => {
 	const { CallApi, data: products } = useFetch();
-
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	useEffect(() => CallApi(apiEndpoints("products"), METHOD.GET), []);
+	useEffect(() => CallApi(apiEndpoints("items/getallitems"), METHOD.GET), []);
+	//useEffect(() => CallApi(apiEndpoints("products"), METHOD.GET), []);
 
 	return (
 		<>
 			<div className="wholePage">
-				{products?.map((item) => {
-					return <SingleProduct key={item.id} product={item} />;
-				})}
+				{console.log(products)}
+				{/* {products?.myBates.map((item) => {
+					return <img src={`data:image/png;base64,${item}`} />;
+					//return <SingleProduct product={item} />;
+				})} */}
 			</div>
 		</>
 	);

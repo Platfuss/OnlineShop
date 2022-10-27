@@ -38,7 +38,7 @@ const useFetch = () => {
 	return { CallApi, data, isLoading, error };
 };
 
-const beginning = "https://fakestoreapi.com";
+const beginning = "https://localhost:7177/api";
 
 const apiEndpoints = (...props) => {
 	let address = beginning;

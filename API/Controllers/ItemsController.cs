@@ -1,6 +1,8 @@
-﻿using DataAccess.Services.Interfaces;
+﻿using DataAccess.Models.Dto;
+using DataAccess.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
 
 namespace API.Controllers
 {
@@ -9,43 +11,34 @@ namespace API.Controllers
     public class ItemsController : ControllerBase
     {
         private readonly IItemsService _itemsService;
-        private readonly IFileService _fileService;
 
-        public ItemsController(IItemsService itemsService, IFileService fileService)
+        public ItemsController(IItemsService itemsService)
         {
             _itemsService = itemsService;
-            _fileService = fileService;
         }
 
         [HttpGet("GetItem/{id}")]
-        public async Task<ItemModel> GetItem(int id)
+        public async Task<ItemDto> GetItem(int id)
         {
             return await _itemsService.GetItem(id);
         }
 
         [HttpGet("GetAllItems")]
-        public async Task<IEnumerable<ItemModel>> GetAllItems()
+        public async Task<IEnumerable<ItemDto>> GetAllItems()
         {
             return await _itemsService.GetItemsAll();
         }
 
         [HttpGet("GetItemsInCategory/{categoryName}")]
-        public async Task<IEnumerable<ItemModel>> GetItemsInCategory(string categoryName)
+        public async Task<IEnumerable<ItemDto>> GetItemsInCategory(string categoryName)
         {
             return await _itemsService.GetItemsInCategory(categoryName);
         }
 
         [HttpPost("InsertItem")]
-        public async Task<ItemModel> InsertItem([FromForm] ItemModel model, [FromForm] List<string> dir, [FromForm] List<IFormFile> files)
+        public async Task<ItemModel> InsertItem(ItemModel model)
         {
-            _fileService.Save(dir, files);
             return await _itemsService.InsertItem(model);
-        }
-
-        [HttpPost("AbcdEF")]
-        public async Task<List<byte[]>> ABCDEF([FromForm] ItemModel model, [FromForm] List<string> dir)
-        {
-            return await _fileService.Read(dir, false);
         }
 
         [HttpPatch("UpdateItem")]

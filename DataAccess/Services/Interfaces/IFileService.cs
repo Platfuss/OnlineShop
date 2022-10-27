@@ -4,7 +4,7 @@ namespace DataAccess.Services.Interfaces
 {
     public interface IFileService
     {
-        Task<List<byte[]>> Read(List<string> dirParts, bool onlyFirst = true);
-        void Save(List<string> dirParts, List<IFormFile> images);
+        List<byte[]> Read(List<string> paths, bool onlyFirst);
+        void Save(string path, List<IFormFile> images);
     }
 }
