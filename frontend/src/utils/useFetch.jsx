@@ -40,11 +40,9 @@ const useFetch = () => {
 
 const beginning = "https://localhost:7177/api";
 
-const apiEndpoints = (...props) => {
+const apiEndpoints = (props) => {
 	let address = beginning;
-	for (const i in props) {
-		address += "/" + props[i];
-	}
+	address += "/" + props;
 	return address;
 };
 

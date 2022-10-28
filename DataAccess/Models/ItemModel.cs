@@ -17,7 +17,6 @@ namespace DataAccess.Models
         [Range(0, int.MaxValue)]
         public int Amount { get; set; }
         public string Category { get; set; }
-        public string? ImagePaths { get; set; }
         public DateTime AddedToShop { get; set; }
     }
 }

@@ -95,7 +95,6 @@
     <Build Include="dbo\StoredProcedures\sp_Carts_Delete.sql" />
     <Build Include="dbo\StoredProcedures\sp_Carts_Update.sql" />
     <Build Include="dbo\StoredProcedures\sp_PopulateData.sql" />
-    <Build Include="dbo\StoredProcedures\sp_Images_Insert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shop.publish.xml" />

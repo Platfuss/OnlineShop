@@ -4,8 +4,7 @@
     @Description NVARCHAR(2000), 
     @Price SMALLMONEY, 
     @Amount INT, 
-    @Category NCHAR(100), 
-    @ImagePaths NCHAR(500),
+    @Category NVARCHAR(100),
     @AddedToShop DATETIME2
 AS
 BEGIN
@@ -14,13 +13,12 @@ BEGIN
                                 [Description] NVARCHAR(2000), 
                                 Price SMALLMONEY, 
                                 Amount INT, 
-                                Category NCHAR(100), 
-                                ImagePaths NCHAR(500),
+                                Category NVARCHAR(100),
                                 AddedToShop DATETIME2);
 	INSERT [dbo].[Items]
-        OUTPUT INSERTED.Id, INSERTED.[Name], INSERTED.[Description], INSERTED.Price, INSERTED.Amount, INSERTED.Category, INSERTED.ImagePaths, INSERTED.AddedToShop
+        OUTPUT INSERTED.Id, INSERTED.[Name], INSERTED.[Description], INSERTED.Price, INSERTED.Amount, INSERTED.Category, INSERTED.AddedToShop
         INTO @TableHelper
-    VALUES (@Name, @Description, @Price, @Amount, @Category, @ImagePaths, @AddedToShop);
+    VALUES (@Name, @Description, @Price, @Amount, @Category, @AddedToShop);
 
     SELECT * FROM @TableHelper;
 END

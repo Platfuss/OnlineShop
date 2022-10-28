@@ -11,10 +11,10 @@ BEGIN
 	EXEC sp_Customers_Insert @Name = "Tomek", @Surname = "Polok", @Email = "pl.polok.tttt@gmail.com", @InvoiceAddressId = 3, @ShipmentAddressId = null;
 	EXEC sp_Customers_Insert @Name = "Aleksandra", @Surname = "Schabowicka", @Email = "smiesznymail@interia.pl", @InvoiceAddressId = 4, @ShipmentAddressId = null;
 
-	EXEC sp_Items_Insert @Name = "Cegłówka", @Description = "Narzędzie do budowania domów i innych budowli", @Price = 3.5, @Amount = 2000, @Category = "Budowlane", @ImagePaths = "fun\ti4.jpg", @AddedToShop = "2022-10-23 08:24:10";
-	EXEC sp_Items_Insert @Name = "Ubranie", @Description = "Materiał do okrywania ciała", @Price = 200, @Amount = 20, @Category = "Moda", @ImagePaths = "food\ciasto.jpg", @AddedToShop = "2022-10-23 08:26:13";
-	EXEC sp_Items_Insert @Name = "Piosenka", @Description = "Utwór muzyczny do miłego spędzania czasu", @Price = 50, @Amount = 100, @Category = "Rozrywka", @ImagePaths = "pets\kot.png", @AddedToShop = "2022-10-22 08:27:10";
-	EXEC sp_Items_Insert @Name = "Krzesło", @Description = "Urządzenie do siadania", @Price = 250, @Amount = 10, @Category = "Umeblowanie", @ImagePaths = "pets\pies.jpg", @AddedToShop = "2022-10-21 08:28:30";
+	EXEC sp_Items_Insert @Name = "Cegłówka", @Description = "Narzędzie do budowania domów i innych budowli", @Price = 3.5, @Amount = 2000, @Category = "Budowlane", @AddedToShop = "2022-10-23 08:24:10";
+	EXEC sp_Items_Insert @Name = "Ubranie", @Description = "Materiał do okrywania ciała", @Price = 200, @Amount = 20, @Category = "Moda", @AddedToShop = "2022-10-23 08:26:13";
+	EXEC sp_Items_Insert @Name = "Piosenka", @Description = "Utwór muzyczny do miłego spędzania czasu", @Price = 50, @Amount = 100, @Category = "Rozrywka", @AddedToShop = "2022-10-22 08:27:10";
+	EXEC sp_Items_Insert @Name = "Krzesło", @Description = "Urządzenie do siadania", @Price = 250, @Amount = 10, @Category = "Umeblowanie", @AddedToShop = "2022-10-21 08:28:30";
 
 	EXEC sp_Orders_Insert @CustomerId = 1, @InvoiceAddressId = 1, @ShipmentAddressId = 2, @ShipmentType = "Kurier";
 	EXEC sp_Orders_Insert @CustomerId = 2, @InvoiceAddressId = 1, @ShipmentAddressId = 1, @ShipmentType = "InPost";

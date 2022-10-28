@@ -26,16 +26,16 @@ namespace DataAccess.Services
         {
             var result = (await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_GetOne", new { Id = id }))
                 .FirstOrDefault();
-            var images = _fileService.Read(result.ImagePaths.Split(';').ToList(), false);
+            var images = await _fileService.Read(id.ToString(), false);
             return ItemConverter.ModelToDto(result, images);
         }
         public async Task<IEnumerable<ItemDto>> GetItemsAll()
         {
             var output = new List<ItemDto>();
             var result = await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_GetAll", new { });
-            result.ToList().ForEach(model =>
+            result.ToList().ForEach(async model =>
             {
-                var image = _fileService.Read(model.ImagePaths?.Split(';').ToList(), true);
+                var image = await _fileService.Read(model.Id.ToString(), true);
                 output.Add(ItemConverter.ModelToDto(model, image));
             });
 
@@ -46,9 +46,9 @@ namespace DataAccess.Services
         {
             var output = new List<ItemDto>();
             var result = await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_InCategory", new { Category = categoryName });
-            result.ToList().ForEach(model =>
+            result.ToList().ForEach(async model =>
             {
-                var image = _fileService.Read(model.ImagePaths.Split(';').ToList(), true);
+                var image = await _fileService.Read(model.Id.ToString(), true);
                 output.Add(ItemConverter.ModelToDto(model, image));
             });
 

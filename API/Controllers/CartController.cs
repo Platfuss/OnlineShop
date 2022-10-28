@@ -1,4 +1,4 @@
-﻿using DataAccess.Services.Interfaces;
+﻿using DataAccess.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -13,10 +13,7 @@ namespace API.Controllers
         public CartController(ICartsService cartsService) => _cartsService = cartsService;
 
         [HttpGet("GetUserCart/id")]
-        public async Task<IEnumerable<CartModel>> GetUserCart(int id)
-        {
-            return await _cartsService.GetUserCart(id);
-        }
+        public async Task<IEnumerable<CartDto>> GetUserCart(int id) => await _cartsService.GetUserCart(id);
 
         // TODO: Validate if amount isn't greater that amount in stock
         [HttpPost("InsertIntoCart")]
