@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import useFetch, { METHOD, apiEndpoints } from "../utils/useFetch";
 import { useParams } from "react-router-dom";
+import Img64Base from "../utils/Img64Base";
 
 const SingleProductDetails = () => {
 	const params = useParams();
@@ -16,7 +17,7 @@ const SingleProductDetails = () => {
 	const { CallApi: AddToCart, isLoading: isAddingToCart } = useFetch();
 
 	useEffect(
-		() => GetDetails(apiEndpoints("products", params.id), METHOD.GET),
+		() => GetDetails(apiEndpoints("items/getitem/" + params.id), METHOD.GET),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
@@ -28,14 +29,19 @@ const SingleProductDetails = () => {
 	return (
 		<div className="wholePage">
 			<figure className="imageContainer">
-				<img
-					className="singleProductImage"
-					src={`${product?.image}`}
-					alt="productImage"
-				></img>
+				{product?.images &&
+					product.images.map((img, index) => {
+						return (
+							<Img64Base
+								key={index}
+								className="singleProductImage"
+								src={img}
+							></Img64Base>
+						);
+					})}
 			</figure>
 			<div>{product?.category}</div>
-			<div>{product?.title}</div>
+			<div>{product?.name}</div>
 			<div>{product?.price} zł</div>
 			<button
 				className="addToCartButton"

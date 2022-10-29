@@ -12,5 +12,6 @@ namespace DataAccess.Services.Interfaces
         Task<IEnumerable<ItemDto>> GetItemsAll();
         Task<ItemModel> InsertItem(ItemModel model);
         Task<ItemModel> UpdateItem(ItemModel model);
+        Task<IEnumerable<ItemDto>> GetNewestItems();
     }
 }

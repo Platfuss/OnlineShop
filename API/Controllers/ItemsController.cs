@@ -35,6 +35,12 @@ namespace API.Controllers
             return await _itemsService.GetItemsInCategory(categoryName);
         }
 
+        [HttpGet("GetNewestItems")]
+        public async Task<IEnumerable<ItemDto>> GetNewestItems()
+        {
+            return await _itemsService.GetNewestItems();
+        }
+
         [HttpPost("InsertItem")]
         public async Task<ItemModel> InsertItem(ItemModel model)
         {

@@ -32,12 +32,13 @@ namespace DataAccess.Services
         public async Task<IEnumerable<ItemDto>> GetItemsAll()
         {
             var output = new List<ItemDto>();
-            var result = await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_GetAll", new { });
-            result.ToList().ForEach(async model =>
+            var result = (await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_GetAll", new { }))
+                .ToList();
+            foreach (var model in result)
             {
-                var image = await _fileService.Read(model.Id.ToString(), true);
-                output.Add(ItemConverter.ModelToDto(model, image));
-            });
+                var images = await _fileService.Read(model.Id.ToString(), true);
+                output.Add(ItemConverter.ModelToDto(model, images));
+            };
 
             return output;
         }
@@ -45,12 +46,27 @@ namespace DataAccess.Services
         public async Task<IEnumerable<ItemDto>> GetItemsInCategory(string categoryName)
         {
             var output = new List<ItemDto>();
-            var result = await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_InCategory", new { Category = categoryName });
-            result.ToList().ForEach(async model =>
+            var result = (await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_InCategory", new { Category = categoryName }))
+                .ToList();
+            foreach(var model in result)
             {
-                var image = await _fileService.Read(model.Id.ToString(), true);
-                output.Add(ItemConverter.ModelToDto(model, image));
-            });
+                var images = await _fileService.Read(model.Id.ToString(), true);
+                output.Add(ItemConverter.ModelToDto(model, images));
+            }
+
+            return output;
+        }
+
+        public async Task<IEnumerable<ItemDto>> GetNewestItems()
+        {
+            var output = new List<ItemDto>();
+            var result = (await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_GetNewests", new { }))
+                .ToList();
+            foreach (var model in result)
+            {
+                var images = await _fileService.Read(model.Id.ToString(), true);
+                output.Add(ItemConverter.ModelToDto(model, images));
+            }
 
             return output;
         }
