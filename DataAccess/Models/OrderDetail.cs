@@ -10,9 +10,14 @@ namespace DataAccess.Models
     public class OrderDetail
     {
         public int Id { get; set; }
-        public int OrderId { get; set; }
-        public int ItemId { get; set; }
-        [Range(0, int.MaxValue)]
+
+        public virtual int OrderId { get; set; }
+        public virtual Order Order { get; set; }
+
+        public virtual int ItemId { get; set; }
+        public virtual Item Item { get; set; }
+
+        [Required]
         public int Amount { get; set; }
     }
 }

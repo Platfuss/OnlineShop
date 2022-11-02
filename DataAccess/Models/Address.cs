@@ -10,9 +10,14 @@ namespace DataAccess.Models
     public class Address
     {
         public int Id { get; set; }
+
+        [Required]
         public string City { get; set; }
+
+        [Required]
         public string Street { get; set; }
-        [RegularExpression("^\\d{2}-\\d{3}$")]
+
+        [Required, RegularExpression("^\\d{2}-\\d{3}$")]
         public string PostalCode { get; set; }
     }
 }

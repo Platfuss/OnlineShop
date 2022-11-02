@@ -9,12 +9,18 @@ namespace DataAccess.Models
 {
     public class Customer
     {
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
+
+        [Required]
         public string Surname { get; set; }
-        [EmailAddress]
+
+        [Required, EmailAddress]
         public string Email { get; set; }
-        public int InvoiceAddressId { get; set; }
-        public int? ShipmentAddressId { get; set; }
+
+        [Required]
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

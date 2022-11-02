@@ -17,7 +17,7 @@ namespace DataAccess.Models.Dto
         [Range(0, int.MaxValue)]
         public int Amount { get; set; }
         public string Category { get; set; }
-        public List<byte[]>? Images { get; set; }
+        public List<byte[]> Images { get; set; }
         public DateTime AddedToShop { get; set; }
     }
 }

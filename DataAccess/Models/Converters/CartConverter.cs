@@ -11,14 +11,15 @@ namespace DataAccess.Models.Converters
     {
         public static CartDto ModelToDto(Cart model, byte[] image)
         {
-            return new CartDto()
-            {
-                Id = model.Id,
-                CustomerId = model.CustomerId,
-                ItemId = model.ItemId,
-                Amount = model.Amount,
-                Image = image
-            };
+            //return new CartDto()
+            //{
+            //    Id = model.Id,
+            //    CustomerId = model.CustomerId,
+            //    ItemId = model.ItemId,
+            //    Amount = model.Amount,
+            //    Image = image
+            //};
+            return new CartDto();
         }
     }
 }

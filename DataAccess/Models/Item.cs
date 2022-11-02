@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,15 +11,22 @@ namespace DataAccess.Models
 {
     public class Item
     {
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+
         public string Description { get; set; }
-        [Range(0, (double)decimal.MaxValue)]
-        [DataType(DataType.Currency)]
+
+        [Required, Column(TypeName = "decimal(18,4)")]
         public decimal Price { get; set; }
-        [Range(0, int.MaxValue)]
+
+        [Required]
         public int Amount { get; set; }
+
+        [Required]
         public string Category { get; set; }
+
+        [Required]
         public DateTime AddedToShop { get; set; }
     }
 }

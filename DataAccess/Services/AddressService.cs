@@ -41,7 +41,7 @@ namespace DataAccess.Services
             address.City = model.City;
             address.PostalCode = model.PostalCode;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return address;
         }
@@ -50,7 +50,7 @@ namespace DataAccess.Services
         {
             var address = await _context.Addresses.FindAsync(id);
              _context.Remove(address);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
