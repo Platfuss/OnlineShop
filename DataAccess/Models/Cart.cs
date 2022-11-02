@@ -10,9 +10,13 @@ namespace DataAccess.Models
     public class Cart
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }
-        public int ItemId { get; set; }
-        [Range(0, int.MaxValue)]
+
+        public virtual int CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
+
+        public virtual int ItemId { get; set; }
+        public virtual Item Item { get; set; }
+
         public int Amount { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace DataAccess.Models.Converters
 {
     public static class ItemConverter
     {
-        public static ItemDto ModelToDto(Item model, List<byte[]>? images)
+        public static ItemDto ModelToDto(Item model, List<byte[]> images)
         {
             var modelDto = new ItemDto() { Id = model.Id, Name = model.Name, Description = model.Description, Price = model.Price,
                 Amount = model.Amount, Category = model.Category, Images = images, AddedToShop = model.AddedToShop};
