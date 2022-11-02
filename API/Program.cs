@@ -37,7 +37,8 @@ internal class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddDbContext<DataContext>(options =>
         {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("Default"), 
+                x => x.MigrationsAssembly("DataAccess"));
         });
         builder.Services.AddCors(options =>
         {
@@ -48,13 +49,13 @@ internal class Program
                 });
         });
         builder.Services.AddSingleton<IDatabase, MsSql>();
-        builder.Services.AddSingleton<IAddressService, AddressService>();
-        builder.Services.AddSingleton<ICartsService, CartsService>();
-        builder.Services.AddSingleton<ICustomersService, CustomersService>();
-        builder.Services.AddSingleton<IItemsService, ItemsService>();
+        builder.Services.AddScoped<IAddressService, AddressService>();
+        builder.Services.AddScoped<ICartsService, CartsService>();
+        builder.Services.AddScoped<ICustomersService, CustomersService>();
+        builder.Services.AddScoped<IItemsService, ItemsService>();
+        builder.Services.AddScoped<IOrderDetailsService, OrderDetailsService>();
+        builder.Services.AddScoped<IOrdersService, OrdersService>();
         builder.Services.AddTransient<IFileService, ImageService>();
-        builder.Services.AddSingleton<IOrderDetailsService, OrderDetailsService>();
-        builder.Services.AddSingleton<IOrdersService, OrdersService>();
 
         return builder;
     }

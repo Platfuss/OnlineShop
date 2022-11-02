@@ -1,4 +1,5 @@
-﻿using DataAccess.DatabaseAccess.Interfaces;
+﻿using DataAccess.DatabaseAccess;
+using DataAccess.DatabaseAccess.Interfaces;
 using DataAccess.Models;
 using DataAccess.Services.Interfaces;
 using System;
@@ -12,32 +13,44 @@ namespace DataAccess.Services
 {
     public class AddressService : IAddressService
     {
-        private readonly IDatabase _db;
+        private readonly DataContext _context;
 
-        public AddressService(IDatabase db)
+        public AddressService(DataContext context)
         {
-            _db = db;
+            _context = context;
         }
 
         public async Task<Address> GetAddress(int id)
         {
-            var results = await _db.ExecuteProcedure<Address, dynamic>("sp_Address_GetOne", new { Id = id });
-            return results.FirstOrDefault();
+            var address = await _context.Addresses.FindAsync(id);
+            return address;
         }
 
         public async Task<Address> InsertAddress(Address model)
         {
-            var results = await _db.ExecuteProcedure<Address, Address>("sp_Address_Insert", model);
-            return results.FirstOrDefault();
+            _context.Addresses.Add(model);
+            await _context.SaveChangesAsync();
+            return model;
         }
 
         public async Task<Address> UpdateAddress(Address model)
         {
-            var results = await _db.ExecuteProcedure<Address, Address>("sp_Address_Update", model);
-            return results.FirstOrDefault();
+            var address = (await _context.Addresses.FindAsync(model.Id));
+
+            address.Street = model.Street;
+            address.City = model.City;
+            address.PostalCode = model.PostalCode;
+
+            _context.SaveChanges();
+
+            return address;
         }
 
-        public Task DeleteAddress(int id) =>
-             _db.ExecuteProcedure("sp_Address_Delete", new { Id = id });
+        public async Task DeleteAddress(int id)
+        {
+            var address = await _context.Addresses.FindAsync(id);
+             _context.Remove(address);
+            _context.SaveChanges();
+        }
     }
 }
