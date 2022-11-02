@@ -10,8 +10,8 @@ namespace DataAccess.Services.Interfaces
         Task<IEnumerable<ItemDto>> GetItemsInCategory(string categoryName);
 
         Task<IEnumerable<ItemDto>> GetItemsAll();
-        Task<ItemModel> InsertItem(ItemModel model);
-        Task<ItemModel> UpdateItem(ItemModel model);
+        Task<Item> InsertItem(Item model);
+        Task<Item> UpdateItem(Item model);
         Task<IEnumerable<ItemDto>> GetNewestItems();
     }
 }

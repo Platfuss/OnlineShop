@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class CustomerModel
+    public class Customer
     {
         public int Id { get; set; }
         public string Name { get; set; }

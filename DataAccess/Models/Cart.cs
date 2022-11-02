@@ -7,16 +7,12 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class ItemModel
+    public class Cart
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string? Description { get; set; }
-        [Range(0, (double)decimal.MaxValue)]
-        public decimal Price { get; set; }
+        public int CustomerId { get; set; }
+        public int ItemId { get; set; }
         [Range(0, int.MaxValue)]
         public int Amount { get; set; }
-        public string Category { get; set; }
-        public DateTime AddedToShop { get; set; }
     }
 }

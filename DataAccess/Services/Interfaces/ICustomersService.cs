@@ -5,9 +5,9 @@ namespace DataAccess.Services.Interfaces
     public interface ICustomersService
     {
         Task DeleteCustomer(int id);
-        Task<CustomerModel> GetCustomer(int id);
-        Task<IEnumerable<CustomerModel>> GetCustomersAll();
-        Task<CustomerModel> InsertCustomer(CustomerModel model);
-        Task<CustomerModel> UpdateCustomer(CustomerModel model);
+        Task<Customer> GetCustomer(int id);
+        Task<IEnumerable<Customer>> GetCustomersAll();
+        Task<Customer> InsertCustomer(Customer model);
+        Task<Customer> UpdateCustomer(Customer model);
     }
 }

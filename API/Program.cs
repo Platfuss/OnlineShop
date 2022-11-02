@@ -1,6 +1,7 @@
 using DataAccess.DatabaseAccess;
 using DataAccess.DatabaseAccess.Interfaces;
 using DataAccess.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 internal class Program
 {
@@ -34,6 +35,10 @@ internal class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddDbContext<DataContext>(options =>
+        {
+            options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+        });
         builder.Services.AddCors(options =>
         {
             options.AddPolicy(policyName,

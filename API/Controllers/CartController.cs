@@ -17,13 +17,13 @@ namespace API.Controllers
 
         // TODO: Validate if amount isn't greater that amount in stock
         [HttpPost("InsertIntoCart")]
-        public async Task<CartModel> InsertItemIntoCart(CartModel model)
+        public async Task<Cart> InsertItemIntoCart(Cart model)
         {
             return await _cartsService.InsertIntoCart(model);
         }
 
         [HttpPatch("UpdateCart")]
-        public async Task<CartModel> UpdateCart(CartModel model)
+        public async Task<Cart> UpdateCart(Cart model)
         {
             return await _cartsService.UpdateCart(model);
         }

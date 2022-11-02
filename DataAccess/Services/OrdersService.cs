@@ -18,21 +18,21 @@ namespace DataAccess.Services
             _db = db;
         }
 
-        public async Task<OrderModel> GetOrder(int id)
+        public async Task<Order> GetOrder(int id)
         {
-            var results = await _db.ExecuteProcedure<OrderModel, dynamic>("dbo.sp_Orders_GetOne", new { Id = id });
+            var results = await _db.ExecuteProcedure<Order, dynamic>("dbo.sp_Orders_GetOne", new { Id = id });
             return results.FirstOrDefault();
         }
 
-        public async Task<OrderModel> InsertOrder(OrderModel model)
+        public async Task<Order> InsertOrder(Order model)
         {
-            var results = await _db.ExecuteProcedure<OrderModel, OrderModel>("dbo.sp_Orders_Insert", model);
+            var results = await _db.ExecuteProcedure<Order, Order>("dbo.sp_Orders_Insert", model);
             return results.FirstOrDefault();
         }
 
-        public async Task<OrderModel> UpdateOrder(OrderModel model)
+        public async Task<Order> UpdateOrder(Order model)
         {
-            var results = await _db.ExecuteProcedure<OrderModel, OrderModel>("dbo.sp_Orders_Update", model);
+            var results = await _db.ExecuteProcedure<Order, Order>("dbo.sp_Orders_Update", model);
             return results.FirstOrDefault();
         }
 

@@ -14,19 +14,19 @@ namespace API.Controllers
         public AddressController(IAddressService addressService) => _addressService = addressService;
 
         [HttpGet("GetAddress/{id}")]
-        public async Task<AddressModel> GetAddress(int id)
+        public async Task<Address> GetAddress(int id)
         {
             return await _addressService.GetAddress(id);
         }
 
         [HttpPost("InsertAddress")]
-        public async Task<AddressModel> InsertAddress(AddressModel model)
+        public async Task<Address> InsertAddress(Address model)
         {
             return await _addressService.InsertAddress(model);
         }
 
         [HttpPatch("UpdateAddress")]
-        public async Task<AddressModel> UpdateAddress(AddressModel model)
+        public async Task<Address> UpdateAddress(Address model)
         {
             return await _addressService.UpdateAddress(model);
         }
