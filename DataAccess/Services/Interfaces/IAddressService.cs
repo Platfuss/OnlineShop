@@ -5,9 +5,9 @@ namespace DataAccess.Services.Interfaces
     public interface IAddressService
     {
         Task DeleteAddress(int id);
-        Task<AddressModel> GetAddress(int id);
-        Task<AddressModel> InsertAddress(AddressModel model);
+        Task<Address> GetAddress(int id);
+        Task<Address> InsertAddress(Address model);
 
-        Task<AddressModel> UpdateAddress(AddressModel model);
+        Task<Address> UpdateAddress(Address model);
     }
 }

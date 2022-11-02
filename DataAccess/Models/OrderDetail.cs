@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class AddressModel
+    public class OrderDetail
     {
         public int Id { get; set; }
-        public string City { get; set; }
-        public string Street { get; set; }
-        [RegularExpression("^\\d{2}-\\d{3}$")]
-        public string PostalCode { get; set; }
+        public int OrderId { get; set; }
+        public int ItemId { get; set; }
+        [Range(0, int.MaxValue)]
+        public int Amount { get; set; }
     }
 }

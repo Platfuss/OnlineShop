@@ -24,7 +24,7 @@ namespace DataAccess.Services
 
         public async Task<ItemDto> GetItem(int id)
         {
-            var result = (await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_GetOne", new { Id = id }))
+            var result = (await _db.ExecuteProcedure<Item, dynamic>("dbo.sp_Items_GetOne", new { Id = id }))
                 .FirstOrDefault();
             var images = await _fileService.Read(id.ToString(), false);
             return ItemConverter.ModelToDto(result, images);
@@ -32,7 +32,7 @@ namespace DataAccess.Services
         public async Task<IEnumerable<ItemDto>> GetItemsAll()
         {
             var output = new List<ItemDto>();
-            var result = (await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_GetAll", new { }))
+            var result = (await _db.ExecuteProcedure<Item, dynamic>("dbo.sp_Items_GetAll", new { }))
                 .ToList();
             foreach (var model in result)
             {
@@ -46,7 +46,7 @@ namespace DataAccess.Services
         public async Task<IEnumerable<ItemDto>> GetItemsInCategory(string categoryName)
         {
             var output = new List<ItemDto>();
-            var result = (await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_InCategory", new { Category = categoryName }))
+            var result = (await _db.ExecuteProcedure<Item, dynamic>("dbo.sp_Items_InCategory", new { Category = categoryName }))
                 .ToList();
             foreach(var model in result)
             {
@@ -60,7 +60,7 @@ namespace DataAccess.Services
         public async Task<IEnumerable<ItemDto>> GetNewestItems()
         {
             var output = new List<ItemDto>();
-            var result = (await _db.ExecuteProcedure<ItemModel, dynamic>("dbo.sp_Items_GetNewests", new { }))
+            var result = (await _db.ExecuteProcedure<Item, dynamic>("dbo.sp_Items_GetNewests", new { }))
                 .ToList();
             foreach (var model in result)
             {
@@ -71,16 +71,16 @@ namespace DataAccess.Services
             return output;
         }
 
-        public async Task<ItemModel> InsertItem(ItemModel model)
+        public async Task<Item> InsertItem(Item model)
         {
-            var results = (await _db.ExecuteProcedure<ItemModel, ItemModel>("dbo.sp_Items_Insert", model)).FirstOrDefault();
+            var results = (await _db.ExecuteProcedure<Item, Item>("dbo.sp_Items_Insert", model)).FirstOrDefault();
 
             return results;
         }
 
-        public async Task<ItemModel> UpdateItem(ItemModel model)
+        public async Task<Item> UpdateItem(Item model)
         {
-            var results = await _db.ExecuteProcedure<ItemModel, ItemModel>("dbo.sp_Items_Update", model);
+            var results = await _db.ExecuteProcedure<Item, Item>("dbo.sp_Items_Update", model);
             return results.FirstOrDefault();
         }
             

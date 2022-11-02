@@ -16,25 +16,25 @@ namespace API.Controllers
         }
 
         [HttpGet("GetCustomer/{id}")]
-        public async Task<CustomerModel> GetCustomer(int id)
+        public async Task<Customer> GetCustomer(int id)
         {
             return await _customers.GetCustomer(id);
         }
 
         [HttpGet("GetAllCustomers")]
-        public async Task<IEnumerable<CustomerModel>> GetAllCustomers()
+        public async Task<IEnumerable<Customer>> GetAllCustomers()
         {
             return await _customers.GetCustomersAll();
         }
 
         [HttpPost("InsertCustomer")]
-        public async Task<CustomerModel> InsertCustomer(CustomerModel model)
+        public async Task<Customer> InsertCustomer(Customer model)
         {
            return await _customers.InsertCustomer(model);
         }
 
         [HttpPatch("UpdateCustomer")]
-        public async Task<CustomerModel> UpdateCustomer(CustomerModel model)
+        public async Task<Customer> UpdateCustomer(Customer model)
         {
             return await _customers.UpdateCustomer(model);
         }

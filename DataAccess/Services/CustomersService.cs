@@ -18,23 +18,23 @@ namespace DataAccess.Services
             _db = db;
         }
 
-        public async Task<CustomerModel> GetCustomer(int id)
+        public async Task<Customer> GetCustomer(int id)
         {
-            var results = await _db.ExecuteProcedure<CustomerModel, dynamic>("dbo.sp_Customers_GetOne", new { Id = id });
+            var results = await _db.ExecuteProcedure<Customer, dynamic>("dbo.sp_Customers_GetOne", new { Id = id });
             return results.FirstOrDefault();
         }
-        public Task<IEnumerable<CustomerModel>> GetCustomersAll() =>
-            _db.ExecuteProcedure<CustomerModel, dynamic>("dbo.sp_Customers_GetAll", new { });
+        public Task<IEnumerable<Customer>> GetCustomersAll() =>
+            _db.ExecuteProcedure<Customer, dynamic>("dbo.sp_Customers_GetAll", new { });
 
-        public async Task<CustomerModel> InsertCustomer(CustomerModel model)
+        public async Task<Customer> InsertCustomer(Customer model)
         {
-            var results = await _db.ExecuteProcedure<CustomerModel, CustomerModel>("dbo.sp_Customers_Insert", model);
+            var results = await _db.ExecuteProcedure<Customer, Customer>("dbo.sp_Customers_Insert", model);
             return results.FirstOrDefault();
         }
 
-        public async Task<CustomerModel> UpdateCustomer(CustomerModel model)
+        public async Task<Customer> UpdateCustomer(Customer model)
         {
-            var results = await _db.ExecuteProcedure<CustomerModel, CustomerModel>("dbo.sp_Customers_Update", model);
+            var results = await _db.ExecuteProcedure<Customer, Customer>("dbo.sp_Customers_Update", model);
             return results.FirstOrDefault();
         }
 

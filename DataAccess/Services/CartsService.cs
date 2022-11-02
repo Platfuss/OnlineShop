@@ -25,7 +25,7 @@ namespace DataAccess.Services
 
         public async Task<IEnumerable<CartDto>> GetUserCart(int customerId)
         {
-            var userCart = (await _db.ExecuteProcedure<CartModel, dynamic>
+            var userCart = (await _db.ExecuteProcedure<Cart, dynamic>
                 ("dbo.sp_Carts_GetUserCart", new { CustomerId = customerId }))
                 .ToList();
             var output = new List<CartDto>();
@@ -38,15 +38,15 @@ namespace DataAccess.Services
             return output;
         }
 
-        public async Task<CartModel> InsertIntoCart(CartModel model)
+        public async Task<Cart> InsertIntoCart(Cart model)
         {
-            var results = await _db.ExecuteProcedure<CartModel, CartModel>("dbo.sp_Carts_Insert", model);
+            var results = await _db.ExecuteProcedure<Cart, Cart>("dbo.sp_Carts_Insert", model);
             return results.FirstOrDefault();
         }
 
-        public async Task<CartModel> UpdateCart(CartModel model)
+        public async Task<Cart> UpdateCart(Cart model)
         {
-            var results = await _db.ExecuteProcedure<CartModel, CartModel>("dbo.sp_Carts_Update", model);
+            var results = await _db.ExecuteProcedure<Cart, Cart>("dbo.sp_Carts_Update", model);
             return results.FirstOrDefault();
         }
 

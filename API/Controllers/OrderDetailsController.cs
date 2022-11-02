@@ -16,19 +16,19 @@ namespace API.Controllers
         }
 
         [HttpGet("GetOrderDetail/{id}")]
-        public async Task<OrderDetailModel> GetOrderDetail(int id)
+        public async Task<OrderDetail> GetOrderDetail(int id)
         {
             return await _orderDetailsService.GetOrderDetail(id);
         }
 
         [HttpPost("InsertOrderDetail")]
-        public async Task<OrderDetailModel> InsertOrderDetail(OrderDetailModel model)
+        public async Task<OrderDetail> InsertOrderDetail(OrderDetail model)
         {
             return await _orderDetailsService.InsertOrderDetail(model);
         }
 
         [HttpPatch("UpdateOrderDetail")]
-        public async Task<OrderDetailModel> UpdateOrderDetail(OrderDetailModel model)
+        public async Task<OrderDetail> UpdateOrderDetail(OrderDetail model)
         {
             return await _orderDetailsService.UpdateOrderDetail(model);
         }

@@ -9,7 +9,7 @@ namespace DataAccess.Models.Converters
 {
     public static class CartConverter
     {
-        public static CartDto ModelToDto(CartModel model, byte[] image)
+        public static CartDto ModelToDto(Cart model, byte[] image)
         {
             return new CartDto()
             {

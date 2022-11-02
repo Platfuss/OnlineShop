@@ -42,13 +42,13 @@ namespace API.Controllers
         }
 
         [HttpPost("InsertItem")]
-        public async Task<ItemModel> InsertItem(ItemModel model)
+        public async Task<Item> InsertItem(Item model)
         {
             return await _itemsService.InsertItem(model);
         }
 
         [HttpPatch("UpdateItem")]
-        public async Task<ItemModel> UpdateItem(ItemModel model)
+        public async Task<Item> UpdateItem(Item model)
         {
             return await _itemsService.UpdateItem(model);
         }
