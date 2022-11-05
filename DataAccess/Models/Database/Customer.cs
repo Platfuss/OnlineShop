@@ -1,27 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataAccess.Models.Database
+namespace DataAccess.Models.Database;
+
+public class Customer
 {
-    public class Customer
-    {
-        public virtual int Id { get; set; }
+    public int Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+    [Required]
+    public string Name { get; set; }
 
-        [Required]
-        public string Surname { get; set; }
+    [Required]
+    public string Surname { get; set; }
 
-        [Required, EmailAddress]
-        public string Email { get; set; }
+    [Required, EmailAddress]
+    public string Email { get; set; }
 
-        [Required]
-        public virtual ICollection<Address> Addresses { get; set; }
-    }
+    public int DefaultInvoiceAddressId { get; set; }
+    public virtual Address DefaultInvoiceAddress { get; set; }
+
+    public int? DefaultShippingAddressId { get; set; }
+    public virtual Address DefaultShippingAddress { get; set; }
 }
