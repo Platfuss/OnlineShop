@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Models
+namespace DataAccess.Models.Database
 {
     public class Item
     {
@@ -17,13 +17,11 @@ namespace DataAccess.Models
 
         public string Description { get; set; }
 
-        [Required, Column(TypeName = "decimal(18,4)")]
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Price { get; set; }
 
-        [Required]
         public int Amount { get; set; }
 
-        [Required]
         public string Category { get; set; }
 
         [Required]

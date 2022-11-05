@@ -1,8 +1,9 @@
-﻿using DataAccess.DatabaseAccess.Interfaces;
-using DataAccess.Models;
+﻿using DataAccess.DatabaseAccess;
+using DataAccess.Models.Database;
 using DataAccess.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,34 +12,45 @@ namespace DataAccess.Services
 {
     public class CustomersService : ICustomersService
     {
-        private readonly IDatabase _db;
+        private readonly DataContext _db;
 
-        public CustomersService(IDatabase db)
+        public CustomersService(DataContext db)
         {
             _db = db;
         }
 
         public async Task<Customer> GetCustomer(int id)
         {
-            var results = await _db.ExecuteProcedure<Customer, dynamic>("dbo.sp_Customers_GetOne", new { Id = id });
-            return results.FirstOrDefault();
+            var result = await _db.Customers.FindAsync(id);
+            return result;
         }
-        public Task<IEnumerable<Customer>> GetCustomersAll() =>
-            _db.ExecuteProcedure<Customer, dynamic>("dbo.sp_Customers_GetAll", new { });
+        public async Task<IEnumerable<Customer>> GetCustomersAll()
+        {
+            var result = await _db.Customers.ToListAsync();
+            return result;
+        }
 
         public async Task<Customer> InsertCustomer(Customer model)
         {
-            var results = await _db.ExecuteProcedure<Customer, Customer>("dbo.sp_Customers_Insert", model);
-            return results.FirstOrDefault();
+            _db.Customers.Add(model);
+            await _db.SaveChangesAsync();
+
+            return model;
         }
 
         public async Task<Customer> UpdateCustomer(Customer model)
         {
-            var results = await _db.ExecuteProcedure<Customer, Customer>("dbo.sp_Customers_Update", model);
-            return results.FirstOrDefault();
+            _db.Customers.Update(model);
+            await _db.SaveChangesAsync();
+
+            return model;
         }
 
-        public Task DeleteCustomer(int id) =>
-            _db.ExecuteProcedure("dbo.sp_Customers_Delete", new { Id = id });
+        public async Task DeleteCustomer(int id)
+        {
+            var result = await _db.Customers.FindAsync(id);
+            _db.Customers.Remove(result);
+            await _db.SaveChangesAsync();
+        }
     }
 }

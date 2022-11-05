@@ -1,6 +1,7 @@
-﻿using DataAccess.DatabaseAccess.Interfaces;
-using DataAccess.Models;
+﻿using DataAccess.DatabaseAccess;
+using DataAccess.Models.Database;
 using DataAccess.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,32 +12,40 @@ namespace DataAccess.Services
 {
     public class OrderDetailsService : IOrderDetailsService
     {
-        private readonly IDatabase _db;
+        private readonly DataContext _db;
 
-        public OrderDetailsService(IDatabase db)
+        public OrderDetailsService(DataContext db)
         {
             _db = db;
         }
 
         public async Task<OrderDetail> GetOrderDetail(int id)
         {
-            var results = await _db.ExecuteProcedure<OrderDetail, dynamic>("dbo.sp_OrderDetails_GetOne", new { Id = id });
-            return results.FirstOrDefault();
+            var result = await _db.OrderDetails.FindAsync(id);
+            return result;
         }
 
         public async Task<OrderDetail> InsertOrderDetail(OrderDetail model)
         {
-            var results = await _db.ExecuteProcedure<OrderDetail, OrderDetail>("dbo.sp_OrderDetails_Insert", model);
-            return results.FirstOrDefault();
+            _db.OrderDetails.Add(model);
+            await _db.SaveChangesAsync();
+
+            return model;
         }
 
         public async Task<OrderDetail> UpdateOrderDetail(OrderDetail model)
         {
-            var results = await _db.ExecuteProcedure<OrderDetail, OrderDetail>("dbo.sp_OrderDetails_Update", model);
-            return results.FirstOrDefault();
+            _db.OrderDetails.Update(model);
+            await _db.SaveChangesAsync();
+
+            return model;
         }
             
-        public Task DeleteOrderDetail(int id) =>
-            _db.ExecuteProcedure("dbo.sp_OrderDetails_Delete", new { Id = id });
+        public async Task DeleteOrderDetail(int id)
+        {
+            var result = await _db.OrderDetails.FindAsync(id);
+            _db.OrderDetails.Remove(result);
+            await _db.SaveChangesAsync();
+        }
     }
 }

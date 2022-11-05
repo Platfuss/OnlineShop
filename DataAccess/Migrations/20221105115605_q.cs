@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class EfModels : Migration
+    public partial class q : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,7 +34,7 @@ namespace DataAccess.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddedToShop = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -97,6 +97,8 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     OrderId = table.Column<int>(type: "int", nullable: true)
@@ -141,6 +143,17 @@ namespace DataAccess.Migrations
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Items",
+                columns: new[] { "Id", "AddedToShop", "Amount", "Category", "Description", "Name", "Price" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 10, 23, 8, 24, 10, 0, DateTimeKind.Unspecified), 100, "Żywność", "Coś do jedzenia", "Ciasto", 3.5m },
+                    { 2, new DateTime(2022, 11, 5, 12, 56, 5, 2, DateTimeKind.Local).AddTicks(8383), 100, "Rozrywka", "Spoko giera", "Twilight Imperium", 1000m },
+                    { 3, new DateTime(2015, 7, 1, 12, 15, 50, 0, DateTimeKind.Unspecified), 2, "Zoologia", "Nie na sprzedaż!", "Zwierzaczki", 999999m },
+                    { 4, new DateTime(2022, 11, 5, 10, 15, 7, 0, DateTimeKind.Unspecified), 5000, "Rozrywka", "Piosenki piosenkarki", "Muzyka", 65m }
                 });
 
             migrationBuilder.CreateIndex(

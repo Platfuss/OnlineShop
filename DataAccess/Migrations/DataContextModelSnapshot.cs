@@ -22,7 +22,7 @@ namespace DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("DataAccess.Models.Address", b =>
+            modelBuilder.Entity("DataAccess.Models.Database.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,6 +37,10 @@ namespace DataAccess.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
@@ -48,6 +52,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SubNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
@@ -57,7 +64,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Cart", b =>
+            modelBuilder.Entity("DataAccess.Models.Database.Cart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,7 +90,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Carts");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Customer", b =>
+            modelBuilder.Entity("DataAccess.Models.Database.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -108,7 +115,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Item", b =>
+            modelBuilder.Entity("DataAccess.Models.Database.Item", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,7 +130,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Category")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -139,9 +145,51 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Items");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddedToShop = new DateTime(2022, 10, 23, 8, 24, 10, 0, DateTimeKind.Unspecified),
+                            Amount = 100,
+                            Category = "Żywność",
+                            Description = "Coś do jedzenia",
+                            Name = "Ciasto",
+                            Price = 3.5m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddedToShop = new DateTime(2022, 11, 5, 12, 56, 5, 2, DateTimeKind.Local).AddTicks(8383),
+                            Amount = 100,
+                            Category = "Rozrywka",
+                            Description = "Spoko giera",
+                            Name = "Twilight Imperium",
+                            Price = 1000m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AddedToShop = new DateTime(2015, 7, 1, 12, 15, 50, 0, DateTimeKind.Unspecified),
+                            Amount = 2,
+                            Category = "Zoologia",
+                            Description = "Nie na sprzedaż!",
+                            Name = "Zwierzaczki",
+                            Price = 999999m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AddedToShop = new DateTime(2022, 11, 5, 10, 15, 7, 0, DateTimeKind.Unspecified),
+                            Amount = 5000,
+                            Category = "Rozrywka",
+                            Description = "Piosenki piosenkarki",
+                            Name = "Muzyka",
+                            Price = 65m
+                        });
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Order", b =>
+            modelBuilder.Entity("DataAccess.Models.Database.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -163,7 +211,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.OrderDetail", b =>
+            modelBuilder.Entity("DataAccess.Models.Database.OrderDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,26 +237,26 @@ namespace DataAccess.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Address", b =>
+            modelBuilder.Entity("DataAccess.Models.Database.Address", b =>
                 {
-                    b.HasOne("DataAccess.Models.Customer", null)
+                    b.HasOne("DataAccess.Models.Database.Customer", null)
                         .WithMany("Addresses")
                         .HasForeignKey("CustomerId");
 
-                    b.HasOne("DataAccess.Models.Order", null)
+                    b.HasOne("DataAccess.Models.Database.Order", null)
                         .WithMany("Addresses")
                         .HasForeignKey("OrderId");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Cart", b =>
+            modelBuilder.Entity("DataAccess.Models.Database.Cart", b =>
                 {
-                    b.HasOne("DataAccess.Models.Customer", "Customer")
+                    b.HasOne("DataAccess.Models.Database.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Models.Item", "Item")
+                    b.HasOne("DataAccess.Models.Database.Item", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -219,9 +267,9 @@ namespace DataAccess.Migrations
                     b.Navigation("Item");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Order", b =>
+            modelBuilder.Entity("DataAccess.Models.Database.Order", b =>
                 {
-                    b.HasOne("DataAccess.Models.Customer", "Customer")
+                    b.HasOne("DataAccess.Models.Database.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -230,15 +278,15 @@ namespace DataAccess.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.OrderDetail", b =>
+            modelBuilder.Entity("DataAccess.Models.Database.OrderDetail", b =>
                 {
-                    b.HasOne("DataAccess.Models.Item", "Item")
+                    b.HasOne("DataAccess.Models.Database.Item", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Models.Order", "Order")
+                    b.HasOne("DataAccess.Models.Database.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -249,12 +297,12 @@ namespace DataAccess.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Customer", b =>
+            modelBuilder.Entity("DataAccess.Models.Database.Customer", b =>
                 {
                     b.Navigation("Addresses");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Order", b =>
+            modelBuilder.Entity("DataAccess.Models.Database.Order", b =>
                 {
                     b.Navigation("Addresses");
                 });

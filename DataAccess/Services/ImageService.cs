@@ -51,11 +51,16 @@ namespace DataAccess.Services
         public async Task<List<byte[]>> Read(string path, bool onlyFirst)
         {
             var searchingFolder = Path.Combine(_startingDirectory, path);
-            if (path is null || !Directory.Exists(searchingFolder))
-                return null;
+            if (!Directory.Exists(searchingFolder)
+                || !Directory.EnumerateFiles(searchingFolder).Any())
+            {
+                searchingFolder = _startingDirectory;
+                onlyFirst = true;
+            }
 
             var output = new List<byte[]>();
-            var imagesInFolder = Directory.EnumerateFiles(searchingFolder).OrderBy(name => name).ToArray();
+            var onlyImages = new Regex(@".+.(jpg||png||jpeg)", RegexOptions.Compiled);
+            var imagesInFolder = Directory.EnumerateFiles(searchingFolder).OrderBy(name => name).Where(name => onlyImages.IsMatch(name)).ToArray();
             foreach (var fileName in imagesInFolder)
             {
                 using var fileStream = File.Open(fileName, FileMode.Open);
