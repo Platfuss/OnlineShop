@@ -8,12 +8,12 @@ public static class ModelBuilderExtention
     public static void Configure(this ModelBuilder builder)
     {
         var customers = builder.Entity<Customer>();
-        customers.HasOne(c => c.DefaultInvoiceAddress).WithOne().IsRequired().OnDelete(DeleteBehavior.NoAction);
-        customers.HasOne(c => c.DefaultShipingAddress).WithOne().IsRequired(false).OnDelete(DeleteBehavior.NoAction);
+        customers.HasOne(c => c.DefaultInvoiceAddress).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
+        customers.HasOne(c => c.DefaultShipingAddress).WithMany().IsRequired(false).OnDelete(DeleteBehavior.NoAction);
 
         var orders = builder.Entity<Order>();
-        orders.HasOne(o => o.InvoiceAddress).WithOne().IsRequired().OnDelete(DeleteBehavior.NoAction);
-        orders.HasOne(o => o.ShipingAddress).WithOne().IsRequired().OnDelete(DeleteBehavior.NoAction);
+        orders.HasOne(o => o.InvoiceAddress).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
+        orders.HasOne(o => o.ShipingAddress).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
     }
 
     public static void SeedData(this ModelBuilder builder)
@@ -49,8 +49,8 @@ public static class ModelBuilderExtention
 
         builder.Entity<Order>()
             .HasData(
-                new Order() { Id = 1, CustomerId = 1, InvoiceAddressId = 1, ShipingAddressId = 2, ShipmentType = "Kurier" },
-                new Order() { Id = 2, CustomerId = 2, InvoiceAddressId = 1, ShipingAddressId = 1, ShipmentType = "InPost" }
+                new Order() { Id = 1, CreationDate = DateTime.Parse("2022-10-22 23:32:00"), CustomerId = 1, InvoiceAddressId = 1, ShipingAddressId = 2, ShipmentType = "Kurier" },
+                new Order() { Id = 2, CreationDate = DateTime.Parse("2022-10-23 10:00:00"), CustomerId = 2, InvoiceAddressId = 1, ShipingAddressId = 1, ShipmentType = "InPost" }
             );
 
         builder.Entity<OrderDetail>()
