@@ -35,7 +35,7 @@ internal class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddDbContext<DataContext>(options =>
         {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("Default"), 
+            options.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
                 x => x.MigrationsAssembly("DataAccess"));
         });
         builder.Services.AddCors(options =>

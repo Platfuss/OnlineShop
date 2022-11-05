@@ -34,15 +34,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
@@ -57,11 +51,42 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("OrderId");
-
                     b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Wrocław",
+                            Number = "156",
+                            PostalCode = "50-123",
+                            Street = "Legnicka"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Wrocław",
+                            Number = "22",
+                            PostalCode = "52-456",
+                            Street = "Górnickiego",
+                            SubNumber = "37"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            City = "Sokołów Młp.",
+                            Number = "44",
+                            PostalCode = "36-050",
+                            Street = "Rzeszowska"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            City = "Rzeszów",
+                            Number = "123",
+                            PostalCode = "37-167",
+                            Street = "Architektów"
+                        });
                 });
 
             modelBuilder.Entity("DataAccess.Models.Database.Cart", b =>
@@ -98,6 +123,12 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("DefaultInvoiceAddressId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DefaultShippingAddressId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -111,6 +142,13 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DefaultInvoiceAddressId")
+                        .IsUnique();
+
+                    b.HasIndex("DefaultShippingAddressId")
+                        .IsUnique()
+                        .HasFilter("[DefaultShippingAddressId] IS NOT NULL");
 
                     b.ToTable("Customers");
                 });
@@ -160,7 +198,7 @@ namespace DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            AddedToShop = new DateTime(2022, 11, 5, 12, 56, 5, 2, DateTimeKind.Local).AddTicks(8383),
+                            AddedToShop = new DateTime(2022, 11, 5, 15, 24, 46, 879, DateTimeKind.Local).AddTicks(5688),
                             Amount = 100,
                             Category = "Rozrywka",
                             Description = "Spoko giera",
@@ -197,16 +235,31 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InvoiceAddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("ShipmentType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ShippingAddressId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("InvoiceAddressId")
+                        .IsUnique();
+
+                    b.HasIndex("ShippingAddressId")
+                        .IsUnique();
 
                     b.ToTable("Orders");
                 });
@@ -237,17 +290,6 @@ namespace DataAccess.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Database.Address", b =>
-                {
-                    b.HasOne("DataAccess.Models.Database.Customer", null)
-                        .WithMany("Addresses")
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("DataAccess.Models.Database.Order", null)
-                        .WithMany("Addresses")
-                        .HasForeignKey("OrderId");
-                });
-
             modelBuilder.Entity("DataAccess.Models.Database.Cart", b =>
                 {
                     b.HasOne("DataAccess.Models.Database.Customer", "Customer")
@@ -267,6 +309,24 @@ namespace DataAccess.Migrations
                     b.Navigation("Item");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Database.Customer", b =>
+                {
+                    b.HasOne("DataAccess.Models.Database.Address", "DefaultInvoiceAddress")
+                        .WithOne()
+                        .HasForeignKey("DataAccess.Models.Database.Customer", "DefaultInvoiceAddressId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("DataAccess.Models.Database.Address", "DefaultShippingAddress")
+                        .WithOne()
+                        .HasForeignKey("DataAccess.Models.Database.Customer", "DefaultShippingAddressId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("DefaultInvoiceAddress");
+
+                    b.Navigation("DefaultShippingAddress");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Database.Order", b =>
                 {
                     b.HasOne("DataAccess.Models.Database.Customer", "Customer")
@@ -275,7 +335,23 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DataAccess.Models.Database.Address", "InvoiceAddress")
+                        .WithOne()
+                        .HasForeignKey("DataAccess.Models.Database.Order", "InvoiceAddressId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("DataAccess.Models.Database.Address", "ShippingAddress")
+                        .WithOne()
+                        .HasForeignKey("DataAccess.Models.Database.Order", "ShippingAddressId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Customer");
+
+                    b.Navigation("InvoiceAddress");
+
+                    b.Navigation("ShippingAddress");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Database.OrderDetail", b =>
@@ -295,16 +371,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Item");
 
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.Database.Customer", b =>
-                {
-                    b.Navigation("Addresses");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.Database.Order", b =>
-                {
-                    b.Navigation("Addresses");
                 });
 #pragma warning restore 612, 618
         }

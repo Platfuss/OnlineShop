@@ -1,40 +1,37 @@
 ﻿using DataAccess.Models.Database;
-using DataAccess.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class AddressController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AddressController : ControllerBase
+    private readonly IAddressService _addressService;
+
+    public AddressController(IAddressService addressService) => _addressService = addressService;
+
+    [HttpGet("GetAddress/{id}")]
+    public async Task<Address> GetAddress(int id)
     {
-        private readonly IAddressService _addressService;
+        return await _addressService.GetAddress(id);
+    }
 
-        public AddressController(IAddressService addressService) => _addressService = addressService;
+    [HttpPost("InsertAddress")]
+    public async Task<Address> InsertAddress(Address model)
+    {
+        return await _addressService.InsertAddress(model);
+    }
 
-        [HttpGet("GetAddress/{id}")]
-        public async Task<Address> GetAddress(int id)
-        {
-            return await _addressService.GetAddress(id);
-        }
+    [HttpPatch("UpdateAddress")]
+    public async Task<Address> UpdateAddress(Address model)
+    {
+        return await _addressService.UpdateAddress(model);
+    }
 
-        [HttpPost("InsertAddress")]
-        public async Task<Address> InsertAddress(Address model)
-        {
-            return await _addressService.InsertAddress(model);
-        }
-
-        [HttpPatch("UpdateAddress")]
-        public async Task<Address> UpdateAddress(Address model)
-        {
-            return await _addressService.UpdateAddress(model);
-        }
-
-        [HttpDelete("DeleteAddress/{id}")]
-        public async Task DeleteAddress(int id)
-        {
-            await _addressService.DeleteAddress(id);
-        }
+    [HttpDelete("DeleteAddress/{id}")]
+    public async Task DeleteAddress(int id)
+    {
+        await _addressService.DeleteAddress(id);
     }
 }
