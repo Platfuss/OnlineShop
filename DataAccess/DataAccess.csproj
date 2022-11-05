@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DatabaseAccess\Interfaces\**" />
+    <EmbeddedResource Remove="DatabaseAccess\Interfaces\**" />
+    <None Remove="DatabaseAccess\Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
@@ -24,10 +30,6 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.25.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DatabaseAccess\Interfaces\" />
   </ItemGroup>
 
 </Project>

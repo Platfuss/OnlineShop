@@ -1,9 +1,10 @@
 using DataAccess.DatabaseAccess;
-using DataAccess.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
+using System.Text;
 
 internal class Program
 {
@@ -20,12 +21,12 @@ internal class Program
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
 
         app.UseCors(policyName);
-        app.UseAuthentication();
 
         app.Run();
     }
@@ -37,13 +38,26 @@ internal class Program
         // Add services to the container.
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(opts =>
+        {
+            opts.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            {
+                Description = "Authorization using Bearer scheme",
+                In = ParameterLocation.Header,
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey
+            });
+
+            opts.OperationFilter<SecurityRequirementsOperationFilter>();
+        });
+
         builder.Services.AddDbContext<DataContext>(options =>
         {
             options.EnableSensitiveDataLogging();
             options.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
                 x => x.MigrationsAssembly("DataAccess"));
         });
+
         builder.Services.AddCors(options =>
         {
             options.AddPolicy(policyName,
@@ -52,25 +66,21 @@ internal class Program
                     policy.WithOrigins("http://localhost:3000");
                 });
         });
-        builder.Services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
 
-                //TODO: Add builder.config appsettings
-                ValidIssuer = "https://localhost:7177",
-                ValidAudience = "https://localhost:7177",
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("VjcKumQGFKbtDPO19zqThjDAreu2u6Tl"))
-            };
-        });
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(
+                            builder.Configuration.GetSection("Jwt:Token").Value)),
+
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
         builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
         builder.Services.AddScoped<IAddressService, AddressService>();

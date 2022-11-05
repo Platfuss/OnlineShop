@@ -1,11 +1,9 @@
-﻿using DataAccess.Models;
-using DataAccess.Models.Dto;
+﻿using DataAccess.Models.Dto;
 
-namespace DataAccess.Services.Interfaces
+namespace DataAccess.Services.Interfaces;
+
+public interface IAuthorizationService
 {
-    public interface IAuthorizationService
-    {
-        Task<string> Login(UserDto userDto);
-        Task<string> Register(UserDto userDto);
-    }
+    Task<string> Login(UserDto userDto);
+    Task<string> Register(UserDto userDto);
 }
