@@ -18,6 +18,6 @@ public class Customer
     public int DefaultInvoiceAddressId { get; set; }
     public virtual Address DefaultInvoiceAddress { get; set; }
 
-    public int? DefaultShippingAddressId { get; set; }
-    public virtual Address DefaultShippingAddress { get; set; }
+    public int? DefaultShipingAddressId { get; set; }
+    public virtual Address DefaultShipingAddress { get; set; }
 }
