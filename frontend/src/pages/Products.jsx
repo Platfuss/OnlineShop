@@ -8,17 +8,11 @@ const Products = () => {
 	useEffect(() => CallApi(apiEndpoints("items/getallitems"), METHOD.GET), []);
 
 	return (
-		<>
-			<div className="wholePage">
-				{products?.map((item) => (
-					<SingleProduct key={item.id} product={item} />
-				))}
-				{/* {products?.myBates.map((item) => {
-					return <img src={`data:image/png;base64,${item}`} />;
-					//return <SingleProduct product={item} />;
-				})} */}
-			</div>
-		</>
+		<div className="wholePage">
+			{products?.map((item) => (
+				<SingleProduct key={item.id} product={item} />
+			))}
+		</div>
 	);
 };
 
