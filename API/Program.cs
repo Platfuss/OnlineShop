@@ -1,6 +1,4 @@
 using DataAccess.DatabaseAccess;
-using DataAccess.DatabaseAccess.Interfaces;
-using DataAccess.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 internal class Program
@@ -48,7 +46,7 @@ internal class Program
                     policy.WithOrigins("http://localhost:3000");
                 });
         });
-        builder.Services.AddSingleton<IDatabase, MsSql>();
+        builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
         builder.Services.AddScoped<IAddressService, AddressService>();
         builder.Services.AddScoped<ICartsService, CartsService>();
         builder.Services.AddScoped<ICustomersService, CustomersService>();

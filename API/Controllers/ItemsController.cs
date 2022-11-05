@@ -1,4 +1,5 @@
-﻿using DataAccess.Models.Dto;
+﻿using DataAccess.Models.Database;
+using DataAccess.Models.Dto;
 using DataAccess.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

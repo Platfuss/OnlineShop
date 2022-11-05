@@ -5,19 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Models
+namespace DataAccess.Models.Database
 {
-    public class Address
+    public class Order
     {
         public int Id { get; set; }
 
         [Required]
-        public string City { get; set; }
+        public Customer Customer { get; set; }
 
         [Required]
-        public string Street { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
 
-        [Required, RegularExpression("^\\d{2}-\\d{3}$")]
-        public string PostalCode { get; set; }
+        [Required]
+        public string ShipmentType { get; set; }
     }
 }

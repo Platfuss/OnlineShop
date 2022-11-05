@@ -1,5 +1,5 @@
-﻿using DataAccess.DatabaseAccess.Interfaces;
-using DataAccess.Models;
+﻿using DataAccess.DatabaseAccess;
+using DataAccess.Models.Database;
 using DataAccess.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,32 +11,40 @@ namespace DataAccess.Services
 {
     public class OrdersService : IOrdersService
     {
-        private readonly IDatabase _db;
+        private readonly DataContext _db;
 
-        public OrdersService(IDatabase db)
+        public OrdersService(DataContext db)
         {
             _db = db;
         }
 
         public async Task<Order> GetOrder(int id)
         {
-            var results = await _db.ExecuteProcedure<Order, dynamic>("dbo.sp_Orders_GetOne", new { Id = id });
-            return results.FirstOrDefault();
+            var result = await _db.Orders.FindAsync(id);
+            return result;
         }
 
         public async Task<Order> InsertOrder(Order model)
         {
-            var results = await _db.ExecuteProcedure<Order, Order>("dbo.sp_Orders_Insert", model);
-            return results.FirstOrDefault();
+            _db.Orders.Add(model);
+            await _db.SaveChangesAsync();
+
+            return model;
         }
 
         public async Task<Order> UpdateOrder(Order model)
         {
-            var results = await _db.ExecuteProcedure<Order, Order>("dbo.sp_Orders_Update", model);
-            return results.FirstOrDefault();
+            _db.Orders.Update(model);
+            await _db.SaveChangesAsync();
+
+            return model;
         }
 
-        public Task DeleteOrder(int id) =>
-            _db.ExecuteProcedure("dbo.sp_Orders_Delete", new { Id = id });
+        public async Task DeleteOrder(int id)
+        {
+            var result = await _db.Orders.FindAsync(id);
+            _db.Orders.Remove(result);
+            await _db.SaveChangesAsync();
+        }
     }
 }
