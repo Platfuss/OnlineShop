@@ -50,6 +50,7 @@ const SingleProductDetails = () => {
 			>
 				Dodaj do koszyka
 			</button>
+			<div>{product?.decription}</div>
 		</div>
 	);
 };

@@ -8,12 +8,16 @@ public static class ModelBuilderExtention
     public static void Configure(this ModelBuilder builder)
     {
         var customers = builder.Entity<Customer>();
-        customers.HasOne(c => c.DefaultInvoiceAddress).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
+        customers.HasOne(c => c.DefaultInvoiceAddress).WithMany().IsRequired(false).OnDelete(DeleteBehavior.NoAction);
         customers.HasOne(c => c.DefaultShipingAddress).WithMany().IsRequired(false).OnDelete(DeleteBehavior.NoAction);
 
         var orders = builder.Entity<Order>();
         orders.HasOne(o => o.InvoiceAddress).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
         orders.HasOne(o => o.ShipingAddress).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
+
+        var users = builder.Entity<User>();
+        users.HasOne(u => u.Customer).WithOne(c => c.User).IsRequired();
+        users.HasIndex(u => u.Email).IsUnique();
     }
 
     public static void SeedData(this ModelBuilder builder)
@@ -35,10 +39,18 @@ public static class ModelBuilderExtention
             );
         builder.Entity<Customer>()
             .HasData(
-                new Customer() { Id = 1, Name = "Eleonora", Surname = "Zadecka", Email = "eleonora.zadecka@o2.pl", DefaultInvoiceAddressId = 1, DefaultShipingAddressId =  2 },
-                new Customer() { Id = 2, Name = "Władysław", Surname = "Włodecki", Email = "w.w@onet.pl", DefaultInvoiceAddressId = 3, DefaultShipingAddressId = null },
-                new Customer() { Id = 3, Name = "Tomek", Surname = "Polok", Email = "pl.polok.tttt@gmail.com", DefaultInvoiceAddressId = 4, DefaultShipingAddressId = null },
-                new Customer() { Id = 4, Name = "Aleksandra", Surname = "Schabowicka", Email = "smiesznymail@interia.pl", DefaultInvoiceAddressId = 4, DefaultShipingAddressId = null }
+                new Customer() { Id = 1, Name = "Eleonora", Surname = "Zadecka",  DefaultInvoiceAddressId = 1, DefaultShipingAddressId =  2 },
+                new Customer() { Id = 2, Name = "Władysław", Surname = "Włodecki",  DefaultInvoiceAddressId = 3, DefaultShipingAddressId = null },
+                new Customer() { Id = 3, Name = "Tomek", Surname = "Polok", DefaultInvoiceAddressId = 4, DefaultShipingAddressId = null },
+                new Customer() { Id = 4, Name = "Aleksandra", Surname = "Schabowicka",  DefaultInvoiceAddressId = 4, DefaultShipingAddressId = null }
+            );
+
+        builder.Entity<User>()
+            .HasData(
+                new User() { Id = 1, Email = "user@example.com", 
+                    PasswordHash = Convert.FromBase64String("F7597C0DC84A9EAD6BD8F75CD04489F19560A5CC88EC0E77253236D463540208EF02B8E233964C7162FCF09432DFF2636AFDCCE02C67FC865C611A9D4704B3B2"), 
+                    PasswordSalt = Convert.FromBase64String("9669F7253D470D647ADFD28CEAD3F8E90AD2AFC02C01E57DBEA8D2BCA61D47D0F66F0ACC01C78E7E88D634187C8E1BFCEBB7A2859BFD637AD0CAF65FE4D3A9528AEBF343E030C11D42B9138526023218CBCE40A287639A112EF5F5F8C98D28C5517A4285AFDF27E19260F184E522320C736563A324E362B706AA3F6BED3BF471"),
+                    CustomerId = 1 }
             );
 
         builder.Entity<Cart>()
