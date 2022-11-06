@@ -5,7 +5,7 @@ namespace DataAccess.Models.Database;
 
 public class Order
 {
-    public int Id { get; set; }
+    public int Id { get; set; } = 0;
 
     [Required]
     public DateTime CreationDate { get; set; }

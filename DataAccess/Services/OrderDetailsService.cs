@@ -13,13 +13,13 @@ public class OrderDetailsService : IOrderDetailsService
         _db = db;
     }
 
-    public async Task<OrderDetail> GetOrderDetail(int id)
+    public async Task<OrderDetail> GetOrderDetailAsync(int id)
     {
         var result = await _db.OrderDetails.FindAsync(id);
         return result;
     }
 
-    public async Task<OrderDetail> InsertOrderDetail(OrderDetail model)
+    public async Task<OrderDetail> InsertOrderDetailAsync(OrderDetail model)
     {
         _db.OrderDetails.Add(model);
         await _db.SaveChangesAsync();
@@ -27,7 +27,7 @@ public class OrderDetailsService : IOrderDetailsService
         return model;
     }
 
-    public async Task<OrderDetail> UpdateOrderDetail(OrderDetail model)
+    public async Task<OrderDetail> UpdateOrderDetailAsync(OrderDetail model)
     {
         _db.OrderDetails.Update(model);
         await _db.SaveChangesAsync();
@@ -35,7 +35,7 @@ public class OrderDetailsService : IOrderDetailsService
         return model;
     }
 
-    public async Task DeleteOrderDetail(int id)
+    public async Task DeleteOrderDetailAsync(int id)
     {
         var result = await _db.OrderDetails.FindAsync(id);
         _db.OrderDetails.Remove(result);

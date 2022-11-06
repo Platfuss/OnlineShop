@@ -14,24 +14,24 @@ public class AddressController : ControllerBase
     [HttpGet("GetAddress/{id}")]
     public async Task<Address> GetAddress(int id)
     {
-        return await _addressService.GetAddress(id);
+        return await _addressService.GetAddressAsync(id);
     }
 
     [HttpPost("InsertAddress")]
     public async Task<Address> InsertAddress(Address model)
     {
-        return await _addressService.InsertAddress(model);
+        return await _addressService.InsertAddressAsync(model);
     }
 
     [HttpPatch("UpdateAddress")]
     public async Task<Address> UpdateAddress(Address model)
     {
-        return await _addressService.UpdateAddress(model);
+        return await _addressService.UpdateAddressAsync(model);
     }
 
     [HttpDelete("DeleteAddress/{id}")]
     public async Task DeleteAddress(int id)
     {
-        await _addressService.DeleteAddress(id);
+        await _addressService.DeleteAddressAsync(id);
     }
 }

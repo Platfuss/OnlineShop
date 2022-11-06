@@ -17,12 +17,12 @@ public class AuthorizationController : ControllerBase
     [HttpPost("Register")]
     public async Task<ActionResult<string>> Register(UserDto userDto)
     {
-        return Ok(await _authorization.Register(userDto));
+        return Ok(await _authorization.RegisterAsync(userDto));
     }
 
     [HttpPost("Login")]
     public async Task<ActionResult<string>> Login(UserDto userDto)
     {
-        return Ok(await _authorization.Login(userDto));
+        return Ok(await _authorization.LoginAsync(userDto));
     }
 }

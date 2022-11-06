@@ -9,7 +9,8 @@ public class AutoMapperProfile : Profile
 
     public AutoMapperProfile()
     {
-        CreateMap<Cart, CartDto>();
+        CreateMap<Cart, CartResponse>();
+        CreateMap<CartRequest, Cart>();
         CreateMap<Item, ItemDto>();
     }
 }

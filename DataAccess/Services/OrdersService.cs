@@ -13,13 +13,13 @@ public class OrdersService : IOrdersService
         _db = db;
     }
 
-    public async Task<Order> GetOrder(int id)
+    public async Task<Order> GetOrderAsync(int id)
     {
         var result = await _db.Orders.FindAsync(id);
         return result;
     }
 
-    public async Task<Order> InsertOrder(Order model)
+    public async Task<Order> InsertOrderAsync(Order model)
     {
         _db.Orders.Add(model);
         await _db.SaveChangesAsync();
@@ -27,7 +27,7 @@ public class OrdersService : IOrdersService
         return model;
     }
 
-    public async Task<Order> UpdateOrder(Order model)
+    public async Task<Order> UpdateOrderAsync(Order model)
     {
         _db.Orders.Update(model);
         await _db.SaveChangesAsync();
@@ -35,7 +35,7 @@ public class OrdersService : IOrdersService
         return model;
     }
 
-    public async Task DeleteOrder(int id)
+    public async Task DeleteOrderAsync(int id)
     {
         var result = await _db.Orders.FindAsync(id);
         _db.Orders.Remove(result);

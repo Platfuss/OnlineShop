@@ -14,18 +14,18 @@ public class CustomersService : ICustomersService
         _db = db;
     }
 
-    public async Task<Customer> GetCustomer(int id)
+    public async Task<Customer> GetCustomerAsync(int id)
     {
         var result = await _db.Customers.FindAsync(id);
         return result;
     }
-    public async Task<IEnumerable<Customer>> GetCustomersAll()
+    public async Task<IEnumerable<Customer>> GetCustomersAllAsync()
     {
         var result = await _db.Customers.ToListAsync();
         return result;
     }
 
-    public async Task<Customer> InsertCustomer(Customer model)
+    public async Task<Customer> InsertCustomerAsync(Customer model)
     {
         _db.Customers.Add(model);
         await _db.SaveChangesAsync();
@@ -33,7 +33,7 @@ public class CustomersService : ICustomersService
         return model;
     }
 
-    public async Task<Customer> UpdateCustomer(Customer model)
+    public async Task<Customer> UpdateCustomerAsync(Customer model)
     {
         _db.Customers.Update(model);
         await _db.SaveChangesAsync();
@@ -41,7 +41,7 @@ public class CustomersService : ICustomersService
         return model;
     }
 
-    public async Task DeleteCustomer(int id)
+    public async Task DeleteCustomerAsync(int id)
     {
         var result = await _db.Customers.FindAsync(id);
         _db.Customers.Remove(result);

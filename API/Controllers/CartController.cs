@@ -1,11 +1,12 @@
-﻿using DataAccess.Models.Database;
-using DataAccess.Models.Dto;
+﻿using DataAccess.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace API.Controllers;
 
 [Route("api/[controller]")]
+[Authorize]
 [ApiController]
 public class CartController : ControllerBase
 {
@@ -13,24 +14,29 @@ public class CartController : ControllerBase
 
     public CartController(ICartsService cartsService) => _cartsService = cartsService;
 
-    [HttpGet("GetUserCart/id")]
-    public async Task<IEnumerable<CartDto>> GetUserCart(int id) => await _cartsService.GetUserCart(id);
+    [HttpGet("GetUserCart")]
+    public async Task<IEnumerable<CartResponse>> GetUserCart() => await _cartsService.GetUserCartAsync();
 
-    // TODO: Validate if amount isn't greater that amount in stock
-    [HttpPost("InsertIntoCart")]
-    public async Task<Cart> InsertItemIntoCart(Cart model)
+    [HttpPost("AddItemToCart")]
+    public async Task<bool> AddItemToCart(CartRequest request)
     {
-        return await _cartsService.InsertIntoCart(model);
+        return await _cartsService.AddToCartAsync(request);
+    }
+
+    [HttpPost("ValidateAmountOfItems")]
+    public async Task<List<string>> ValidateAmountOfItems()
+    {
+        return await _cartsService.ValidateAmountOfItemsAsync();
     }
 
     [HttpPatch("UpdateCart")]
-    public async Task<Cart> UpdateCart(Cart model)
+    public async Task<bool> UpdateCart(CartRequest request)
     {
-        return await _cartsService.UpdateCart(model);
+        return await _cartsService.UpdateCartAsync(request);
     }
 
-    [HttpDelete("DeleteItemFromCart/{customerId}/{itemId}")]
-    public Task DeleteItemFromCart(int customerId, int itemId) =>
-        _cartsService.DeleteFromCart(customerId, itemId);
+    [HttpDelete("DeleteItemFromCart/{itemId}")]
+    public Task DeleteItemFromCart(int itemId) =>
+        _cartsService.DeleteFromCartAsync(itemId);
 
 }

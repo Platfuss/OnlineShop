@@ -42,7 +42,7 @@ public class ImageService : IFileService
         });
     }
 
-    public async Task<List<byte[]>> Read(string path, bool onlyFirst)
+    public async Task<List<byte[]>> ReadAsync(string path, bool onlyFirst)
     {
         var searchingFolder = Path.Combine(_startingDirectory, path);
         if (!Directory.Exists(searchingFolder)

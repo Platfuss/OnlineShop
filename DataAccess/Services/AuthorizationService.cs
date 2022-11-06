@@ -25,14 +25,14 @@ public class AuthorizationService : IAuthorizationService
         _customerService = customerService;
     }
 
-    public async Task<string> Register(UserDto userDto)
+    public async Task<string> RegisterAsync(UserDto userDto)
     {
         var userAlreadyExists = (await _db.Users.Where(u => u.Email == userDto.Email).FirstOrDefaultAsync())
             != null;
         if (userAlreadyExists)
             return null;
 
-        var customer = await _customerService.InsertCustomer(new Customer() { });
+        var customer = await _customerService.InsertCustomerAsync(new Customer() { });
 
         CreatePasswordHash(userDto.Password,
             out byte[] passwordHash,
@@ -42,10 +42,10 @@ public class AuthorizationService : IAuthorizationService
         _db.Add(userModel);
         await _db.SaveChangesAsync();
 
-        return await Login(userDto);
+        return await LoginAsync(userDto);
     }
 
-    public async Task<string> Login(UserDto userDto)
+    public async Task<string> LoginAsync(UserDto userDto)
     {
         var user = await _db.Users.Where(u => u.Email == userDto.Email).FirstOrDefaultAsync();
         if (user == null)

@@ -17,24 +17,24 @@ public class OrdersController : ControllerBase
     [HttpGet("GetOrder/{id}")]
     public async Task<Order> GetOrder(int id)
     {
-        return await _ordersService.GetOrder(id);
+        return await _ordersService.GetOrderAsync(id);
     }
 
     [HttpPost("InsertOrder")]
     public async Task<Order> InsertOrder(Order model)
     {
-        return await _ordersService.InsertOrder(model);
+        return await _ordersService.InsertOrderAsync(model);
     }
 
     [HttpPatch("UpdateOrder")]
     public async Task<Order> UpdateOrder(Order model)
     {
-        return await _ordersService.UpdateOrder(model);
+        return await _ordersService.UpdateOrderAsync(model);
     }
 
     [HttpDelete("DeleteOrder/{id}")]
     public async Task DeleteOrder(int id)
     {
-        await _ordersService.DeleteOrder(id);
+        await _ordersService.DeleteOrderAsync(id);
     }
 }

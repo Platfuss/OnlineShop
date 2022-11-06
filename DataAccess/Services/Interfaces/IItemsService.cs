@@ -5,12 +5,11 @@ namespace DataAccess.Services.Interfaces;
 
 public interface IItemsService
 {
-    Task DeleteItem(int id);
-    Task<ItemDto> GetItem(int id);
-    Task<IEnumerable<ItemDto>> GetItemsInCategory(string categoryName);
-
-    Task<IEnumerable<ItemDto>> GetItemsAll();
-    Task<Item> InsertItem(Item model);
-    Task<Item> UpdateItem(Item model);
-    Task<IEnumerable<ItemDto>> GetNewestItems();
+    Task<ItemDto> GetItemAsync(int id);
+    Task<IEnumerable<ItemDto>> GetItemsAllAsync();
+    Task<IEnumerable<ItemDto>> GetItemsInCategoryAsync(string categoryName);
+    Task<IEnumerable<ItemDto>> GetNewestItemsAsync();
+    Task<Item> InsertItemAsync(Item model);
+    Task<Item> UpdateItemAsync(Item model);
+    Task DeleteItemAsync(int id);
 }

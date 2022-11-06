@@ -15,9 +15,15 @@ public static class ModelBuilderExtention
         orders.HasOne(o => o.InvoiceAddress).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
         orders.HasOne(o => o.ShipingAddress).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
 
+        var orderDetail = builder.Entity<OrderDetail>();
+        orderDetail.HasIndex(od => new { od.OrderId, od.ItemId }).IsUnique();
+
         var users = builder.Entity<User>();
         users.HasOne(u => u.Customer).WithOne(c => c.User).IsRequired();
         users.HasIndex(u => u.Email).IsUnique();
+
+        var carts = builder.Entity<Cart>();
+        carts.HasIndex(c => new { c.CustomerId, c.ItemId }).IsUnique();
     }
 
     public static void SeedData(this ModelBuilder builder)

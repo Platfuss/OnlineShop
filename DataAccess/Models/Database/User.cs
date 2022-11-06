@@ -5,7 +5,7 @@ namespace DataAccess.Models.Database;
 
 public class User
 {
-    public int Id { get; set; }
+    public int Id { get; set; } = 0;
 
     [Required, EmailAddress]
     public string Email { get; set; }

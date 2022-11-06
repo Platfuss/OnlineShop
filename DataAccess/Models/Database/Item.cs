@@ -6,7 +6,7 @@ namespace DataAccess.Models.Database;
 
 public class Item
 {
-    public int Id { get; set; }
+    public int Id { get; set; } = 0;
     [Required]
     public string Name { get; set; }
 
@@ -20,5 +20,5 @@ public class Item
     public string Category { get; set; }
 
     [Required]
-    public DateTime AddedToShop { get; set; }
+    public DateTime AddedToShop { get; set; } = DateTime.UtcNow;
 }

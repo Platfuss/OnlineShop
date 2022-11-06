@@ -4,6 +4,6 @@ namespace DataAccess.Services.Interfaces;
 
 public interface IAuthorizationService
 {
-    Task<string> Login(UserDto userDto);
-    Task<string> Register(UserDto userDto);
+    Task<string> LoginAsync(UserDto userDto);
+    Task<string> RegisterAsync(UserDto userDto);
 }

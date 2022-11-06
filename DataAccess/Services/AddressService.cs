@@ -13,20 +13,20 @@ public class AddressService : IAddressService
         _db = db;
     }
 
-    public async Task<Address> GetAddress(int id)
+    public async Task<Address> GetAddressAsync(int id)
     {
         var address = await _db.Addresses.FindAsync(id);
         return address;
     }
 
-    public async Task<Address> InsertAddress(Address model)
+    public async Task<Address> InsertAddressAsync(Address model)
     {
         _db.Addresses.Add(model);
         await _db.SaveChangesAsync();
         return model;
     }
 
-    public async Task<Address> UpdateAddress(Address model)
+    public async Task<Address> UpdateAddressAsync(Address model)
     {
         _db.Addresses.Update(model);
         await _db.SaveChangesAsync();
@@ -34,7 +34,7 @@ public class AddressService : IAddressService
         return model;
     }
 
-    public async Task DeleteAddress(int id)
+    public async Task DeleteAddressAsync(int id)
     {
         var address = await _db.Addresses.FindAsync(id);
         _db.Addresses.Remove(address);

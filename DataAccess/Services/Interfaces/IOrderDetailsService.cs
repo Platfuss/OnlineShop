@@ -4,8 +4,8 @@ namespace DataAccess.Services.Interfaces;
 
 public interface IOrderDetailsService
 {
-    Task DeleteOrderDetail(int id);
-    Task<OrderDetail> GetOrderDetail(int id);
-    Task<OrderDetail> InsertOrderDetail(OrderDetail model);
-    Task<OrderDetail> UpdateOrderDetail(OrderDetail model);
+    Task DeleteOrderDetailAsync(int id);
+    Task<OrderDetail> GetOrderDetailAsync(int id);
+    Task<OrderDetail> InsertOrderDetailAsync(OrderDetail model);
+    Task<OrderDetail> UpdateOrderDetailAsync(OrderDetail model);
 }

@@ -4,7 +4,7 @@ namespace DataAccess.Models.Database;
 
 public class OrderDetail
 {
-    public int Id { get; set; }
+    public int Id { get; set; } = 0;
 
     public int Amount { get; set; }
 
