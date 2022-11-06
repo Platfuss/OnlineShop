@@ -38,6 +38,7 @@ internal class Program
         // Add services to the container.
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddHttpContextAccessor();
         builder.Services.AddSwaggerGen(opts =>
         {
             opts.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -90,6 +91,7 @@ internal class Program
         builder.Services.AddScoped<IItemsService, ItemsService>();
         builder.Services.AddScoped<IOrderDetailsService, OrderDetailsService>();
         builder.Services.AddScoped<IOrdersService, OrdersService>();
+        builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddTransient<IFileService, ImageService>();
 
         return builder;

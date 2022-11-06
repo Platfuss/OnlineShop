@@ -28,7 +28,7 @@ public class AuthorizationService : IAuthorizationService
     public async Task<string> Register(UserDto userDto)
     {
         var userAlreadyExists = (await _db.Users.Where(u => u.Email == userDto.Email).FirstOrDefaultAsync())
-            is not null;
+            != null;
         if (userAlreadyExists)
             return null;
 
@@ -48,7 +48,7 @@ public class AuthorizationService : IAuthorizationService
     public async Task<string> Login(UserDto userDto)
     {
         var user = await _db.Users.Where(u => u.Email == userDto.Email).FirstOrDefaultAsync();
-        if (user is null)
+        if (user == null)
             return null;
 
         if (!CheckPassword(userDto.Password, user.PasswordHash, user.PasswordSalt))
