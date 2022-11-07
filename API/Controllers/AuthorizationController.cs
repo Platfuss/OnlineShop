@@ -1,5 +1,4 @@
-﻿using DataAccess.Models.Dto;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
@@ -14,13 +13,13 @@ public class AuthorizationController : ControllerBase
         _authorization = authorization;
     }
 
-    [HttpPost("Register")]
+    [HttpPost("register")]
     public async Task<ActionResult<string>> Register(UserDto userDto)
     {
         return Ok(await _authorization.RegisterAsync(userDto));
     }
 
-    [HttpPost("Login")]
+    [HttpPost("login")]
     public async Task<ActionResult<string>> Login(UserDto userDto)
     {
         return Ok(await _authorization.LoginAsync(userDto));

@@ -16,13 +16,11 @@ public class AuthorizationService : IAuthorizationService
 {
     private readonly IConfiguration _config;
     private readonly DataContext _db;
-    private readonly ICustomersService _customerService;
 
-    public AuthorizationService(IConfiguration config, DataContext db, ICustomersService customerService)
+    public AuthorizationService(IConfiguration config, DataContext db)
     {
         _config = config;
         _db = db;
-        _customerService = customerService;
     }
 
     public async Task<string> RegisterAsync(UserDto userDto)
@@ -32,13 +30,14 @@ public class AuthorizationService : IAuthorizationService
         if (userAlreadyExists)
             return null;
 
-        var customer = await _customerService.InsertCustomerAsync(new Customer() { });
+        var customer = _db.Customers.Add(new Customer());
+        await _db.SaveChangesAsync();
 
         CreatePasswordHash(userDto.Password,
             out byte[] passwordHash,
             out byte[] passwordSalt);
 
-        var userModel = new User() { Email = userDto.Email, PasswordHash = passwordHash, PasswordSalt = passwordSalt, Customer = customer };
+        var userModel = new User() { Email = userDto.Email, PasswordHash = passwordHash, PasswordSalt = passwordSalt, Customer = customer.Entity };
         _db.Add(userModel);
         await _db.SaveChangesAsync();
 

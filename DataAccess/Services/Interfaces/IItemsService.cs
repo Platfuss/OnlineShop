@@ -11,5 +11,4 @@ public interface IItemsService
     Task<IEnumerable<ItemDto>> GetNewestItemsAsync();
     Task<Item> InsertItemAsync(Item model);
     Task<Item> UpdateItemAsync(Item model);
-    Task DeleteItemAsync(int id);
 }

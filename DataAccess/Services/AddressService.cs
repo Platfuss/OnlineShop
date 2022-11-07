@@ -19,25 +19,11 @@ public class AddressService : IAddressService
         return address;
     }
 
-    public async Task<Address> InsertAddressAsync(Address model)
-    {
-        _db.Addresses.Add(model);
-        await _db.SaveChangesAsync();
-        return model;
-    }
-
     public async Task<Address> UpdateAddressAsync(Address model)
     {
         _db.Addresses.Update(model);
         await _db.SaveChangesAsync();
 
         return model;
-    }
-
-    public async Task DeleteAddressAsync(int id)
-    {
-        var address = await _db.Addresses.FindAsync(id);
-        _db.Addresses.Remove(address);
-        await _db.SaveChangesAsync();
     }
 }

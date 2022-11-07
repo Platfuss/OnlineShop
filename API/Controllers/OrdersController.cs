@@ -1,6 +1,4 @@
-﻿using DataAccess.Models.Database;
-using DataAccess.Models.Dto;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -17,27 +15,15 @@ public class OrdersController : ControllerBase
         _ordersService = ordersService;
     }
 
-    [HttpGet("GetOrder/{id}")]
+    [HttpGet("{id}")]
     public async Task<OrderInfo> GetOrder(int id)
     {
         return await _ordersService.GetOrderAsync(id);
     }
 
-    [HttpPost("InsertOrder")]
+    [HttpPost("order")]
     public async Task<Order> InsertOrder(OrderRequest request)
     {
         return await _ordersService.InsertOrderAsync(request);
     }
-
-    //[HttpPatch("UpdateOrder")]
-    //public async Task<Order> UpdateOrder(Order model)
-    //{
-    //    return await _ordersService.UpdateOrderAsync(model);
-    //}
-
-    //[HttpDelete("DeleteOrder/{id}")]
-    //public async Task DeleteOrder(int id)
-    //{
-    //    await _ordersService.DeleteOrderAsync(id);
-    //}
 }

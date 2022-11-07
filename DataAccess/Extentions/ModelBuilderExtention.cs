@@ -80,7 +80,8 @@ public static class ModelBuilderExtention
                     CustomerId = 1,
                     InvoiceAddressId = 1,
                     ShipingAddressId = 2,
-                    ShipmentType = "Kurier"
+                    ShipmentType = "Kurier",
+                    Status = "Zatwierdzone"
                 },
                 new Order()
                 {
@@ -89,7 +90,8 @@ public static class ModelBuilderExtention
                     CustomerId = 2,
                     InvoiceAddressId = 1,
                     ShipingAddressId = 1,
-                    ShipmentType = "InPost"
+                    ShipmentType = "InPost",
+                    Status = "Wysłane"
                 }
             );
 

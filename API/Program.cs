@@ -89,7 +89,6 @@ internal class Program
         builder.Services.AddScoped<ICartsService, CartsService>();
         builder.Services.AddScoped<ICustomersService, CustomersService>();
         builder.Services.AddScoped<IItemsService, ItemsService>();
-        builder.Services.AddScoped<IOrderDetailsService, OrderDetailsService>();
         builder.Services.AddScoped<IOrdersService, OrdersService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddTransient<IFileService, ImageService>();

@@ -23,6 +23,9 @@ public class Order
     public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
     [Required]
+    public string Status { get; set; }
+
+    [Required]
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
     [Required]

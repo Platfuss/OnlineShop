@@ -20,5 +20,7 @@ public class Item
     [Required]
     public DateTime AddedToShop { get; set; } = DateTime.UtcNow;
 
+    public bool Recommended { get; set; }
+
     public string Description { get; set; }
 }

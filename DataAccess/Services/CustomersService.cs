@@ -8,29 +8,19 @@ namespace DataAccess.Services;
 public class CustomersService : ICustomersService
 {
     private readonly DataContext _db;
+    private readonly IUserService _userService;
 
-    public CustomersService(DataContext db)
+    public CustomersService(DataContext db, IUserService userService)
     {
         _db = db;
+        _userService = userService;
     }
 
-    public async Task<Customer> GetCustomerAsync(int id)
+    public async Task<Customer> GetCustomerAsync()
     {
-        var result = await _db.Customers.FindAsync(id);
+        var customerId = await _userService.GetCustomerIdAsync();
+        var result = await _db.Customers.FindAsync(customerId);
         return result;
-    }
-    public async Task<IEnumerable<Customer>> GetCustomersAllAsync()
-    {
-        var result = await _db.Customers.ToListAsync();
-        return result;
-    }
-
-    public async Task<Customer> InsertCustomerAsync(Customer model)
-    {
-        _db.Customers.Add(model);
-        await _db.SaveChangesAsync();
-
-        return model;
     }
 
     public async Task<Customer> UpdateCustomerAsync(Customer model)
@@ -39,12 +29,5 @@ public class CustomersService : ICustomersService
         await _db.SaveChangesAsync();
 
         return model;
-    }
-
-    public async Task DeleteCustomerAsync(int id)
-    {
-        var result = await _db.Customers.FindAsync(id);
-        _db.Customers.Remove(result);
-        await _db.SaveChangesAsync();
     }
 }

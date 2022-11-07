@@ -1,5 +1,5 @@
-﻿using DataAccess.Models.Database;
-using DataAccess.Models.Dto;
+﻿using DataAccess.Miscellaneous;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -15,45 +15,39 @@ public class ItemsController : ControllerBase
         _itemsService = itemsService;
     }
 
-    [HttpGet("GetItem/{id}")]
+    [HttpGet("{id}")]
     public async Task<ItemDto> GetItem(int id)
     {
         return await _itemsService.GetItemAsync(id);
     }
 
-    [HttpGet("GetAllItems")]
+    [HttpGet("all-items")]
     public async Task<IEnumerable<ItemDto>> GetAllItems()
     {
         return await _itemsService.GetItemsAllAsync();
     }
 
-    [HttpGet("GetItemsInCategory/{categoryName}")]
+    [HttpGet("category/{categoryName}")]
     public async Task<IEnumerable<ItemDto>> GetItemsInCategory(string categoryName)
     {
         return await _itemsService.GetItemsInCategoryAsync(categoryName);
     }
 
-    [HttpGet("GetNewestItems")]
+    [HttpGet("newests")]
     public async Task<IEnumerable<ItemDto>> GetNewestItems()
     {
         return await _itemsService.GetNewestItemsAsync();
     }
 
-    [HttpPost("InsertItem")]
+    [HttpPost("add"), Authorize(Roles = Roles.Owner)]
     public async Task<Item> InsertItem(Item model)
     {
         return await _itemsService.InsertItemAsync(model);
     }
 
-    [HttpPatch("UpdateItem")]
+    [HttpPatch("update"), Authorize(Roles = Roles.Owner)]
     public async Task<Item> UpdateItem(Item model)
     {
         return await _itemsService.UpdateItemAsync(model);
-    }
-
-    [HttpDelete("DeleteItem/{id}")]
-    public async Task DeleteItem(int id)
-    {
-        await _itemsService.DeleteItemAsync(id);
     }
 }

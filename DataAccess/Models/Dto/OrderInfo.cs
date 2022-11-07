@@ -12,6 +12,8 @@ public class OrderInfo
 
     public DateTime CreationDate { get; set; }
 
+    public string Status { get; set; }
+
     public string ShipmentType { get; set; }
 
     public List<BoughtItem> OrderedItems { get; set; }

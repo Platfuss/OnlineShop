@@ -21,6 +21,8 @@ public class Address
     [Required, RegularExpression("^\\d{2}-\\d{3}$", ErrorMessage = "Niepoprawny kod pocztowy. Wzorzec to: 00-000")]
     public string PostalCode { get; set; }
 
+    public bool Immutable { get; set; } = false;
+
     [JsonIgnore]
     public virtual ICollection<Customer> Customers { get; set; }
 }
