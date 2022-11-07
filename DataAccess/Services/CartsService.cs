@@ -24,7 +24,7 @@ public class CartsService : ICartsService
 
     public async Task<IEnumerable<CartResponse>> GetUserCartAsync()
     {
-        var customerId = await GetCustomerIdAsync();
+        var customerId = await _userService.GetCustomerIdAsync();
         var userCart = await _db.Carts.Where(cart => cart.CustomerId == customerId).ToListAsync();
         var output = new List<CartResponse>();
         foreach (var item in userCart)
@@ -40,7 +40,7 @@ public class CartsService : ICartsService
     public async Task<bool> AddToCartAsync(CartRequest request)
     {
         var cartModel = _mapper.Map<CartRequest, Cart>(request);
-        cartModel.CustomerId = await GetCustomerIdAsync();
+        cartModel.CustomerId = await _userService.GetCustomerIdAsync();
         _db.Carts.Add(cartModel);
         await _db.SaveChangesAsync();
         return cartModel.Id != 0;
@@ -48,7 +48,7 @@ public class CartsService : ICartsService
 
     public async Task<List<string>> ValidateAmountOfItemsAsync()
     {
-        var customerId = await GetCustomerIdAsync();
+        var customerId = await _userService.GetCustomerIdAsync();
         var itemsInCart = await _db.Carts.Include(c => c.Item).Where(c => c.CustomerId == customerId).ToListAsync();
         var notEnoughItems = new List<string>();
 
@@ -65,7 +65,7 @@ public class CartsService : ICartsService
 
     public async Task<bool> UpdateCartAsync(CartRequest request)
     {
-        var customerId = await GetCustomerIdAsync();
+        var customerId = await _userService.GetCustomerIdAsync();
         var cartEntity = await _db.Carts
             .Where(c => c.CustomerId == customerId && c.ItemId == request.ItemId)
             .FirstAsync();
@@ -76,11 +76,9 @@ public class CartsService : ICartsService
 
     public async Task DeleteFromCartAsync(int itemId)
     {
-        var customerId = await GetCustomerIdAsync();
+        var customerId = await _userService.GetCustomerIdAsync();
         var cartEntry = _db.Carts.Where(x => x.CustomerId == customerId && x.ItemId == itemId).First();
         _db.Carts.Remove(cartEntry);
         await _db.SaveChangesAsync();
     }
-
-    private async Task<int> GetCustomerIdAsync() => (await _userService.GetCustomerAsync()).Id;
 }

@@ -26,4 +26,10 @@ public class UserService : IUserService
         var user = await _db.Users.Include(u => u.Customer).Where(u => u.Email == email).FirstAsync();
         return user.Customer;
     }
+
+    public async Task<int> GetCustomerIdAsync()
+    {
+        var customer = await GetCustomerAsync();
+        return customer.Id;
+    }
 }

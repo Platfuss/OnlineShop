@@ -18,6 +18,5 @@ public class DataContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Configure();
-        builder.SeedData();
     }
 }

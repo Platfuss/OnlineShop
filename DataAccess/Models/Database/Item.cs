@@ -10,15 +10,15 @@ public class Item
     [Required]
     public string Name { get; set; }
 
-    public string Description { get; set; }
-
     [Column(TypeName = "decimal(18,4)")]
     public decimal Price { get; set; }
 
-    public int Amount { get; set; }
+    public uint Amount { get; set; }
 
     public string Category { get; set; }
 
     [Required]
     public DateTime AddedToShop { get; set; } = DateTime.UtcNow;
+
+    public string Description { get; set; }
 }

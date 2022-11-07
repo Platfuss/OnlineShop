@@ -14,5 +14,5 @@ public class Cart
     [JsonIgnore]
     public virtual Item Item { get; set; }
 
-    public int Amount { get; set; } = 0;
+    public uint Amount { get; set; } = 0;
 }

@@ -15,7 +15,7 @@ public class ItemDto
     [Column(TypeName = "decimal(18,4)")]
     public decimal Price { get; set; }
 
-    public int Amount { get; set; }
+    public uint Amount { get; set; }
 
     public string Category { get; set; }
 

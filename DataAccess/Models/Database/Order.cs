@@ -7,12 +7,6 @@ public class Order
 {
     public int Id { get; set; } = 0;
 
-    [Required]
-    public DateTime CreationDate { get; set; }
-
-    [Required]
-    public string ShipmentType { get; set; }
-
     public int CustomerId { get; set; }
     [JsonIgnore]
     public virtual Customer Customer { get; set; }
@@ -24,4 +18,13 @@ public class Order
     public int ShipingAddressId { get; set; }
     [JsonIgnore]
     public virtual Address ShipingAddress { get; set; }
+
+    [JsonIgnore]
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+
+    [Required]
+    public DateTime CreationDate { get; set; } = DateTime.UtcNow;
+
+    [Required]
+    public string ShipmentType { get; set; }
 }

@@ -6,8 +6,6 @@ public class OrderDetail
 {
     public int Id { get; set; } = 0;
 
-    public int Amount { get; set; }
-
     public int OrderId { get; set; }
     [JsonIgnore]
     public virtual Order Order { get; set; }
@@ -15,4 +13,6 @@ public class OrderDetail
     public int ItemId { get; set; }
     [JsonIgnore]
     public virtual Item Item { get; set; }
+
+    public uint Amount { get; set; }
 }
