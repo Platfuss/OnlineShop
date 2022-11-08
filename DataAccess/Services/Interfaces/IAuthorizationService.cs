@@ -1,9 +1,9 @@
-﻿using DataAccess.Models.Dto;
+﻿using DataAccess.Models.Dto.Requests;
 
 namespace DataAccess.Services.Interfaces;
 
 public interface IAuthorizationService
 {
-    Task<string> LoginAsync(UserDto userDto);
-    Task<string> RegisterAsync(UserDto userDto);
+    Task<string> LoginAsync(UserRequest userDto);
+    Task<string> RegisterAsync(UserRequest userDto);
 }

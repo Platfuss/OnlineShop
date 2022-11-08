@@ -1,12 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
-namespace DataAccess.Models.Database;
-
-public class Address
+namespace DataAccess.Models.Dto.Requests;
+public class AddressRequest
 {
-    public int Id { get; set; } = 0;
-
     [Required]
     public string City { get; set; }
 
@@ -20,7 +16,4 @@ public class Address
 
     [Required, RegularExpression("^\\d{2}-\\d{3}$", ErrorMessage = "Niepoprawny kod pocztowy. Wzorzec to: 00-000")]
     public string PostalCode { get; set; }
-
-    [JsonIgnore]
-    public virtual ICollection<CustomerAddress> CustomerAddress { get; set; }
 }

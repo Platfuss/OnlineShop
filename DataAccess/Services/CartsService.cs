@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using DataAccess.DatabaseAccess;
 using DataAccess.Models.Database;
-using DataAccess.Models.Dto;
+using DataAccess.Models.Dto.Requests;
+using DataAccess.Models.Dto.Responses;
 using DataAccess.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

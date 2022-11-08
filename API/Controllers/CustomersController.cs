@@ -15,15 +15,17 @@ public class CustomersController : ControllerBase
         _customers = customers;
     }
 
-    [HttpGet("{id}")]
-    public async Task<Customer> GetCustomer()
+    [HttpGet("get")]
+    public async Task<CustomerBasicInfo> GetCustomer()
     {
         return await _customers.GetCustomerAsync();
     }
 
     [HttpPatch("update")]
-    public async Task<Customer> UpdateCustomer(Customer model)
+    public async Task<Customer> UpdateCustomer(CustomerBasicInfo customerInfo)
     {
-        return await _customers.UpdateCustomerAsync(model);
+        return await _customers.UpdateCustomerAsync(customerInfo);
     }
+
+
 }

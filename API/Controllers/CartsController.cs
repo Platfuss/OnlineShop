@@ -13,10 +13,10 @@ public class CartsController : ControllerBase
 
     public CartsController(ICartsService cartsService) => _cartsService = cartsService;
 
-    [HttpGet]
+    [HttpGet("get")]
     public async Task<IEnumerable<CartResponse>> GetUserCart() => await _cartsService.GetUserCartAsync();
 
-    [HttpPost("add")]
+    [HttpPost("add-item")]
     public async Task<bool> AddItemToCart(CartRequest request)
     {
         return await _cartsService.AddToCartAsync(request);

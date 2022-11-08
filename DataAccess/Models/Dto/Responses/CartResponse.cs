@@ -1,4 +1,4 @@
-﻿namespace DataAccess.Models.Dto;
+﻿namespace DataAccess.Models.Dto.Responses;
 
 public class CartResponse
 {

@@ -1,6 +1,6 @@
 ﻿using DataAccess.DatabaseAccess;
 using DataAccess.Models.Database;
-using DataAccess.Models.Dto;
+using DataAccess.Models.Dto.Requests;
 using DataAccess.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,7 +23,7 @@ public class AuthorizationService : IAuthorizationService
         _db = db;
     }
 
-    public async Task<string> RegisterAsync(UserDto userDto)
+    public async Task<string> RegisterAsync(UserRequest userDto)
     {
         var userAlreadyExists = (await _db.Users.Where(u => u.Email == userDto.Email).FirstOrDefaultAsync())
             != null;
@@ -44,7 +44,7 @@ public class AuthorizationService : IAuthorizationService
         return await LoginAsync(userDto);
     }
 
-    public async Task<string> LoginAsync(UserDto userDto)
+    public async Task<string> LoginAsync(UserRequest userDto)
     {
         var user = await _db.Users.Where(u => u.Email == userDto.Email).FirstOrDefaultAsync();
         if (user == null)

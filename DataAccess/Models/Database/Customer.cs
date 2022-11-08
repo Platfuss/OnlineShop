@@ -10,8 +10,7 @@ public class Customer
 
     public string Surname { get; set; }
 
-    [JsonIgnore]
-    public virtual ICollection<Address> Addresses { get; set; }
+    public virtual ICollection<CustomerAddress> CustomerAddress { get; set; }
 
     [JsonIgnore]
     public virtual User User { get; set; }

@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DataAccess.Models.Dto;
+namespace DataAccess.Models.Dto.Responses;
 
-public class ItemDto
+public class SingleItemResponse
 {
     public virtual int Id { get; set; }
     [Required]

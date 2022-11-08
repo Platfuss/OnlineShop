@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataAccess.Models.Dto;
+namespace DataAccess.Models.Dto.Requests;
 
-public class UserDto
+public class UserRequest
 {
     [EmailAddress]
     public string Email { get; set; }

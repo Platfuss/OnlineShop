@@ -1,9 +1,10 @@
 ﻿using DataAccess.Models.Database;
+using DataAccess.Models.Dto.Requests;
 
 namespace DataAccess.Services.Interfaces;
 
 public interface ICustomersService
 {
-    Task<Customer> GetCustomerAsync();
-    Task<Customer> UpdateCustomerAsync(Customer model);
+    Task<CustomerBasicInfo> GetCustomerAsync();
+    Task<Customer> UpdateCustomerAsync(CustomerBasicInfo model);
 }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DataAccess.DatabaseAccess;
 using DataAccess.Models.Database;
-using DataAccess.Models.Dto;
+using DataAccess.Models.Dto.Responses;
 using DataAccess.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,39 +20,39 @@ public class ItemsService : IItemsService
         _mapper = mapper;
     }
 
-    public async Task<ItemDto> GetItemAsync(int id)
+    public async Task<SingleItemResponse> GetItemAsync(int id)
     {
         var result = await _db.Items.FindAsync(id);
         var images = await _fileService.ReadAsync(id.ToString(), false);
-        var output = _mapper.Map<Item, ItemDto>(result, opt => opt.AfterMap((src, dest) => dest.Images = images));
+        var output = _mapper.Map<Item, SingleItemResponse>(result, opt => opt.AfterMap((src, dest) => dest.Images = images));
         return output;
     }
 
-    public async Task<IEnumerable<ItemDto>> GetItemsAllAsync()
+    public async Task<IEnumerable<SingleItemResponse>> GetItemsAllAsync()
     {
         var result = await _db.Items.ToListAsync();
         return await GetItemsWithSingleImageAsync(result);
     }
 
-    public async Task<IEnumerable<ItemDto>> GetItemsInCategoryAsync(string categoryName)
+    public async Task<IEnumerable<SingleItemResponse>> GetItemsInCategoryAsync(string categoryName)
     {
         var result = await _db.Items.Where(x => x.Category == categoryName).ToListAsync();
         return await GetItemsWithSingleImageAsync(result);
     }
 
-    public async Task<IEnumerable<ItemDto>> GetNewestItemsAsync()
+    public async Task<IEnumerable<SingleItemResponse>> GetNewestItemsAsync()
     {
         var result = await _db.Items.OrderByDescending(x => x.AddedToShop).ToListAsync();
         return await GetItemsWithSingleImageAsync(result);
     }
 
-    private async Task<List<ItemDto>> GetItemsWithSingleImageAsync(List<Item> items)
+    private async Task<List<SingleItemResponse>> GetItemsWithSingleImageAsync(List<Item> items)
     {
-        var output = new List<ItemDto>();
+        var output = new List<SingleItemResponse>();
         foreach (var model in items)
         {
             var image = await _fileService.ReadAsync(model.Id.ToString(), true);
-            var itemEntry = _mapper.Map<Item, ItemDto>(model, opt => opt.AfterMap((src, dest) => dest.Images = image));
+            var itemEntry = _mapper.Map<Item, SingleItemResponse>(model, opt => opt.AfterMap((src, dest) => dest.Images = image));
             output.Add(itemEntry);
         }
         return output;

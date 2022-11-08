@@ -16,25 +16,25 @@ public class ItemsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ItemDto> GetItem(int id)
+    public async Task<SingleItemResponse> GetItem(int id)
     {
         return await _itemsService.GetItemAsync(id);
     }
 
-    [HttpGet("all-items")]
-    public async Task<IEnumerable<ItemDto>> GetAllItems()
+    [HttpGet("items")]
+    public async Task<IEnumerable<SingleItemResponse>> GetAllItems()
     {
         return await _itemsService.GetItemsAllAsync();
     }
 
     [HttpGet("category/{categoryName}")]
-    public async Task<IEnumerable<ItemDto>> GetItemsInCategory(string categoryName)
+    public async Task<IEnumerable<SingleItemResponse>> GetItemsInCategory(string categoryName)
     {
         return await _itemsService.GetItemsInCategoryAsync(categoryName);
     }
 
     [HttpGet("newests")]
-    public async Task<IEnumerable<ItemDto>> GetNewestItems()
+    public async Task<IEnumerable<SingleItemResponse>> GetNewestItems()
     {
         return await _itemsService.GetNewestItemsAsync();
     }

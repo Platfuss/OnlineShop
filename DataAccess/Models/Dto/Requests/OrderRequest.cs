@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace DataAccess.Models.Dto;
+namespace DataAccess.Models.Dto.Requests;
 public class OrderRequest
 {
     public int InvoiceAddressId { get; set; }

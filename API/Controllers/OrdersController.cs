@@ -15,10 +15,10 @@ public class OrdersController : ControllerBase
         _ordersService = ordersService;
     }
 
-    [HttpGet("{id}")]
-    public async Task<OrderInfo> GetOrder(int id)
+    [HttpGet("all")]
+    public async Task<List<OrderInfo>> GetOrders()
     {
-        return await _ordersService.GetOrderAsync(id);
+        return await _ordersService.GetOrdersAsync();
     }
 
     [HttpPost("order")]

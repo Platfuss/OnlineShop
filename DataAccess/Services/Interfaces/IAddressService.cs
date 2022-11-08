@@ -1,9 +1,12 @@
 ﻿using DataAccess.Models.Database;
+using DataAccess.Models.Dto.Requests;
 
 namespace DataAccess.Services.Interfaces;
 
 public interface IAddressService
 {
-    Task<Address> GetAddressAsync(int id);
+    Task<Address> AddAddressAsync(AddressRequest request);
+    Task DeleteAddressAsync(int addressId);
+    Task<List<Address>> GetAddressesAsync();
     Task<Address> UpdateAddressAsync(Address model);
 }

@@ -23,7 +23,10 @@ public class Order
     public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
     [Required]
-    public string Status { get; set; }
+    public string PaymentType { get; set; } = "Gotówka";
+
+    [Required]
+    public string Status { get; set; } = "Złożone";
 
     [Required]
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;

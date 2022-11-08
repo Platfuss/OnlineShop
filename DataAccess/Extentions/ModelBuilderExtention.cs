@@ -7,8 +7,10 @@ public static class ModelBuilderExtention
 {
     public static void Configure(this ModelBuilder builder)
     {
-        var customers = builder.Entity<Customer>();
-        var customerAndAddressBuilder = customers.HasMany(c => c.Addresses).WithMany(a => a.Customers);
+        var customerAddress = builder.Entity<CustomerAddress>();
+        customerAddress.HasKey(ca => new { ca.AddressId, ca.CustomerId });
+        customerAddress.HasOne(ca => ca.Address).WithMany(a => a.CustomerAddress).HasForeignKey(ca => ca.AddressId);
+        customerAddress.HasOne(ca => ca.Customer).WithMany(c => c.CustomerAddress).HasForeignKey(ca => ca.CustomerId);
 
         var orders = builder.Entity<Order>();
         orders.HasOne(o => o.InvoiceAddress).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
@@ -41,28 +43,29 @@ public static class ModelBuilderExtention
                 new Address() { Id = 4, City = "Rzeszów", Street = "Architektów", Number = "123", SubNumber = null, PostalCode = "37-167", }
             );
 
-        customers.HasData(
-                new Customer() { Id = 1, Name = "Eleonora", Surname = "Zadecka" },
+        builder.Entity<Customer>()
+            .HasData(
+                new Customer() { Id = 1, Name = "Michau", Surname = "Stanislau" },
                 new Customer() { Id = 2, Name = "Władysław", Surname = "Włodecki" },
                 new Customer() { Id = 3, Name = "Tomek", Surname = "Polok" },
                 new Customer() { Id = 4, Name = "Aleksandra", Surname = "Schabowicka" }
             );
 
-        customerAndAddressBuilder.UsingEntity(ca => ca.HasData(
-            new { AddressesId = 1, CustomersId = 1 },
-            new { AddressesId = 1, CustomersId = 2 },
-            new { AddressesId = 2, CustomersId = 3 },
-            new { AddressesId = 3, CustomersId = 4 },
-            new { AddressesId = 4, CustomersId = 4 }
-        ));
+        customerAddress.HasData(
+            new { AddressId = 1, CustomerId = 1 },
+            new { AddressId = 1, CustomerId = 2 },
+            new { AddressId = 2, CustomerId = 3 },
+            new { AddressId = 3, CustomerId = 4 },
+            new { AddressId = 4, CustomerId = 4 }
+        );
 
         users.HasData(
                 new User()
                 {
                     Id = 1,
                     Email = "user@example.com",
-                    PasswordHash = Convert.FromBase64String("F7597C0DC84A9EAD6BD8F75CD04489F19560A5CC88EC0E77253236D463540208EF02B8E233964C7162FCF09432DFF2636AFDCCE02C67FC865C611A9D4704B3B2"),
-                    PasswordSalt = Convert.FromBase64String("9669F7253D470D647ADFD28CEAD3F8E90AD2AFC02C01E57DBEA8D2BCA61D47D0F66F0ACC01C78E7E88D634187C8E1BFCEBB7A2859BFD637AD0CAF65FE4D3A9528AEBF343E030C11D42B9138526023218CBCE40A287639A112EF5F5F8C98D28C5517A4285AFDF27E19260F184E522320C736563A324E362B706AA3F6BED3BF471"),
+                    PasswordHash = Convert.FromHexString("06ABE76258A3A95573FEEFAB8DBEDCFE0C8C8C446A998188543B3A64BDA5E85011F29E8DB00879DE6DCB6077D9F4002A01549414849A913DAABCF7E9D3529F44"),
+                    PasswordSalt = Convert.FromHexString("EFDB8832074402985B10F01E1518636E411B475576F4C07257C7659D523034DA3286EBB8779CFB6B4B2E572D221FFD5BC863E34B6C6AB0C8340F5A4328CC789A61158BB8AF6FCC472DCAA02931F78E2E65CA73C379B157777966F359690FCDC4B834FFED1988EC78E98B39FF92B2AC9BCC84B53DECA107E4159237F7AC8C4F09"),
                     CustomerId = 1
                 }
             );

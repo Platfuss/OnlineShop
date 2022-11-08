@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace DataAccess.Models.Dto;
+namespace DataAccess.Models.Dto.Requests;
 public class CartRequest
 {
     [JsonIgnore]

@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using DataAccess.DatabaseAccess;
 using DataAccess.Models.Database;
-using DataAccess.Models.Dto;
 using DataAccess.Models.Dto.Helpers;
+using DataAccess.Models.Dto.Requests;
+using DataAccess.Models.Dto.Responses;
 using DataAccess.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,32 +27,46 @@ public class OrdersService : IOrdersService
         _mapper = mapper;
     }
 
-    public async Task<OrderInfo> GetOrderAsync(int orderId)
+    public async Task<List<OrderInfo>> GetOrdersAsync()
     {
-        var order = await _db.Orders
+        var customerId = await _userService.GetCustomerIdAsync();
+        var customerOrders = new List<OrderInfo>();
+
+        var orders = await _db.Orders
             .Include(o => o.InvoiceAddress)
             .Include(o => o.ShipingAddress)
-            .FirstOrDefaultAsync(o => o.Id == orderId);
-
-        var orderedItems = await _db.OrderDetails
-            .Where(od => od.OrderId == orderId)
-            .Include(od => od.Item)
-            .Select(od => _mapper.Map<Item, BoughtItem>(od.Item))
+            .Where(o => o.CustomerId == customerId)
+            .OrderByDescending(o => o.CreationDate)
             .ToListAsync();
 
-        var itemAmounts = await _db.OrderDetails
-            .Where(od => od.OrderId == orderId)
-            .ToDictionaryAsync(od => od.ItemId, od => od.Amount);
-
-        foreach (var item in orderedItems)
+        foreach (var order in orders)
         {
-            item.Amount = itemAmounts[item.Id];
+            var orderedItems = await _db.OrderDetails
+                .Where(od => od.OrderId == order.Id)
+                .Include(od => od.Item)
+                .Select(od => _mapper.Map<Item, BoughtItem>(od.Item))
+                .AsNoTracking()
+                .ToListAsync();
+
+            var itemAmounts = await _db.OrderDetails
+                .Where(od => od.OrderId == order.Id)
+                .ToDictionaryAsync(od => od.ItemId, od => od.Amount);
+
+            var totalPrice = 0M;
+            foreach (var item in orderedItems)
+            {
+                item.Amount = itemAmounts[item.Id];
+                totalPrice += item.Amount * item.Price;
+            }
+
+            var orderInfo = _mapper.Map<Order, OrderInfo>(order);
+            orderInfo.OrderedItems = orderedItems;
+            orderInfo.TotalPrice = totalPrice;
+
+            customerOrders.Add(orderInfo);
         }
 
-        var orderInfo = _mapper.Map<Order, OrderInfo>(order);
-        orderInfo.OrderedItems = orderedItems;
-
-        return orderInfo;
+        return customerOrders;
     }
 
     public async Task<Order> InsertOrderAsync(OrderRequest request)
