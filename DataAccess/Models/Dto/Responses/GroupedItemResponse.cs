@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DataAccess.Models.Dto.Responses;
-
-public class SingleItemResponse
+public class GroupedItemResponse
 {
     public virtual int Id { get; set; }
 
@@ -20,5 +21,5 @@ public class SingleItemResponse
 
     public DateTime AddedToShop { get; set; }
 
-    public List<byte[]> Images { get; set; }
+    public byte[] Image { get; set; }
 }

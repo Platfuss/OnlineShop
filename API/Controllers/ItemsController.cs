@@ -21,33 +21,46 @@ public class ItemsController : ControllerBase
         return await _itemsService.GetItemAsync(id);
     }
 
-    [HttpGet("items")]
-    public async Task<IEnumerable<SingleItemResponse>> GetAllItems()
+    [HttpGet("group/{page}/{amount}")]
+    public async Task<IEnumerable<GroupedItemResponse>> GetAllItems(int page,
+                                                                    int amount,
+                                                                    string category,
+                                                                    bool onlyRecommended = false,
+                                                                    bool descendingOrderByDate = true)
     {
-        return await _itemsService.GetItemsAllAsync();
+        return await _itemsService.GetItemsByPagesAsync(page, amount, category, onlyRecommended, descendingOrderByDate);
     }
 
-    [HttpGet("category/{categoryName}")]
-    public async Task<IEnumerable<SingleItemResponse>> GetItemsInCategory(string categoryName)
+    [HttpGet("number-of-pages")]
+    public async Task<int> HowManyPages(int amountPerPage, string category, bool onlyRecommended = false)
     {
-        return await _itemsService.GetItemsInCategoryAsync(categoryName);
+        return await _itemsService.HowManyPagesAsync(amountPerPage, category, onlyRecommended);
     }
 
-    [HttpGet("newests")]
-    public async Task<IEnumerable<SingleItemResponse>> GetNewestItems()
-    {
-        return await _itemsService.GetNewestItemsAsync();
-    }
-
-    [HttpPost("add"), Authorize(Roles = Roles.Owner)]
-    public async Task<Item> InsertItem(Item model)
-    {
-        return await _itemsService.InsertItemAsync(model);
-    }
-
-    [HttpPatch("update"), Authorize(Roles = Roles.Owner)]
-    public async Task<Item> UpdateItem(Item model)
-    {
-        return await _itemsService.UpdateItemAsync(model);
-    }
 }
+
+    //[HttpGet("category/{categoryName}")]
+    //public async Task<IEnumerable<SingleItemResponse>> GetItemsInCategory(string categoryName)
+    //{
+    //    return await _itemsService.GetItemsInCategoryAsync(categoryName);
+    //}
+
+    //[HttpGet("newests")]
+    //public async Task<IEnumerable<SingleItemResponse>> GetNewestItems()
+    //{
+    //    return await _itemsService.GetNewestItemsAsync();
+    //}
+
+
+
+    //[HttpPost("add"), Authorize(Roles = Roles.Owner)]
+    //public async Task<Item> InsertItem(Item model)
+    //{
+    //    return await _itemsService.InsertItemAsync(model);
+    //}
+
+    //[HttpPatch("update"), Authorize(Roles = Roles.Owner)]
+    //public async Task<Item> UpdateItem(Item model)
+    //{
+    //    return await _itemsService.UpdateItemAsync(model);
+    //}

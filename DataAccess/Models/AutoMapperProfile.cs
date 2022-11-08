@@ -11,14 +11,19 @@ public class AutoMapperProfile : Profile
 
     public AutoMapperProfile()
     {
-        CreateMap<Cart, CartResponse>();
-        CreateMap<CartRequest, Cart>();
-        CreateMap<Item, SingleItemResponse>();
-        CreateMap<OrderRequest, Order>();
-        CreateMap<Item, BoughtItem>();
-        CreateMap<Order, OrderInfo>();
-        CreateMap<CustomerBasicInfo, Customer>().ReverseMap();
         CreateMap<AddressRequest, Address>();
         CreateMap<Address, Address>();
+
+        CreateMap<Cart, CartResponse>();
+        CreateMap<CartRequest, Cart>();
+
+        CreateMap<CustomerBasicInfo, Customer>().ReverseMap();
+
+        CreateMap<Item, SingleItemResponse>();
+        CreateMap<Item, BoughtItem>();
+        CreateMap<Item, GroupedItemResponse>();
+
+        CreateMap<OrderRequest, Order>();
+        CreateMap<Order, OrderInfo>();
     }
 }

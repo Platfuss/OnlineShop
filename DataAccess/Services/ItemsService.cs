@@ -28,54 +28,74 @@ public class ItemsService : IItemsService
         return output;
     }
 
-    public async Task<IEnumerable<SingleItemResponse>> GetItemsAllAsync()
+    public async Task<int> HowManyPagesAsync(int amountPerPage, string category, bool onlyRecommended)
     {
-        var result = await _db.Items.ToListAsync();
-        return await GetItemsWithSingleImageAsync(result);
+        double quantityOfItems = await _db.Items
+            .Where(i => !onlyRecommended || i.Recommended)
+            .Where(i => string.IsNullOrEmpty(category)
+                || i.Category == category)
+            .CountAsync();
+
+        var numberOfPages = (int)Math.Ceiling(quantityOfItems / amountPerPage);
+
+        return numberOfPages;
     }
 
-    public async Task<IEnumerable<SingleItemResponse>> GetItemsInCategoryAsync(string categoryName)
+    public async Task<IEnumerable<GroupedItemResponse>> GetItemsByPagesAsync(int page,
+                                                                             int amount,
+                                                                             string category,
+                                                                             bool onlyRecommended,
+                                                                             bool descendingOrderByDate)
     {
-        var result = await _db.Items.Where(x => x.Category == categoryName).ToListAsync();
-        return await GetItemsWithSingleImageAsync(result);
+        var result = _db.Items
+            .Where(i => !onlyRecommended || i.Recommended)
+            .Where(i => string.IsNullOrEmpty(category)
+                || i.Category == category)
+            .Skip(page * amount)
+            .Take(amount);
+
+        if (descendingOrderByDate)
+        {
+            result.OrderByDescending(r => r.AddedToShop);
+        }
+
+        var choosenItems = await result.ToListAsync();
+
+        return await GetItemsWithSingleImageAsync(choosenItems);
     }
 
-    public async Task<IEnumerable<SingleItemResponse>> GetNewestItemsAsync()
+    private async Task<List<GroupedItemResponse>> GetItemsWithSingleImageAsync(List<Item> items)
     {
-        var result = await _db.Items.OrderByDescending(x => x.AddedToShop).ToListAsync();
-        return await GetItemsWithSingleImageAsync(result);
-    }
-
-    private async Task<List<SingleItemResponse>> GetItemsWithSingleImageAsync(List<Item> items)
-    {
-        var output = new List<SingleItemResponse>();
+        var output = new List<GroupedItemResponse>();
         foreach (var model in items)
         {
             var image = await _fileService.ReadAsync(model.Id.ToString(), true);
-            var itemEntry = _mapper.Map<Item, SingleItemResponse>(model, opt => opt.AfterMap((src, dest) => dest.Images = image));
+            var itemEntry = _mapper.Map<Item, GroupedItemResponse>(model, opt => opt.AfterMap((src, dest) => dest.Image = image.FirstOrDefault()));
             output.Add(itemEntry);
         }
         return output;
     }
-
-    public async Task<Item> InsertItemAsync(Item model)
-    {
-        _db.Items.Add(model);
-        await _db.SaveChangesAsync();
-        return model;
-    }
-
-    public async Task<Item> UpdateItemAsync(Item model)
-    {
-        _db.Items.Update(model);
-        await _db.SaveChangesAsync();
-        return model;
-    }
-
-    public async Task DeleteItemAsync(int id)
-    {
-        var item = await _db.Items.FindAsync(id);
-        _db.Items.Remove(item);
-        await _db.SaveChangesAsync();
-    }
 }
+
+
+
+    //public async Task<Item> InsertItemAsync(Item model)
+    //{
+    //    _db.Items.Add(model);
+    //    await _db.SaveChangesAsync();
+    //    return model;
+    //}
+
+    //public async Task<Item> UpdateItemAsync(Item model)
+    //{
+    //    _db.Items.Update(model);
+    //    await _db.SaveChangesAsync();
+    //    return model;
+    //}
+
+    //public async Task DeleteItemAsync(int id)
+    //{
+    //    var item = await _db.Items.FindAsync(id);
+    //    _db.Items.Remove(item);
+    //    await _db.SaveChangesAsync();
+    //}
