@@ -1,6 +1,4 @@
-﻿using DataAccess.Miscellaneous;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
@@ -39,28 +37,28 @@ public class ItemsController : ControllerBase
 
 }
 
-    //[HttpGet("category/{categoryName}")]
-    //public async Task<IEnumerable<SingleItemResponse>> GetItemsInCategory(string categoryName)
-    //{
-    //    return await _itemsService.GetItemsInCategoryAsync(categoryName);
-    //}
+//[HttpGet("category/{categoryName}")]
+//public async Task<IEnumerable<SingleItemResponse>> GetItemsInCategory(string categoryName)
+//{
+//    return await _itemsService.GetItemsInCategoryAsync(categoryName);
+//}
 
-    //[HttpGet("newests")]
-    //public async Task<IEnumerable<SingleItemResponse>> GetNewestItems()
-    //{
-    //    return await _itemsService.GetNewestItemsAsync();
-    //}
+//[HttpGet("newests")]
+//public async Task<IEnumerable<SingleItemResponse>> GetNewestItems()
+//{
+//    return await _itemsService.GetNewestItemsAsync();
+//}
 
 
 
-    //[HttpPost("add"), Authorize(Roles = Roles.Owner)]
-    //public async Task<Item> InsertItem(Item model)
-    //{
-    //    return await _itemsService.InsertItemAsync(model);
-    //}
+//[HttpPost("add"), Authorize(Roles = Roles.Owner)]
+//public async Task<Item> InsertItem(Item model)
+//{
+//    return await _itemsService.InsertItemAsync(model);
+//}
 
-    //[HttpPatch("update"), Authorize(Roles = Roles.Owner)]
-    //public async Task<Item> UpdateItem(Item model)
-    //{
-    //    return await _itemsService.UpdateItemAsync(model);
-    //}
+//[HttpPatch("update"), Authorize(Roles = Roles.Owner)]
+//public async Task<Item> UpdateItem(Item model)
+//{
+//    return await _itemsService.UpdateItemAsync(model);
+//}

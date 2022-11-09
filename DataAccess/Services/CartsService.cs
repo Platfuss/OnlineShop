@@ -40,6 +40,7 @@ public class CartsService : ICartsService
 
     public async Task<bool> AddToCartAsync(CartRequest request)
     {
+        //TODO: check if item isnt already in cart, if so, increase amount (or merge add and update)
         var cartModel = _mapper.Map<CartRequest, Cart>(request);
         cartModel.CustomerId = await _userService.GetCustomerIdAsync();
         _db.Carts.Add(cartModel);

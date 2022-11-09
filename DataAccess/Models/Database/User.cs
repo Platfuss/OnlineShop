@@ -14,6 +14,11 @@ public class User
     [JsonIgnore]
     public virtual Customer Customer { get; set; }
 
+    [JsonIgnore]
+    public DateTime RefreshTokenExpireTime { get; set; }
+    [JsonIgnore]
+    public string RefreshToken { get; set; }
+
     [Required]
     public byte[] PasswordHash { get; set; }
 

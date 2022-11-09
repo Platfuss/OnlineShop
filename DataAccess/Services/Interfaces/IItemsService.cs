@@ -1,5 +1,4 @@
-﻿using DataAccess.Models.Database;
-using DataAccess.Models.Dto.Responses;
+﻿using DataAccess.Models.Dto.Responses;
 
 namespace DataAccess.Services.Interfaces;
 

@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace DataAccess.Models.Dto.Responses;
+﻿namespace DataAccess.Models.Dto.Responses;
 
 public class SingleItemResponse
 {

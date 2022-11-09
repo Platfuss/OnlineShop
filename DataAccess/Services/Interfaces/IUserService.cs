@@ -7,4 +7,5 @@ public interface IUserService
     Task<Customer> GetCustomerAsync();
     Task<int> GetCustomerIdAsync();
     string GetEmail();
+    Task<User> GetUserAsync();
 }

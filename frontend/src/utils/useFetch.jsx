@@ -10,6 +10,10 @@ const useFetch = () => {
 		setIsLoading(true);
 		const aborter = new AbortController();
 		fetch(url, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+			credentials: "include",
 			method: method,
 			body: body,
 			signal: aborter.signal,

@@ -79,23 +79,23 @@ public class ItemsService : IItemsService
 
 
 
-    //public async Task<Item> InsertItemAsync(Item model)
-    //{
-    //    _db.Items.Add(model);
-    //    await _db.SaveChangesAsync();
-    //    return model;
-    //}
+//public async Task<Item> InsertItemAsync(Item model)
+//{
+//    _db.Items.Add(model);
+//    await _db.SaveChangesAsync();
+//    return model;
+//}
 
-    //public async Task<Item> UpdateItemAsync(Item model)
-    //{
-    //    _db.Items.Update(model);
-    //    await _db.SaveChangesAsync();
-    //    return model;
-    //}
+//public async Task<Item> UpdateItemAsync(Item model)
+//{
+//    _db.Items.Update(model);
+//    await _db.SaveChangesAsync();
+//    return model;
+//}
 
-    //public async Task DeleteItemAsync(int id)
-    //{
-    //    var item = await _db.Items.FindAsync(id);
-    //    _db.Items.Remove(item);
-    //    await _db.SaveChangesAsync();
-    //}
+//public async Task DeleteItemAsync(int id)
+//{
+//    var item = await _db.Items.FindAsync(id);
+//    _db.Items.Remove(item);
+//    await _db.SaveChangesAsync();
+//}

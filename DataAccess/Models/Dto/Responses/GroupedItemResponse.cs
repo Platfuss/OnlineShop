@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataAccess.Models.Dto.Responses;
+﻿namespace DataAccess.Models.Dto.Responses;
 public class GroupedItemResponse
 {
     public virtual int Id { get; set; }

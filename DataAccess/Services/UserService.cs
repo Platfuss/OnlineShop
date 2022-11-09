@@ -18,7 +18,7 @@ public class UserService : IUserService
     }
 
     public string GetEmail() =>
-        _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Email);
+        _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
 
     public async Task<Customer> GetCustomerAsync()
     {
@@ -31,5 +31,12 @@ public class UserService : IUserService
     {
         var customer = await GetCustomerAsync();
         return customer.Id;
+    }
+
+    public async Task<User> GetUserAsync()
+    {
+        var email = GetEmail();
+        var user = await _db.Users.SingleAsync(u => u.Email == email);
+        return user;
     }
 }
