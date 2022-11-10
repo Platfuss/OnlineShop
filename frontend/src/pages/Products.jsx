@@ -4,6 +4,7 @@ import useFetch, { METHOD, apiEndpoints } from "../utils/useFetch";
 
 const Products = () => {
 	const { CallApi, data: products } = useFetch();
+
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => CallApi(apiEndpoints("items/getallitems"), METHOD.GET), []);
 

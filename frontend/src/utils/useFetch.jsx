@@ -13,6 +13,7 @@ const useFetch = () => {
 			headers: {
 				"Content-Type": "application/json",
 			},
+			//TODO: credentials
 			credentials: "include",
 			method: method,
 			body: body,

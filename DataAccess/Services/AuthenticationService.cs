@@ -20,8 +20,8 @@ public class AuthenticationService : IAuthenticationService
     private readonly ITokenService _tokenService;
 
     //TODO: change for real values
-    private readonly DateTime _jwtShouldExpire = DateTime.Now.AddMinutes(5);
-    private readonly DateTime _refreshTokenShouldExpire = DateTime.Now.AddMinutes(15);
+    private readonly DateTime _jwtShouldExpire = DateTime.UtcNow.AddMinutes(5);
+    private readonly DateTime _refreshTokenShouldExpire = DateTime.UtcNow.AddMinutes(15);
 
     private readonly string _jwtConfigName;
     private readonly string _refreshTokenConfigName;
@@ -90,7 +90,7 @@ public class AuthenticationService : IAuthenticationService
                            HttpOnly = true,
                            SameSite = SameSiteMode.None,
                            Secure = true,
-                           Expires = _jwtShouldExpire.AddDays(7)
+                           Expires = _refreshTokenShouldExpire
                        });
 
         cookies.Append(_refreshTokenConfigName,
@@ -129,7 +129,7 @@ public class AuthenticationService : IAuthenticationService
                         HttpOnly = true,
                         SameSite = SameSiteMode.None,
                         Secure = true,
-                        Expires = _jwtShouldExpire.AddDays(7)
+                        Expires = _refreshTokenShouldExpire
                     });
 
         return new TokenResponse { JwtExpirationDate = _jwtShouldExpire, RefreshTokenExpirationDate = user.RefreshTokenExpirationTime };
@@ -146,13 +146,13 @@ public class AuthenticationService : IAuthenticationService
         {
             if (oldCookies[name] != null)
             {
-                newCookies.Append(name, "", new CookieOptions { Expires = DateTime.Now.AddDays(-1) });
+                newCookies.Append(name, "", new CookieOptions { Expires = DateTime.UtcNow.AddDays(-1) });
             }
         }
 
         var user = await _userService.GetUserAsync();
         user.RefreshToken = string.Empty;
-        user.RefreshTokenExpirationTime = DateTime.Now.AddDays(-1);
+        user.RefreshTokenExpirationTime = DateTime.UtcNow.AddDays(-1);
 
         await _db.SaveChangesAsync();
 
