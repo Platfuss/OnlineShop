@@ -15,7 +15,7 @@ public class User
     public virtual Customer Customer { get; set; }
 
     [JsonIgnore]
-    public DateTime RefreshTokenExpireTime { get; set; }
+    public DateTime RefreshTokenExpirationTime { get; set; }
     [JsonIgnore]
     public string RefreshToken { get; set; }
 

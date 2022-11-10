@@ -1,13 +1,11 @@
 ﻿using DataAccess.DatabaseAccess;
 using DataAccess.Models.Database;
 using DataAccess.Models.Dto.Requests;
+using DataAccess.Models.Dto.Responses;
 using DataAccess.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -15,26 +13,37 @@ namespace DataAccess.Services;
 
 public class AuthenticationService : IAuthenticationService
 {
-    private readonly IConfiguration _config;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly DataContext _db;
     private readonly IUserService _userService;
-    private readonly DateTime _jwtShouldExpire = DateTime.Now.AddMinutes(5);
+    private readonly IConfiguration _config;
+    private readonly ITokenService _tokenService;
 
-    public AuthenticationService(DataContext db, IUserService userService, IConfiguration config, IHttpContextAccessor httpContextAccessor)
+    //TODO: change for real values
+    private readonly DateTime _jwtShouldExpire = DateTime.Now.AddMinutes(5);
+    private readonly DateTime _refreshTokenShouldExpire = DateTime.Now.AddMinutes(15);
+
+    private readonly string _jwtConfigName;
+    private readonly string _refreshTokenConfigName;
+
+    public AuthenticationService(DataContext db, IUserService userService, IConfiguration config, ITokenService tokenService, IHttpContextAccessor httpContextAccessor)
     {
-        _config = config;
         _httpContextAccessor = httpContextAccessor;
         _db = db;
         _userService = userService;
+        _config = config;
+        _tokenService = tokenService;
+
+        _jwtConfigName = _config.GetSection("Jwt:JwtName").Value;
+        _refreshTokenConfigName = _config.GetSection("Jwt:RefreshTokenName").Value;
     }
 
-    public async Task<bool> RegisterAsync(UserRequest userDto)
+    public async Task<TokenResponse> RegisterAsync(UserRequest userDto)
     {
         var userAlreadyExists = (await _db.Users.Where(u => u.Email == userDto.Email).FirstOrDefaultAsync())
             != null;
         if (userAlreadyExists)
-            return false;
+            return null;
 
         var customer = _db.Customers.Add(new Customer());
         await _db.SaveChangesAsync();
@@ -50,41 +59,41 @@ public class AuthenticationService : IAuthenticationService
             PasswordSalt = passwordSalt,
             Customer = customer.Entity
         };
+
         _db.Add(userModel);
         await _db.SaveChangesAsync();
 
         return await LoginAsync(userDto);
     }
 
-    public async Task<bool> LoginAsync(UserRequest userDto)
+    public async Task<TokenResponse> LoginAsync(UserRequest userDto)
     {
         var user = await _db.Users.Where(u => u.Email == userDto.Email).FirstOrDefaultAsync();
         if (user == null)
-            return false;
+            return null;
 
         if (!CheckPassword(userDto.Password, user.PasswordHash, user.PasswordSalt))
-            return false;
+            return null;
 
-        var token = CreateToken(user, _jwtShouldExpire);
-        var refreshToken = GenerateRefreshToken();
+        var jwt = _tokenService.CreateJwt(user, _jwtShouldExpire);
+        var refreshToken = _tokenService.GenerateRefreshToken();
+
         user.RefreshToken = refreshToken;
-        var refreshTokenExpireTime = DateTime.UtcNow.AddDays(1);
-        user.RefreshTokenExpireTime = refreshTokenExpireTime;
-
+        user.RefreshTokenExpirationTime = _refreshTokenShouldExpire;
 
         var cookies = _httpContextAccessor.HttpContext.Response.Cookies;
         //TODO: samesite, secure >>>
-        cookies.Append("jwt",
-                       token,
+        cookies.Append(_jwtConfigName,
+                       jwt,
                        new CookieOptions()
                        {
                            HttpOnly = true,
                            SameSite = SameSiteMode.None,
                            Secure = true,
-                           Expires = _jwtShouldExpire
+                           Expires = _jwtShouldExpire.AddDays(7)
                        });
 
-        cookies.Append("refresh-token",
+        cookies.Append(_refreshTokenConfigName,
                        refreshToken,
                        new CookieOptions()
                        {
@@ -92,41 +101,44 @@ public class AuthenticationService : IAuthenticationService
                            HttpOnly = true,
                            SameSite = SameSiteMode.None,
                            Secure = true,
-                           Expires = refreshTokenExpireTime
-                       });
+                           Expires = _refreshTokenShouldExpire
+                       }); ;
 
         await _db.SaveChangesAsync();
-        return true;
+        return new TokenResponse { JwtExpirationDate = _jwtShouldExpire, RefreshTokenExpirationDate = _refreshTokenShouldExpire };
     }
 
-    public async Task<bool> RefreshAccessToken()
+    public async Task<TokenResponse> RefreshJwtAsync()
     {
         var user = await _userService.GetUserAsync();
-        if (user.RefreshTokenExpireTime < DateTime.UtcNow)
-            return false;
 
-        var refreshToken = _httpContextAccessor.HttpContext.Request.Cookies["refresh-token"];
+        if (user.RefreshTokenExpirationTime < DateTime.UtcNow)
+            return null;
+
+        var refreshToken = _httpContextAccessor.HttpContext.Request.Cookies[_refreshTokenConfigName];
         if (refreshToken != user.RefreshToken)
-            return false;
+            return null;
 
-        var token = CreateToken(user, _jwtShouldExpire);
-        var cookies = _httpContextAccessor.HttpContext.Response.Cookies;
+        var token = _tokenService.CreateJwt(user, _jwtShouldExpire);
         //TODO: samesite, secure >>>
-        cookies.Append("jwt",
-                       token,
-                       new CookieOptions()
-                       {
-                           HttpOnly = true,
-                           SameSite = SameSiteMode.None,
-                           Secure = true,
-                           Expires = _jwtShouldExpire
-                       });
+        _httpContextAccessor.HttpContext.Response.Cookies
+           .Append(_jwtConfigName,
+                    token,
+                    new CookieOptions()
+                    {
+                        HttpOnly = true,
+                        SameSite = SameSiteMode.None,
+                        Secure = true,
+                        Expires = _jwtShouldExpire.AddDays(7)
+                    });
 
-        return true;
+        return new TokenResponse { JwtExpirationDate = _jwtShouldExpire, RefreshTokenExpirationDate = user.RefreshTokenExpirationTime };
     }
+
     public async Task<bool> RevokeAccess()
     {
-        var tokenNames = new List<string>() { "jwt", "refresh-token" };
+        var tokenNames = new List<string>() { _jwtConfigName, _refreshTokenConfigName };
+
         var oldCookies = _httpContextAccessor.HttpContext.Request.Cookies;
         var newCookies = _httpContextAccessor.HttpContext.Response.Cookies;
 
@@ -140,35 +152,11 @@ public class AuthenticationService : IAuthenticationService
 
         var user = await _userService.GetUserAsync();
         user.RefreshToken = string.Empty;
-        user.RefreshTokenExpireTime = DateTime.Now.AddDays(-1);
+        user.RefreshTokenExpirationTime = DateTime.Now.AddDays(-1);
 
         await _db.SaveChangesAsync();
 
         return true;
-    }
-
-    private string CreateToken(User userModel, DateTime whenExpires, bool isAdmin = false)
-    {
-        var claims = new List<Claim>()
-        {
-            new Claim(ClaimTypes.Email, userModel.Email)
-        };
-
-        if (isAdmin)
-        {
-            var adminClaim = new Claim(ClaimTypes.Role, "Admin");
-            claims.Add(adminClaim);
-        }
-
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Token").Value));
-        var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-        var token = new JwtSecurityToken(
-            claims: claims,
-            expires: whenExpires,
-            signingCredentials: cred);
-
-        var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-        return jwt;
     }
 
     private static void CreatePasswordHash(string password,
@@ -185,10 +173,5 @@ public class AuthenticationService : IAuthenticationService
         using var hmac = new HMACSHA512(passwordSalt);
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
         return computedHash.SequenceEqual(passwordHash);
-    }
-
-    private static string GenerateRefreshToken()
-    {
-        return Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
     }
 }

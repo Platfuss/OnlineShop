@@ -68,7 +68,7 @@ public static class WebApplicationBuilderExtension
                 {
                     OnMessageReceived = context =>
                     {
-                        context.Token = context.Request.Cookies["jwt"];
+                        context.Token = context.Request.Cookies[builder.Configuration.GetSection("Jwt:JwtName").Value];
                         return Task.CompletedTask;
                     }
                 };
@@ -76,6 +76,7 @@ public static class WebApplicationBuilderExtension
 
         builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
         builder.Services.AddScoped<IAddressService, AddressService>();
+        builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
         builder.Services.AddScoped<ICartsService, CartsService>();
         builder.Services.AddScoped<ICustomersService, CustomersService>();

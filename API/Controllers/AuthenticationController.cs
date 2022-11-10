@@ -17,26 +17,26 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<string>> Register(UserRequest userDto)
+    public async Task<ActionResult<TokenResponse>> Register(UserRequest userDto)
     {
         return Ok(await _authentication.RegisterAsync(userDto));
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<string>> Login(UserRequest userDto)
+    public async Task<ActionResult<TokenResponse>> Login(UserRequest userDto)
     {
         return Ok(await _authentication.LoginAsync(userDto));
     }
 
-    [Authorize]
     [HttpPost("refresh-access-token")]
-    public async Task<ActionResult<bool>> RefreshAccessToken()
+    [Authorize]
+    public async Task<ActionResult<TokenResponse>> RefreshAccessToken()
     {
-        return Ok(await _authentication.RefreshAccessToken());
+        return Ok(await _authentication.RefreshJwtAsync());
     }
 
-    [Authorize]
     [HttpPost("revoke-access")]
+    [Authorize]
     public async Task<ActionResult<bool>> RevokeAccess()
     {
         return Ok(await _authentication.RevokeAccess());
