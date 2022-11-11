@@ -43,8 +43,8 @@ public static class WebApplicationBuilderExtension
                 {
                     policy.AllowAnyMethod();
                     policy.AllowAnyHeader();
-                    policy.SetIsOriginAllowed(origin => true);
                     policy.AllowCredentials();
+                    policy.SetIsOriginAllowed(origin => true);
                     policy.WithOrigins("http://localhost:3000");
                 });
         });

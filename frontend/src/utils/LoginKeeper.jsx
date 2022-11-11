@@ -11,7 +11,8 @@ const LoginKeeper = () => {
 	useEffect(() => {
 		if (refreshTokenExpire) {
 			const now = new Date().toUTCString();
-			const refreshExpire = Date.parse(refreshTokenExpire);
+			const refreshExpire = new Date(refreshTokenExpire);
+			console.log(now, refreshExpire);
 			if (now < refreshExpire) {
 				CallApi(
 					apiEndpoints("authentication/refresh-access-token"),

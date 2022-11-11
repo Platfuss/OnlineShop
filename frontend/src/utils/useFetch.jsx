@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const useFetch = () => {
 	const [data, setData] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const navigate = useNavigate();
 
 	const CallApi = (url, method, body) => {
 		console.log(url);
@@ -20,10 +22,14 @@ const useFetch = () => {
 			signal: aborter.signal,
 		})
 			.then((result) => {
+				if (result.status === 401) {
+					navigate("/login");
+					throw Error("User not logged in");
+				}
 				if (!result) {
 					throw Error("Couldn't get data from server");
 				}
-				return result.json();
+				return result?.json();
 			})
 			.then((result) => {
 				setData(result);
@@ -31,8 +37,8 @@ const useFetch = () => {
 			})
 			.catch((e) => {
 				if (e.name !== "AbortError") {
-					setError(e.message);
-					console.log("Unknown error from fetcher: " + e.message);
+					setError(e);
+					console.log("Fetcher error: " + e.message);
 				}
 			})
 			.finally(() => setIsLoading(false));

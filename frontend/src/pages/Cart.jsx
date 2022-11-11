@@ -8,7 +8,7 @@ const fakeUserId = 5;
 const Cart = () => {
 	const { CallApi: GetItemsInCart, data: itemsInCart } = useFetch();
 	useEffect(
-		() => GetItemsInCart(apiEndpoints("carts", fakeUserId), METHOD.GET),
+		() => GetItemsInCart(apiEndpoints("carts/get", fakeUserId), METHOD.GET),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);

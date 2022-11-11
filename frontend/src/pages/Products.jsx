@@ -6,7 +6,7 @@ const Products = () => {
 	const { CallApi, data: products } = useFetch();
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	useEffect(() => CallApi(apiEndpoints("items/getallitems"), METHOD.GET), []);
+	//useEffect(() => CallApi(apiEndpoints("items/getallitems"), METHOD.GET), []);
 
 	return (
 		<div className="wholePage">

@@ -8,6 +8,7 @@ import Error from "./Error";
 import Category from "./Category";
 import SingleProductDetails from "./SingleProductDetails";
 import Cart from "./Cart";
+import Login from "./Login";
 
 const PageChanger = () => {
 	useScrollToTop();
@@ -21,7 +22,8 @@ const PageChanger = () => {
 				path="/products/details/:id"
 				element={<SingleProductDetails />}
 			/>
-			<Route path={"/cart"} element={<Cart />} />
+			<Route path="/login" element={<Login />} />
+			<Route path="/cart" element={<Cart />} />
 			<Route path="*" element={<Error />} />
 		</Routes>
 	);

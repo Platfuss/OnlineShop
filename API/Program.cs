@@ -17,12 +17,12 @@ internal class Program
 
         app.UseHttpsRedirection();
 
+        app.UseCors(policyName);
+
         app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
-
-        app.UseCors(policyName);
 
         app.Run();
     }
