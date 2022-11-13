@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
-import useFetch, { METHOD, apiEndpoints } from "../utils/useFetch";
-
-const fakeUserId = 5;
+import { METHOD } from "../utils/useFetch";
+import useAuthFetch from "../utils/useAuthFetch";
 
 //TODO: Come back with own API
 
 const Cart = () => {
-	const { CallApi: GetItemsInCart, data: itemsInCart } = useFetch();
+	const { CallApi: GetItemsInCart, data: itemsInCart } = useAuthFetch();
 	useEffect(
-		() => GetItemsInCart(apiEndpoints("carts/get", fakeUserId), METHOD.GET),
+		() => GetItemsInCart("carts/get", METHOD.GET),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
@@ -22,13 +21,13 @@ const Cart = () => {
 		}
 	}
 
-	const { CallApi: GetItemDetails, data: itemDetails } = useFetch();
+	const { CallApi: GetItemDetails, data: itemDetails } = useAuthFetch();
 
 	const Output = () => {
 		return (
 			<div className="wholePage">
 				{itemsToDownload.map((id, index) => {
-					GetItemDetails(apiEndpoints("products", id), METHOD.GET);
+					GetItemDetails("products", id, METHOD.GET);
 					return (
 						<img
 							className="singleProductImage"
