@@ -1,14 +1,16 @@
 import React from "react";
-import useFetch, { METHOD } from "../utils/useFetch";
+import useAuthFetch, { METHOD } from "../utils/useAuthFetch";
 import { useEffect } from "react";
+import useAuth from "../utils/useAuth";
 
 const Login = () => {
 	const loginBody = JSON.stringify({
 		email: "user@example.com",
 		password: "string",
 	});
+	const { setAuth } = useAuth();
 
-	const { CallApi, data: expirationDates } = useFetch();
+	const { CallApi, data: expirationDates, status } = useAuthFetch();
 
 	const onLoginClick = () => {
 		CallApi("authentication/login", METHOD.POST, loginBody);
@@ -21,7 +23,12 @@ const Login = () => {
 				new Date(expirationDates.refreshTokenExpirationDate) + "Z"
 			);
 		}
-	}, [expirationDates]);
+
+		if (status === 200) {
+			setAuth(true);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [expirationDates, status]);
 
 	return (
 		<div className="wholePage">

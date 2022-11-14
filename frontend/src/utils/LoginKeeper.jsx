@@ -3,14 +3,15 @@ import { useEffect } from "react";
 
 const LoginKeeper = () => {
 	const { CallApi, data: expirationDates } = useFetch();
+	const refreshTokenExpire = localStorage.getItem(
+		"RefreshTokenExpirationDate"
+	);
 
 	useEffect(() => {
 		if (refreshTokenExpire) {
 			const now = new Date();
-			const refreshExpire = new Date(
-				localStorage.getItem("RefreshTokenExpirationDate")
-			);
-			if (now < refreshExpire) {
+			const refreshExpireDate = new Date(refreshTokenExpire);
+			if (now < refreshExpireDate) {
 				CallApi(
 					apiEndpoints("authentication/refresh-access-token"),
 					METHOD.POST

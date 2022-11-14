@@ -1,12 +1,14 @@
-import useFetch, { METHOD } from "./useFetch";
+import useFetch from "./useFetch";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "./useAuth";
 
 const useAuthFetch = () => {
 	const [attempt, setAttempt] = useState(0);
 	const [callData, setCallData] = useState({});
 	const { CallApi: UnAuthCall, data, isLoading, error, status } = useFetch();
 	const navigate = useNavigate();
+	const { setAuth } = useAuth();
 
 	const CallApi = (url, method, body) => {
 		setCallData({ url, method, body });
@@ -15,12 +17,12 @@ const useAuthFetch = () => {
 
 	useEffect(() => {
 		if (isLoading === false) {
-			console.log(status, attempt);
 			if (status === 401 && attempt === 0) {
 				UnAuthCall("authentication/refresh-access-token", METHOD.POST);
 				setAttempt(1);
 				UnAuthCall(callData.url, callData.method, callData.body);
 			} else if (status === 401 && attempt > 0) {
+				setAuth(false);
 				setAttempt(0);
 				navigate("/login");
 			}
@@ -31,4 +33,13 @@ const useAuthFetch = () => {
 	return { CallApi, data, isLoading, error, status };
 };
 
+const METHOD = Object.freeze({
+	GET: "GET",
+	PUT: "PUT",
+	POST: "POST",
+	PATCH: "PATCH",
+	DELETE: "DELETE",
+});
+
 export default useAuthFetch;
+export { METHOD };
