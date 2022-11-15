@@ -20,8 +20,8 @@ public class AuthenticationService : IAuthenticationService
     private readonly ITokenService _tokenService;
 
     //TODO: change for real values
-    private readonly DateTime _jwtShouldExpire = DateTime.UtcNow.AddSeconds(10);
-    private readonly DateTime _refreshTokenShouldExpire = DateTime.UtcNow.AddSeconds(30);
+    private readonly DateTime _refreshTokenShouldExpire = DateTime.UtcNow.AddMinutes(5);
+    private readonly DateTime _jwtShouldExpire = DateTime.UtcNow.AddMinutes(1);
 
     private readonly string _jwtConfigName;
     private readonly string _refreshTokenConfigName;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Controllers;
 
@@ -19,18 +20,18 @@ public class ItemsController : ControllerBase
         return await _itemsService.GetItemAsync(id);
     }
 
-    [HttpGet("group/{page}/{amount}")]
-    public async Task<IEnumerable<GroupedItemResponse>> GetAllItems(int page,
-                                                                    int amount,
+    [HttpGet("group/{amount}/{page}")]
+    public async Task<IEnumerable<GroupedItemResponse>> GetAllItems(int amount, 
+                                                                    int page,
                                                                     string category,
                                                                     bool onlyRecommended = false,
                                                                     bool descendingOrderByDate = true)
     {
-        return await _itemsService.GetItemsByPagesAsync(page, amount, category, onlyRecommended, descendingOrderByDate);
+        return await _itemsService.GetItemsByPagesAsync(amount, page, category, onlyRecommended, descendingOrderByDate);
     }
 
-    [HttpGet("number-of-pages")]
-    public async Task<int> HowManyPages(int amountPerPage, string category, bool onlyRecommended = false)
+    [HttpGet("number-of-pages/{amountPerPage}")]
+    public async Task<int> HowManyPages([Range(1, int.MaxValue)]int amountPerPage, string category, bool onlyRecommended = false)
     {
         return await _itemsService.HowManyPagesAsync(amountPerPage, category, onlyRecommended);
     }

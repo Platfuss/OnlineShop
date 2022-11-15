@@ -13,9 +13,9 @@ const NavBar = () => {
 				<li>
 					<div>Nowości</div>
 				</li>
-				<li>
+				{/* <li>
 					<div>Promocje</div>
-				</li>
+				</li> */}
 				<li className="contact">
 					<NavLink end to={"/contact"}>
 						Kontakt
@@ -38,18 +38,18 @@ const MenuExpander = () => {
 				<div>Przedmioty</div>
 				<ul className="submenu2">
 					<li>
-						<NavLink end to={"/products/electronics"}>
-							Elektronika
+						<NavLink end to={"/products/rozrywka"}>
+							Rozrywka
 						</NavLink>
 					</li>
 					<li>
-						<NavLink end to={"/products/jewelery"}>
-							Biżuteria
+						<NavLink end to={"/products/zywnosc"}>
+							Żywność
 						</NavLink>
 					</li>
 					<li>
-						<NavLink end to={"/products/spozywcze"}>
-							Spożywcze
+						<NavLink end to={"/products/zoologia"}>
+							Zoologia
 						</NavLink>
 					</li>
 				</ul>

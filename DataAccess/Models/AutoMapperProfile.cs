@@ -14,8 +14,10 @@ public class AutoMapperProfile : Profile
         CreateMap<AddressRequest, Address>();
         CreateMap<Address, Address>();
 
-        CreateMap<Cart, CartResponse>();
         CreateMap<CartRequest, Cart>();
+        CreateMap<Cart, CartResponse>()
+            .ForMember(cr => cr.Name, opt => opt.MapFrom(c => c.Item.Name))
+            .ForMember(cr => cr.Price, opt => opt.MapFrom(c => c.Item.Price));
 
         CreateMap<CustomerBasicInfo, Customer>().ReverseMap();
 

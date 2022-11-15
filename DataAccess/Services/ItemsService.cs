@@ -33,7 +33,7 @@ public class ItemsService : IItemsService
         double quantityOfItems = await _db.Items
             .Where(i => !onlyRecommended || i.Recommended)
             .Where(i => string.IsNullOrEmpty(category)
-                || i.Category == category)
+                || i.Category.ToLower() == MapCategoryName(category))
             .CountAsync();
 
         var numberOfPages = (int)Math.Ceiling(quantityOfItems / amountPerPage);
@@ -41,8 +41,8 @@ public class ItemsService : IItemsService
         return numberOfPages;
     }
 
-    public async Task<IEnumerable<GroupedItemResponse>> GetItemsByPagesAsync(int page,
-                                                                             int amount,
+    public async Task<IEnumerable<GroupedItemResponse>> GetItemsByPagesAsync(int amount, 
+                                                                             int page,
                                                                              string category,
                                                                              bool onlyRecommended,
                                                                              bool descendingOrderByDate)
@@ -50,7 +50,7 @@ public class ItemsService : IItemsService
         var result = _db.Items
             .Where(i => !onlyRecommended || i.Recommended)
             .Where(i => string.IsNullOrEmpty(category)
-                || i.Category == category)
+                || i.Category.ToLower() == MapCategoryName(category))
             .Skip(page * amount)
             .Take(amount);
 
@@ -74,6 +74,16 @@ public class ItemsService : IItemsService
             output.Add(itemEntry);
         }
         return output;
+    }
+
+    private static string MapCategoryName(string nameFromPath)
+    {
+        nameFromPath = nameFromPath.ToLower();
+
+        var nameMap = new Dictionary<string, string>() { { "zywnosc", "Żywność" } };
+        nameMap.TryGetValue(nameFromPath, out string mappedPathName);
+
+        return mappedPathName ?? nameFromPath;
     }
 }
 

@@ -1,4 +1,4 @@
-import useFetch, { METHOD, apiEndpoints } from "./useFetch";
+import useFetch, { METHOD } from "./useFetch";
 import { useEffect } from "react";
 
 const LoginKeeper = () => {
@@ -11,11 +11,9 @@ const LoginKeeper = () => {
 		if (refreshTokenExpire) {
 			const now = new Date();
 			const refreshExpireDate = new Date(refreshTokenExpire);
+			console.log(now, refreshExpireDate);
 			if (now < refreshExpireDate) {
-				CallApi(
-					apiEndpoints("authentication/refresh-access-token"),
-					METHOD.POST
-				);
+				CallApi("authentication/refresh-access-token", METHOD.POST);
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

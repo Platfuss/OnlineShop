@@ -26,11 +26,11 @@ public class CartsService : ICartsService
     public async Task<IEnumerable<CartResponse>> GetUserCartAsync()
     {
         var customerId = await _userService.GetCustomerIdAsync();
-        var userCart = await _db.Carts.Where(cart => cart.CustomerId == customerId).ToListAsync();
+        var userCart = await _db.Carts.Where(cart => cart.CustomerId == customerId).Include(c => c.Item).ToListAsync();
         var output = new List<CartResponse>();
         foreach (var item in userCart)
         {
-            var image = (await _fileService.ReadAsync(item.Id.ToString(), onlyFirst: true))
+            var image = (await _fileService.ReadAsync(item.ItemId.ToString(), onlyFirst: true))
                 .FirstOrDefault();
             var cartEntry = _mapper.Map<Cart, CartResponse>(item, opt => opt.AfterMap((src, dest) => dest.Image = image));
             output.Add(cartEntry);
@@ -40,12 +40,33 @@ public class CartsService : ICartsService
 
     public async Task<bool> AddToCartAsync(CartRequest request)
     {
-        //TODO: check if item isnt already in cart, if so, increase amount (or merge add and update)
-        var cartModel = _mapper.Map<CartRequest, Cart>(request);
-        cartModel.CustomerId = await _userService.GetCustomerIdAsync();
-        _db.Carts.Add(cartModel);
-        await _db.SaveChangesAsync();
-        return cartModel.Id != 0;
+        var customerId = await _userService.GetCustomerIdAsync();
+        var cartEntry = await _db.Carts
+            .Where(c => c.CustomerId == customerId && c.ItemId == request.ItemId)
+            .FirstOrDefaultAsync();
+
+        if(cartEntry == null)
+        {
+            if (request.Amount < 0)
+            {
+                return false;
+            }
+
+            var cartModel = _mapper.Map<CartRequest, Cart>(request);
+            cartModel.CustomerId = customerId;
+            _db.Carts.Add(cartModel);
+        }
+        else
+        {
+            cartEntry.Amount += request.Amount;
+            if (cartEntry.Amount < 0)
+            {
+                _db.Carts.Remove(cartEntry);
+            }
+        }
+
+        var rowsAffected = await _db.SaveChangesAsync();
+        return rowsAffected == 1;
     }
 
     public async Task<List<string>> ValidateAmountOfItemsAsync()

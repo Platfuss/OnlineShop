@@ -1,33 +1,29 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import useFetch, { METHOD, apiEndpoints } from "../utils/useFetch";
 import Img64Base from "../utils/Img64Base";
+import useAuthFetch, { METHOD } from "../utils/useAuthFetch";
 
 const SingleProduct = ({ product }) => {
 	const route = `/products/details/${product.id}`;
-	const date = new Date().toUTCString();
 	const body = JSON.stringify({
-		userId: 0,
-		date: { date },
-		products: [{ productId: product.id, quantity: 1 }],
+		itemId: product.id,
+		amount: 1,
 	});
 
-	const { CallApi, isLoading } = useFetch();
+	const { CallApi, isLoading } = useAuthFetch();
 
 	const OnButtonClick = () => {
-		CallApi(apiEndpoints("carts"), METHOD.POST, body);
+		CallApi("carts/add-item", METHOD.POST, body);
 	};
 
 	return (
 		<div className="singleProduct">
 			<figure className="imageContainer">
 				<NavLink end to={route}>
-					{product.images && (
-						<Img64Base
-							className="singleProductImage"
-							src={product.images[0]}
-						></Img64Base>
-					)}
+					<Img64Base
+						className="singleProductImage"
+						src={product.image}
+					></Img64Base>
 				</NavLink>
 			</figure>
 			<div>{product.category}</div>
@@ -35,11 +31,11 @@ const SingleProduct = ({ product }) => {
 				<div>{product.name}</div>
 			</NavLink>
 			<div>{product.price} zł</div>
-			<div>Dostępny/Niedostępny</div>
+			<div>{product.amount > 0 ? "Dostępny" : "Niedostępny"}</div>
 			<button
 				className="addToCartButton"
 				onClick={OnButtonClick}
-				disabled={isLoading}
+				disabled={product.amount > 0 && isLoading}
 			>
 				Dodaj do koszyka
 			</button>
