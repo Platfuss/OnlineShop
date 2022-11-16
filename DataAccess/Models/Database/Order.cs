@@ -15,9 +15,9 @@ public class Order
     [JsonIgnore]
     public virtual Address InvoiceAddress { get; set; }
 
-    public int ShipingAddressId { get; set; }
+    public int ShippingAddressId { get; set; }
     [JsonIgnore]
-    public virtual Address ShipingAddress { get; set; }
+    public virtual Address ShippingAddress { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<OrderDetail> OrderDetails { get; set; }

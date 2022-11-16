@@ -8,7 +8,7 @@ public class OrderInfo
 
     public Address InvoiceAddress { get; set; }
 
-    public Address ShipingAddress { get; set; }
+    public Address ShippingAddress { get; set; }
 
     public DateTime CreationDate { get; set; }
 

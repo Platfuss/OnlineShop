@@ -6,7 +6,7 @@ public class OrderRequest
 {
     public int InvoiceAddressId { get; set; }
 
-    public int ShipingAddressId { get; set; }
+    public int ShippingAddressId { get; set; }
 
     [JsonIgnore]
     public int CustomerId { get; set; }

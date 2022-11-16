@@ -14,7 +14,7 @@ public static class ModelBuilderExtention
 
         var orders = builder.Entity<Order>();
         orders.HasOne(o => o.InvoiceAddress).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
-        orders.HasOne(o => o.ShipingAddress).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
+        orders.HasOne(o => o.ShippingAddress).WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
 
         var orderDetails = builder.Entity<OrderDetail>();
         orderDetails.HasIndex(od => new { od.OrderId, od.ItemId }).IsUnique();
@@ -82,7 +82,7 @@ public static class ModelBuilderExtention
                     CreationDate = DateTime.Parse("2022-10-22 23:32:00"),
                     CustomerId = 1,
                     InvoiceAddressId = 1,
-                    ShipingAddressId = 2,
+                    ShippingAddressId = 2,
                     ShipmentType = "Kurier",
                     Status = "Zatwierdzone"
                 },
@@ -92,7 +92,7 @@ public static class ModelBuilderExtention
                     CreationDate = DateTime.Parse("2022-10-23 10:00:00"),
                     CustomerId = 2,
                     InvoiceAddressId = 1,
-                    ShipingAddressId = 1,
+                    ShippingAddressId = 1,
                     ShipmentType = "InPost",
                     Status = "Wysłane"
                 }

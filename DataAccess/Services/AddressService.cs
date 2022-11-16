@@ -27,7 +27,7 @@ public class AddressService : IAddressService
 
         var usedInOrders = _db.Orders
             .Any(o => o.InvoiceAddressId == addressId
-                || o.ShipingAddressId == addressId);
+                || o.ShippingAddressId == addressId);
 
         Address output = null;
         if (usedInOrders)
@@ -68,7 +68,7 @@ public class AddressService : IAddressService
 
         var usedInOrders = _db.Orders
             .Any(o => o.InvoiceAddressId == addressId
-                || o.ShipingAddressId == addressId);
+                || o.ShippingAddressId == addressId);
 
         if (usedInOrders)
         {

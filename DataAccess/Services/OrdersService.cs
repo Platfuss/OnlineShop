@@ -34,7 +34,7 @@ public class OrdersService : IOrdersService
 
         var orders = await _db.Orders
             .Include(o => o.InvoiceAddress)
-            .Include(o => o.ShipingAddress)
+            .Include(o => o.ShippingAddress)
             .Where(o => o.CustomerId == customerId)
             .OrderByDescending(o => o.CreationDate)
             .ToListAsync();

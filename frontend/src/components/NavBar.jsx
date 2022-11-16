@@ -10,9 +10,9 @@ const NavBar = () => {
 					<div>Menu</div>
 					<MenuExpander />
 				</li>
-				<li>
+				{/* <li>
 					<div>Nowości</div>
-				</li>
+				</li> */}
 				{/* <li>
 					<div>Promocje</div>
 				</li> */}
