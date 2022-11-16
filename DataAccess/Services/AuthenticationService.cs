@@ -146,7 +146,13 @@ public class AuthenticationService : IAuthenticationService
         {
             if (oldCookies[name] != null)
             {
-                newCookies.Append(name, "", new CookieOptions { Expires = DateTime.UtcNow.AddDays(-1) });
+                newCookies.Append(name, "", new CookieOptions
+                {
+                    HttpOnly = true,
+                    SameSite = SameSiteMode.None,
+                    Secure = true,
+                    Expires = DateTime.UtcNow.AddDays(-1) 
+                });
             }
         }
 
