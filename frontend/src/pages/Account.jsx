@@ -3,8 +3,10 @@ import { useEffect } from "react";
 import useAuthFetch, { METHOD } from "../utils/useAuthFetch";
 import OrderHiddenInfo from "../components/OrderHiddenInfo";
 import AddressInfo from "../components/AddressInfo";
+import { useNavigate } from "react-router-dom";
 
 const Account = () => {
+	const navigate = useNavigate();
 	const { CallApi: GetOrders, data: orders } = useAuthFetch();
 	const { CallApi: GetUserBasicInfo, data: userBasicInfo } = useAuthFetch();
 	const { CallApi: GetAddresses, data: addresses } = useAuthFetch();
@@ -46,10 +48,11 @@ const Account = () => {
 						<AddressInfo
 							key={a.id}
 							address={a}
-							Callback={UpdateAddresses}
+							RefreshOnDelete={UpdateAddresses}
 						/>
 					);
 				})}
+			<button onClick={() => navigate("/address/new")}>Nowy adres</button>
 		</div>
 	);
 };

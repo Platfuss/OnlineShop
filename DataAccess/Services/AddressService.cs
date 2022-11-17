@@ -115,4 +115,17 @@ public class AddressService : IAddressService
 
         return userAddresses;
     }
+
+    public async Task<Address> GetAddressesAsync(int id)
+    {
+        var customerId = await _userService.GetCustomerIdAsync();
+        var userAddresses = await _db.CustomerAddress
+            .Where(ca => ca.CustomerId == customerId)
+            .Include(ca => ca.Address)
+            .Where(ca => ca.AddressId == id)
+            .Select(ca => ca.Address)
+            .FirstOrDefaultAsync();
+
+        return userAddresses;
+    }
 }

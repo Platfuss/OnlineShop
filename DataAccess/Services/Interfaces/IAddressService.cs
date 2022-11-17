@@ -8,5 +8,6 @@ public interface IAddressService
     Task<Address> AddAddressAsync(AddressRequest request);
     Task<bool> DeleteAddressAsync(int addressId);
     Task<List<Address>> GetAddressesAsync();
+    Task<Address> GetAddressesAsync(int id);
     Task<Address> UpdateAddressAsync(Address model);
 }

@@ -30,6 +30,12 @@ public class AddressesController : ControllerBase
         return await _addressService.GetAddressesAsync();
     }
 
+    [HttpGet("{id}")]
+    public async Task<Address> GetAddresses(int id)
+    {
+        return await _addressService.GetAddressesAsync(id);
+    }
+
     [HttpDelete("{addressId}")]
     public async Task<bool> DeleteAddress(int addressId)
     {

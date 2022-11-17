@@ -1,13 +1,15 @@
 import React from "react";
 import { useEffect } from "react";
 import useAuthFetch, { METHOD } from "../utils/useAuthFetch";
+import { useNavigate } from "react-router-dom";
 
-const AddressInfo = ({ address, Callback }) => {
+const AddressInfo = ({ address, RefreshOnDelete }) => {
+	const navigate = useNavigate();
 	const { CallApi: OnDelete, isLoading } = useAuthFetch();
 
 	useEffect(() => {
-		if (Callback && isLoading === false) {
-			Callback();
+		if (RefreshOnDelete && isLoading === false) {
+			RefreshOnDelete();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLoading]);
@@ -19,7 +21,12 @@ const AddressInfo = ({ address, Callback }) => {
 			{address.number}
 			{address.subNumber ? `/${address.subNumber}` : ""}
 			{address.postalCode}
-			{Callback && (
+			{RefreshOnDelete && (
+				<button onClick={() => navigate(`/address/${address.id}`)}>
+					Edytuj
+				</button>
+			)}
+			{RefreshOnDelete && (
 				<button
 					onClick={() => {
 						OnDelete(`addresses/${address.id}`, METHOD.DELETE);
