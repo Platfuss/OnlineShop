@@ -9,7 +9,7 @@ const Header = () => {
 	const { CallApi } = useAuthFetch();
 
 	const OnLogOut = () => {
-		CallApi("authentication/revoke-access", METHOD.POST);
+		CallApi("authentication/revoke-access", METHOD.DELETE);
 		setAuth(false);
 		localStorage.removeItem("RefreshTokenExpirationDate");
 	};

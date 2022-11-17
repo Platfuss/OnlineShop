@@ -18,7 +18,7 @@ public class AddressesController : ControllerBase
         return await _addressService.UpdateAddressAsync(model);
     }
 
-    [HttpPatch("add")]
+    [HttpPost("add")]
     public async Task<Address> AddAddress(AddressRequest request)
     {
         return await _addressService.AddAddressAsync(request);
@@ -30,7 +30,7 @@ public class AddressesController : ControllerBase
         return await _addressService.GetAddressesAsync();
     }
 
-    [HttpGet("delete/{addressId}")]
+    [HttpDelete("delete/{addressId}")]
     public async Task DeleteAddress(int addressId)
     {
         await _addressService.DeleteAddressAsync(addressId);

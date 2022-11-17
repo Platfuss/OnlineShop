@@ -72,7 +72,7 @@ public class OrdersService : IOrdersService
     public async Task<Order> InsertOrderAsync(OrderRequest request)
     {
         var customerId = await _userService.GetCustomerIdAsync();
-        var isCartValid = (await _cartsService.ValidateAmountOfItemsAsync())
+        var isCartValid = (await ValidateAmountOfItemsAsync())
             .Count == 0;
         if (!isCartValid)
         {
@@ -102,6 +102,23 @@ public class OrdersService : IOrdersService
         await _db.SaveChangesAsync();
 
         return orderModel;
+    }
+
+    private async Task<List<string>> ValidateAmountOfItemsAsync()
+    {
+        var customerId = await _userService.GetCustomerIdAsync();
+        var itemsInCart = await _db.Carts.Include(c => c.Item).Where(c => c.CustomerId == customerId).ToListAsync();
+        var notEnoughItems = new List<string>();
+
+        foreach (var wantedItem in itemsInCart)
+        {
+            if (wantedItem.Amount > wantedItem.Item.Amount)
+            {
+                notEnoughItems.Add(wantedItem.Item.Name);
+            }
+        }
+
+        return notEnoughItems;
     }
 
     public async Task<Order> UpdateOrderAsync(Order model)

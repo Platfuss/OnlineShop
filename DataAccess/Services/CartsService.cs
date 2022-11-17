@@ -69,32 +69,28 @@ public class CartsService : ICartsService
         return rowsAffected == 1;
     }
 
-    public async Task<List<string>> ValidateAmountOfItemsAsync()
-    {
-        var customerId = await _userService.GetCustomerIdAsync();
-        var itemsInCart = await _db.Carts.Include(c => c.Item).Where(c => c.CustomerId == customerId).ToListAsync();
-        var notEnoughItems = new List<string>();
-
-        foreach (var wantedItem in itemsInCart)
-        {
-            if (wantedItem.Amount > wantedItem.Item.Amount)
-            {
-                notEnoughItems.Add(wantedItem.Item.Name);
-            }
-        }
-
-        return notEnoughItems;
-    }
-
     public async Task<bool> UpdateCartAsync(CartRequest request)
     {
         var customerId = await _userService.GetCustomerIdAsync();
         var cartEntity = await _db.Carts
             .Where(c => c.CustomerId == customerId && c.ItemId == request.ItemId)
+            .Include(c => c.Item)
             .FirstAsync();
+
+        if (cartEntity.Item.Amount < request.Amount)
+        {
+            return false;
+        }
+
+        if (request.Amount <= 0)
+        {
+            _db.Carts.Remove(cartEntity);
+        }
+
         cartEntity.Amount = request.Amount;
-        await _db.SaveChangesAsync();
-        return cartEntity.Amount == request.Amount;
+
+        var rowsAffected = await _db.SaveChangesAsync();
+        return true;
     }
 
     public async Task DeleteFromCartAsync(int itemId)

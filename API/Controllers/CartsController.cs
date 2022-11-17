@@ -22,12 +22,6 @@ public class CartsController : ControllerBase
         return await _cartsService.AddToCartAsync(request);
     }
 
-    [HttpPost("validate")]
-    public async Task<List<string>> ValidateAmountOfItems()
-    {
-        return await _cartsService.ValidateAmountOfItemsAsync();
-    }
-
     [HttpPatch("update")]
     public async Task<bool> UpdateCart(CartRequest request)
     {
@@ -39,3 +33,9 @@ public class CartsController : ControllerBase
         _cartsService.DeleteFromCartAsync(itemId);
 
 }
+
+    //[HttpGet("validate")]
+    //public async Task<List<string>> ValidateAmountOfItems()
+    //{
+    //    return await _cartsService.ValidateAmountOfItemsAsync();
+    //}

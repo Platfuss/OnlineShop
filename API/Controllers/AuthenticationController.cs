@@ -35,7 +35,7 @@ public class AuthenticationController : ControllerBase
         return Ok(await _authentication.RefreshJwtAsync());
     }
 
-    [HttpPost("revoke-access")]
+    [HttpDelete("revoke-access")]
     [Authorize]
     public async Task<ActionResult<bool>> RevokeAccess()
     {
