@@ -62,7 +62,7 @@ public class AddressService : IAddressService
         return output;
     }
 
-    public async Task DeleteAddressAsync(int addressId)
+    public async Task<bool> DeleteAddressAsync(int addressId)
     {
         var customerId = await _userService.GetCustomerIdAsync();
 
@@ -88,7 +88,8 @@ public class AddressService : IAddressService
             _db.Addresses.Remove(addressToDelete);
         }
 
-        await _db.SaveChangesAsync();
+        var rowsAffected = await _db.SaveChangesAsync();
+        return rowsAffected == 1;
     }
 
     public async Task<Address> AddAddressAsync(AddressRequest request)

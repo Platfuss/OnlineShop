@@ -12,9 +12,13 @@ const Account = () => {
 	useEffect(() => {
 		GetOrders("orders/all", METHOD.GET);
 		GetUserBasicInfo("customers/get", METHOD.GET);
-		GetAddresses("addresses/all", METHOD.GET);
+		UpdateAddresses();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	const UpdateAddresses = () => {
+		GetAddresses("addresses/all", METHOD.GET);
+	};
 
 	return (
 		<div className="wholePage">
@@ -38,7 +42,13 @@ const Account = () => {
 			<h2>Twoje adresy</h2>
 			{addresses &&
 				addresses.map((a) => {
-					return <AddressInfo key={a.id} address={a} />;
+					return (
+						<AddressInfo
+							key={a.id}
+							address={a}
+							Callback={UpdateAddresses}
+						/>
+					);
 				})}
 		</div>
 	);

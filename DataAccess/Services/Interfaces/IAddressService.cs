@@ -6,7 +6,7 @@ namespace DataAccess.Services.Interfaces;
 public interface IAddressService
 {
     Task<Address> AddAddressAsync(AddressRequest request);
-    Task DeleteAddressAsync(int addressId);
+    Task<bool> DeleteAddressAsync(int addressId);
     Task<List<Address>> GetAddressesAsync();
     Task<Address> UpdateAddressAsync(Address model);
 }

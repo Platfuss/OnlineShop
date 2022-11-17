@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import { METHOD } from "../utils/useFetch";
 import useAuthFetch from "../utils/useAuthFetch";
 import Img64Base from "../utils/Img64Base";
+import { useNavigate, NavLink } from "react-router-dom";
 
 const Cart = () => {
+	const navigate = useNavigate();
 	const { CallApi: GetItemsInCart, data: itemsInCart } = useAuthFetch();
+	const { CallApi: DeleteItemFromCart, isLoading: isDeletingEntry } =
+		useAuthFetch();
 	const {
 		CallApi: UpdateEntry,
 		isLoading: isUpdatingEntry,
@@ -16,11 +20,20 @@ const Cart = () => {
 	useEffect(
 		() => GetItemsInCart("carts/get", METHOD.GET),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[isUpdatingEntry]
+		[]
+	);
+
+	useEffect(
+		() => {
+			if (isUpdatingEntry || isDeletingEntry === false) {
+				GetItemsInCart("carts/get", METHOD.GET);
+			}
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[isUpdatingEntry, isDeletingEntry]
 	);
 
 	useEffect(() => {
-		console.log(wasValidAmount);
 		if (wasValidAmount === false)
 			alert("Przekroczono liczbę dostępnych produktów");
 	}, [wasValidAmount]);
@@ -33,7 +46,6 @@ const Cart = () => {
 				itemAmounts[item.itemId] = item.amount;
 			}
 		}
-		//setServerItemAmounts(itemAmounts);
 		setWebItemAmounts(itemAmounts);
 	}, [itemsInCart]);
 
@@ -57,8 +69,9 @@ const Cart = () => {
 							className="singleProductImage"
 							src={it.image}
 						></Img64Base>
-						<h5>Hello</h5>
-						<p>{it.name}</p>
+						<NavLink end to={`/products/details/${it.itemId}`}>
+							{it.name}
+						</NavLink>
 						<input
 							type={"number"}
 							min={0}
@@ -73,13 +86,25 @@ const Cart = () => {
 								setWebItemAmounts(newAmounts);
 							}}
 						></input>
+						<button
+							onClick={() =>
+								DeleteItemFromCart(`carts/${it.itemId}`, METHOD.DELETE)
+							}
+						>
+							X
+						</button>
 						<p>{it.amount}</p>
 						<p>{it.price}</p>
 						<p>{it.price * it.amount}</p>
 					</div>
 				);
 			})}
-			<button>Kupuję</button>
+			<button
+				disabled={Object.keys(webItemAmounts).length === 0}
+				onClick={() => navigate("/create-order")}
+			>
+				Zamawiam
+			</button>
 		</div>
 	);
 };

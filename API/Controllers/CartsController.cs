@@ -29,7 +29,7 @@ public class CartsController : ControllerBase
     }
 
     [HttpDelete("{itemId}")]
-    public Task DeleteItemFromCart(int itemId) =>
+    public Task<bool> DeleteItemFromCart(int itemId) =>
         _cartsService.DeleteFromCartAsync(itemId);
 
 }

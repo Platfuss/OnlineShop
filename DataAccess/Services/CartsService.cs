@@ -90,14 +90,16 @@ public class CartsService : ICartsService
         cartEntity.Amount = request.Amount;
 
         var rowsAffected = await _db.SaveChangesAsync();
-        return true;
+        return rowsAffected == 1;
     }
 
-    public async Task DeleteFromCartAsync(int itemId)
+    public async Task<bool> DeleteFromCartAsync(int itemId)
     {
         var customerId = await _userService.GetCustomerIdAsync();
         var cartEntry = _db.Carts.Where(x => x.CustomerId == customerId && x.ItemId == itemId).First();
         _db.Carts.Remove(cartEntry);
-        await _db.SaveChangesAsync();
+
+        var rowsAffected = await _db.SaveChangesAsync();
+        return rowsAffected == 1;
     }
 }

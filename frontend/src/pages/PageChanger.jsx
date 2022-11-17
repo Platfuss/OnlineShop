@@ -10,6 +10,7 @@ import SingleProductDetails from "./SingleProductDetails";
 import Cart from "./Cart";
 import Login from "./Login";
 import Account from "./Account";
+import CreateOrder from "./CreateOrder";
 
 const PageChanger = () => {
 	useScrollToTop();
@@ -23,6 +24,7 @@ const PageChanger = () => {
 				path="/products/details/:id"
 				element={<SingleProductDetails />}
 			/>
+			<Route path="/create-order" element={<CreateOrder />} />
 			<Route path="/account" element={<Account />} />
 			<Route path="/login" element={<Login />} />
 			<Route path="/cart" element={<Cart />} />

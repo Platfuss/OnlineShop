@@ -35,7 +35,7 @@ const SingleProduct = ({ product }) => {
 			<button
 				className="addToCartButton"
 				onClick={OnButtonClick}
-				disabled={product.amount > 0 && isLoading}
+				disabled={product.amount < 1 || isLoading}
 			>
 				Dodaj do koszyka
 			</button>
