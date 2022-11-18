@@ -6,8 +6,10 @@ import useAuthFetch from "../utils/useAuthFetch";
 import { METHOD } from "../utils/useFetch";
 import { useNavigate } from "react-router-dom";
 
+const postalCodePattern = new RegExp(/^\d{2}-\d{3}$/);
+
 const AddressEditor = () => {
-	const navigate = useNavigate();
+	const Navigate = useNavigate();
 	const param = useParams();
 	const paramHasId = Object.keys(param).length > 0;
 	const { CallApi: GetAddress, data: address } = useAuthFetch();
@@ -60,7 +62,7 @@ const AddressEditor = () => {
 
 	useEffect(() => {
 		if (addressSubmitStatus === 200) {
-			navigate("/account");
+			Navigate("/account");
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [addressSubmitStatus]);
@@ -118,12 +120,7 @@ const AddressEditor = () => {
 			<button
 				onClick={Submit}
 				disabled={
-					!(
-						city &&
-						street &&
-						number &&
-						new RegExp(/^\d{2}-\d{3}$/).test(postalCode)
-					)
+					!(city && street && number && postalCodePattern.test(postalCode))
 				}
 			>
 				{paramHasId ? "Aktualizuj" : "Utwórz"}

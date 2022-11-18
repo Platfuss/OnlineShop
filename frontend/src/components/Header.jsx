@@ -3,15 +3,18 @@ import NavBar from "./NavBar";
 import { NavLink } from "react-router-dom";
 import useAuth from "../utils/useAuth";
 import useAuthFetch, { METHOD } from "../utils/useAuthFetch";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
 	const { auth, setAuth } = useAuth();
 	const { CallApi } = useAuthFetch();
 
+	const Navigate = useNavigate();
+
 	const OnLogOut = () => {
 		CallApi("authentication/revoke-access", METHOD.DELETE);
 		setAuth(false);
-		localStorage.removeItem("RefreshTokenExpirationDate");
+		Navigate("/");
 	};
 
 	return (
@@ -25,7 +28,7 @@ const Header = () => {
 						<button onClick={OnLogOut}>Wyloguj</button>
 					</div>
 				) : (
-					<NavLink end to={"/login"}>
+					<NavLink end to={"/login-register"}>
 						Zaloguj/Zarejestruj
 					</NavLink>
 				)}

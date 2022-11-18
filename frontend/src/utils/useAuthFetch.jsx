@@ -7,7 +7,7 @@ const useAuthFetch = () => {
 	const [attempt, setAttempt] = useState(0);
 	const [callData, setCallData] = useState({});
 	const { CallApi: UnAuthCall, data, isLoading, error, status } = useFetch();
-	const navigate = useNavigate();
+	const Navigate = useNavigate();
 	const { setAuth } = useAuth();
 
 	const CallApi = (url, method, body) => {
@@ -24,7 +24,7 @@ const useAuthFetch = () => {
 			} else if (status === 401 && attempt > 0) {
 				setAuth(false);
 				setAttempt(0);
-				navigate("/login");
+				Navigate("/login-register");
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

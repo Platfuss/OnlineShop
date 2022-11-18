@@ -5,7 +5,7 @@ import Img64Base from "../utils/Img64Base";
 import { useNavigate, NavLink } from "react-router-dom";
 
 const Cart = () => {
-	const navigate = useNavigate();
+	const Navigate = useNavigate();
 	const { CallApi: GetItemsInCart, data: itemsInCart } = useAuthFetch();
 	const { CallApi: DeleteItemFromCart, isLoading: isDeletingEntry } =
 		useAuthFetch();
@@ -101,7 +101,7 @@ const Cart = () => {
 			})}
 			<button
 				disabled={Object.keys(webItemAmounts).length === 0}
-				onClick={() => navigate("/create-order")}
+				onClick={() => Navigate("/create-order")}
 			>
 				Zamawiam
 			</button>

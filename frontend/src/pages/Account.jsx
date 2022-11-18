@@ -6,7 +6,7 @@ import AddressInfo from "../components/AddressInfo";
 import { useNavigate } from "react-router-dom";
 
 const Account = () => {
-	const navigate = useNavigate();
+	const Navigate = useNavigate();
 	const { CallApi: GetOrders, data: orders } = useAuthFetch();
 	const { CallApi: GetUserBasicInfo, data: userBasicInfo } = useAuthFetch();
 	const { CallApi: GetAddresses, data: addresses } = useAuthFetch();
@@ -52,7 +52,7 @@ const Account = () => {
 						/>
 					);
 				})}
-			<button onClick={() => navigate("/address/new")}>Nowy adres</button>
+			<button onClick={() => Navigate("/address/new")}>Nowy adres</button>
 		</div>
 	);
 };

@@ -8,10 +8,10 @@ import Error from "./Error";
 import Category from "./Category";
 import SingleProductDetails from "./SingleProductDetails";
 import Cart from "./Cart";
-import Login from "./Login";
 import Account from "./Account";
 import CreateOrder from "./CreateOrder";
 import AddressEditor from "./AddressEditor";
+import LoginRegister from "./LoginRegister";
 
 const PageChanger = () => {
 	useScrollToTop();
@@ -29,7 +29,7 @@ const PageChanger = () => {
 			<Route path="/address/:id" element={<AddressEditor />} />
 			<Route path="/address/new" element={<AddressEditor />} />
 			<Route path="/account" element={<Account />} />
-			<Route path="/login" element={<Login />} />
+			<Route path="/login-register" element={<LoginRegister />} />
 			<Route path="/cart" element={<Cart />} />
 			<Route path="*" element={<Error />} />
 		</Routes>

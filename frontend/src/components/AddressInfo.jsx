@@ -4,7 +4,7 @@ import useAuthFetch, { METHOD } from "../utils/useAuthFetch";
 import { useNavigate } from "react-router-dom";
 
 const AddressInfo = ({ address, RefreshOnDelete }) => {
-	const navigate = useNavigate();
+	const Navigate = useNavigate();
 	const { CallApi: OnDelete, isLoading } = useAuthFetch();
 
 	useEffect(() => {
@@ -22,7 +22,7 @@ const AddressInfo = ({ address, RefreshOnDelete }) => {
 			{address.subNumber ? `/${address.subNumber}` : ""}
 			{address.postalCode}
 			{RefreshOnDelete && (
-				<button onClick={() => navigate(`/address/${address.id}`)}>
+				<button onClick={() => Navigate(`/address/${address.id}`)}>
 					Edytuj
 				</button>
 			)}
