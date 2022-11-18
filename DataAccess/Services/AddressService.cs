@@ -74,8 +74,8 @@ public class AddressService : IAddressService
         {
             var addressToForget = await _db.CustomerAddress
                  .Where(ca => ca.CustomerId == customerId
-                     || ca.AddressId == addressId)
-                 .SingleAsync();
+                     && ca.AddressId == addressId)
+                 .FirstOrDefaultAsync();
 
             _db.CustomerAddress.Remove(addressToForget);
         }
@@ -83,7 +83,7 @@ public class AddressService : IAddressService
         {
             var addressToDelete = await _db.Addresses
                 .Where(a => a.Id == addressId)
-                .SingleAsync();
+                .FirstOrDefaultAsync();
 
             _db.Addresses.Remove(addressToDelete);
         }

@@ -39,6 +39,7 @@ const ProfilEditor = () => {
 
 	return (
 		<div className="wholePage">
+			<h1>Edycja profilu</h1>
 			<form>
 				<label>
 					Imię
@@ -67,6 +68,7 @@ const ProfilEditor = () => {
 			>
 				Aktualizuj
 			</button>
+			<button onClick={() => Navigate(-1)}>Powrót</button>
 		</div>
 	);
 };

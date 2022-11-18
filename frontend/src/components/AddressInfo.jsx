@@ -2,13 +2,15 @@ import React from "react";
 import { useEffect } from "react";
 import useAuthFetch, { METHOD } from "../utils/useAuthFetch";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const AddressInfo = ({ address, RefreshOnDelete }) => {
 	const Navigate = useNavigate();
 	const { CallApi: OnDelete, isLoading } = useAuthFetch();
+	const [clickedDelete, setClickedDelete] = useState(false);
 
 	useEffect(() => {
-		if (RefreshOnDelete && isLoading === false) {
+		if (RefreshOnDelete && isLoading === false && clickedDelete) {
 			RefreshOnDelete();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,6 +31,7 @@ const AddressInfo = ({ address, RefreshOnDelete }) => {
 			{RefreshOnDelete && (
 				<button
 					onClick={() => {
+						setClickedDelete(true);
 						OnDelete(`addresses/${address.id}`, METHOD.DELETE);
 					}}
 				>

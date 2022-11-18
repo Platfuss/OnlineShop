@@ -58,7 +58,9 @@ const CreateOrder = () => {
 								);
 							})}
 						</select>
-						<button>Dodaj nowy adres</button>
+						<button onClick={() => Navigate("/address/new")}>
+							Dodaj nowy adres
+						</button>
 						{
 							<form>
 								<label>

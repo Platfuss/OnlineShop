@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import useFetch, { METHOD } from "../utils/useFetch";
 import useAuthFetch from "../utils/useAuthFetch";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Img64Base from "../utils/Img64Base";
 
 const SingleProductDetails = () => {
+	const Navigate = useNavigate();
 	const params = useParams();
 	const { CallApi: GetDetails, data: product } = useFetch();
 	const { CallApi: AddToCart, isLoading: isAddingToCart } = useAuthFetch();
@@ -47,6 +48,7 @@ const SingleProductDetails = () => {
 						Dodaj do koszyka
 					</button>
 					<div>{product.decription}</div>
+					<button onClick={() => Navigate(-1)}>Powrót</button>
 				</>
 			)}
 		</div>

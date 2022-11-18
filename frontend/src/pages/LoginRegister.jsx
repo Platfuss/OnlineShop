@@ -29,7 +29,7 @@ const LoginRegister = () => {
 
 	useEffect(() => {
 		if (auth) {
-			Navigate("/");
+			Navigate(-1, { replace: true });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [auth]);

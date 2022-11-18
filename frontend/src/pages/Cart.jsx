@@ -62,49 +62,62 @@ const Cart = () => {
 
 	return (
 		<div className="wholePage">
-			{itemsInCart?.map((it) => {
-				return (
-					<div key={it.itemId}>
-						<Img64Base
-							className="singleProductImage"
-							src={it.image}
-						></Img64Base>
-						<NavLink end to={`/products/details/${it.itemId}`}>
-							{it.name}
-						</NavLink>
-						<input
-							type={"number"}
-							min={0}
-							max={99}
-							value={webItemAmounts[it.itemId] || 0}
-							onBlur={() => OnAmountConfirmed(it.itemId)}
-							onChange={(e) => {
-								var newAmounts = {
-									...webItemAmounts,
-									[it.itemId]: parseInt(e.target.value),
-								};
-								setWebItemAmounts(newAmounts);
-							}}
-						></input>
-						<button
-							onClick={() =>
-								DeleteItemFromCart(`carts/${it.itemId}`, METHOD.DELETE)
-							}
-						>
-							X
-						</button>
-						<p>{it.amount}</p>
-						<p>{it.price}</p>
-						<p>{it.price * it.amount}</p>
-					</div>
-				);
-			})}
-			<button
-				disabled={Object.keys(webItemAmounts).length === 0}
-				onClick={() => Navigate("/create-order")}
-			>
-				Zamawiam
-			</button>
+			<h1>Koszyk</h1>
+			{itemsInCart?.length ? (
+				<>
+					{itemsInCart?.map((it) => {
+						return (
+							<div key={it.itemId}>
+								<Img64Base
+									className="singleProductImage"
+									src={it.image}
+								></Img64Base>
+								<NavLink end to={`/products/details/${it.itemId}`}>
+									{it.name}
+								</NavLink>
+								<input
+									type={"number"}
+									min={0}
+									max={99}
+									value={webItemAmounts[it.itemId] || 0}
+									onBlur={() => OnAmountConfirmed(it.itemId)}
+									onChange={(e) => {
+										var newAmounts = {
+											...webItemAmounts,
+											[it.itemId]: parseInt(e.target.value),
+										};
+										setWebItemAmounts(newAmounts);
+									}}
+								></input>
+								<button
+									onClick={() =>
+										DeleteItemFromCart(
+											`carts/${it.itemId}`,
+											METHOD.DELETE
+										)
+									}
+								>
+									X
+								</button>
+								<p>{it.amount}</p>
+								<p>{it.price}</p>
+								<p>{it.price * it.amount}</p>
+							</div>
+						);
+					})}
+					<button
+						disabled={Object.keys(webItemAmounts).length === 0}
+						onClick={() => Navigate("/create-order")}
+					>
+						Zamawiam
+					</button>
+				</>
+			) : (
+				<>
+					<h3>Twój koszyk jest pusty</h3>
+					<button onClick={() => Navigate(-1)}>Powrót</button>
+				</>
+			)}
 		</div>
 	);
 };

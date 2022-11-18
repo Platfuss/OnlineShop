@@ -62,13 +62,14 @@ const AddressEditor = () => {
 
 	useEffect(() => {
 		if (addressSubmitStatus === 200) {
-			Navigate("/account");
+			Navigate(-1, { replace: true });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [addressSubmitStatus]);
 
 	return (
 		<div className="wholePage">
+			<h1>Edycja adresu</h1>
 			<form>
 				<label>
 					Miasto
@@ -125,6 +126,7 @@ const AddressEditor = () => {
 			>
 				{paramHasId ? "Aktualizuj" : "Utwórz"}
 			</button>
+			<button onClick={() => Navigate(-1)}>Powrót</button>
 		</div>
 	);
 };

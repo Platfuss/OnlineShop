@@ -3,18 +3,24 @@ import SingleProduct from "../components/SingleProduct";
 import useFetch, { METHOD } from "../utils/useFetch";
 
 const Home = () => {
-	const { CallApi: FetchNewests, data: newests } = useFetch();
+	const {
+		CallApi: FetchNewests,
+		data: newests,
+		isLoading: isNewestsLoading,
+	} = useFetch();
 	const { CallApi: FetchRecommended, data: recommended } = useFetch();
 
-	useEffect(
-		() => {
-			//TODO: fetch one at the time
-			FetchNewests("items/group/8/0", METHOD.GET);
-			FetchRecommended("items/group/8/0?onlyrecommended=true", METHOD.GET);
-		},
+	useEffect(() => {
+		FetchNewests("items/group/8/0", METHOD.GET);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
-	);
+	}, []);
+
+	useEffect(() => {
+		if (isNewestsLoading === false) {
+			FetchRecommended("items/group/8/0?onlyrecommended=true", METHOD.GET);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isNewestsLoading]);
 
 	return (
 		<>
