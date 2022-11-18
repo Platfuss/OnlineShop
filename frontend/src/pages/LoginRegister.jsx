@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../utils/useAuth";
 import { useNavigate } from "react-router-dom";
 
-const emailPattern = new RegExp(/^.+@.+\..+$/);
+const emailPattern = new RegExp(/^\w+@(\w+\.)+\w+$/);
 
 const LoginRegister = () => {
 	const [loginEmail, setLoginEmail] = useState("user@example.com");
@@ -28,7 +28,6 @@ const LoginRegister = () => {
 	}, [loginStatus, registerStatus]);
 
 	useEffect(() => {
-		console.log("Auth", auth);
 		if (auth) {
 			Navigate("/");
 		}

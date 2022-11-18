@@ -8,6 +8,7 @@ const Home = () => {
 
 	useEffect(
 		() => {
+			//TODO: fetch one at the time
 			FetchNewests("items/group/8/0", METHOD.GET);
 			FetchRecommended("items/group/8/0?onlyrecommended=true", METHOD.GET);
 		},
