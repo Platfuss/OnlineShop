@@ -21,7 +21,7 @@ public class OrdersController : ControllerBase
         return await _ordersService.GetOrdersAsync();
     }
 
-    [HttpPost("order")]
+    [HttpPost("create")]
     public async Task<Order> InsertOrder(OrderRequest request)
     {
         return await _ordersService.InsertOrderAsync(request);

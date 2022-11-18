@@ -1,17 +1,18 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import useScrollToTop from "../utils/useScrollToTop";
-import Contact from "./Contact";
-import Home from "./Home";
-import Products from "./Products";
-import Error from "./Error";
-import Category from "./Category";
-import SingleProductDetails from "./SingleProductDetails";
-import Cart from "./Cart";
-import Account from "./Account";
-import CreateOrder from "./CreateOrder";
-import AddressEditor from "./AddressEditor";
-import LoginRegister from "./LoginRegister";
+import useScrollToTop from "./utils/useScrollToTop";
+import Contact from "./pages/Contact";
+import Home from "./pages/Home";
+import Products from "./pages/Products";
+import Error from "./pages/Error";
+import Category from "./pages/Category";
+import SingleProductDetails from "./pages/SingleProductDetails";
+import Cart from "./pages/Cart";
+import Account from "./pages/Account";
+import CreateOrder from "./pages/CreateOrder";
+import AddressEditor from "./pages/AddressEditor";
+import LoginRegister from "./pages/LoginRegister";
+import ProfilEditor from "./pages/ProfilEditor";
 
 const PageChanger = () => {
 	useScrollToTop();
@@ -25,6 +26,7 @@ const PageChanger = () => {
 				path="/products/details/:id"
 				element={<SingleProductDetails />}
 			/>
+			<Route path="/profil" element={<ProfilEditor />} />
 			<Route path="/create-order" element={<CreateOrder />} />
 			<Route path="/address/:id" element={<AddressEditor />} />
 			<Route path="/address/new" element={<AddressEditor />} />

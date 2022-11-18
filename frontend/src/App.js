@@ -1,7 +1,7 @@
 import React from "react";
-import PageChanger from "./pages/PageChanger";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
+import PageChanger from "./PageChanger";
+import Footer from "./Footer";
+import Header from "./Header";
 //import LoginKeeper from "./utils/LoginKeeper";
 
 export default function App() {

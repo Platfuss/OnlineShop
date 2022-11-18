@@ -40,6 +40,7 @@ const Account = () => {
 			<h2>Twój profil</h2>
 			{userBasicInfo?.name}
 			{userBasicInfo?.surname}
+			<button onClick={() => Navigate("/profil")}>Edytuj profil</button>
 
 			<h2>Twoje adresy</h2>
 			{addresses &&

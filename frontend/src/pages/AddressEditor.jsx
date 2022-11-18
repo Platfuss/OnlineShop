@@ -37,7 +37,7 @@ const AddressEditor = () => {
 
 	useEffect(() => {
 		if (paramHasId) {
-			GetAddress(`addresses/${param.id}`);
+			GetAddress(`addresses/${param.id}`, METHOD.GET);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [param]);

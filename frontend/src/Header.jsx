@@ -1,8 +1,8 @@
 import React from "react";
-import NavBar from "./NavBar";
+import NavBar from "./components/NavBar";
 import { NavLink } from "react-router-dom";
-import useAuth from "../utils/useAuth";
-import useAuthFetch, { METHOD } from "../utils/useAuthFetch";
+import useAuth from "./utils/useAuth";
+import useAuthFetch, { METHOD } from "./utils/useAuthFetch";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
