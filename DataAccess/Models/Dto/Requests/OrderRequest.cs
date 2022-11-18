@@ -14,6 +14,7 @@ public class OrderRequest
     [Required]
     public string ShipmentType { get; set; }
 
-    [Required]
+    public string PaymentType { get; set; } = "Karta";
+
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 }

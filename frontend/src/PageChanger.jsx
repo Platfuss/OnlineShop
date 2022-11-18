@@ -10,6 +10,7 @@ import SingleProductDetails from "./pages/SingleProductDetails";
 import Cart from "./pages/Cart";
 import Account from "./pages/Account";
 import CreateOrder from "./pages/CreateOrder";
+import OrderConfirm from "./pages/OrderConfirm";
 import AddressEditor from "./pages/AddressEditor";
 import LoginRegister from "./pages/LoginRegister";
 import ProfilEditor from "./pages/ProfilEditor";
@@ -28,6 +29,7 @@ const PageChanger = () => {
 			/>
 			<Route path="/profil" element={<ProfilEditor />} />
 			<Route path="/create-order" element={<CreateOrder />} />
+			<Route path="/order-confirm" element={<OrderConfirm />} />
 			<Route path="/address/:id" element={<AddressEditor />} />
 			<Route path="/address/new" element={<AddressEditor />} />
 			<Route path="/account" element={<Account />} />

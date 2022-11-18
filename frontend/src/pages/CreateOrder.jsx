@@ -1,14 +1,22 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuthFetch, { METHOD } from "../utils/useAuthFetch";
+
+const personalCollection = "Odbiór osobisty";
+const payWithCash = "Gotówka na miejscu";
 
 const CreateOrder = () => {
 	const { CallApi: GetProfil, data: profil } = useAuthFetch();
 	const { CallApi: GetAddresses, data: addresses } = useAuthFetch();
-	const [shippingIdx, setShippingIdx] = useState(null);
-	const [invoiceIdx, setInvoiceIdx] = useState(null);
+	const { CallApi: NewOrder, data: newOrderData } = useAuthFetch();
+	const [shippingIdx, setShippingIdx] = useState(0);
+	const [invoiceIdx, setInvoiceIdx] = useState(0);
 	const [shippingType, setShippingType] = useState("Inpost Paczkomaty");
+	const [paymentType, setPaymentType] = useState("Karta");
+
+	const Navigate = useNavigate();
 
 	useEffect(() => {
 		GetProfil("customers/get", METHOD.GET);
@@ -22,6 +30,13 @@ const CreateOrder = () => {
 			setInvoiceIdx(0);
 		}
 	}, [addresses]);
+
+	useEffect(() => {
+		if (newOrderData) {
+			Navigate("/order-confirm");
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [newOrderData]);
 
 	const AddressChooser = ({ idx, SetIdx }) => {
 		return (
@@ -86,7 +101,14 @@ const CreateOrder = () => {
 		);
 	};
 
-	const OnBuy = () => {};
+	const newOrderBody = addresses
+		? JSON.stringify({
+				invoiceAddressId: addresses[invoiceIdx].id,
+				shippingAddressId: addresses[shippingIdx].id,
+				shipmentType: shippingType,
+				paymentType: paymentType,
+		  })
+		: null;
 
 	return (
 		<div className="wholePage">
@@ -98,14 +120,13 @@ const CreateOrder = () => {
 					<p>{profil.surname}</p>
 				</div>
 			)}
-			<h3>Adres dostawy:</h3>
-			<AddressChooser idx={shippingIdx} SetIdx={setShippingIdx} />
 			<h3>Typ dostawy:</h3>
-			<div onChange={(e) => setShippingType(e.target.value)}>
+			<form onChange={(e) => setShippingType(e.target.value)}>
 				<input
 					type={"radio"}
 					name={"shippingType"}
 					value={"Inpost Paczkomaty"}
+					disabled={paymentType === payWithCash}
 					defaultChecked
 				/>{" "}
 				Inpost Paczkomaty
@@ -113,24 +134,51 @@ const CreateOrder = () => {
 					type={"radio"}
 					name={"shippingType"}
 					value={"Inpost Kurier"}
+					disabled={paymentType === payWithCash}
 				/>{" "}
 				Inpost Kurier
 				<input
 					type={"radio"}
 					name={"shippingType"}
 					value={"Kurier DHL"}
+					disabled={paymentType === payWithCash}
 				/>{" "}
 				Kurier DHL
 				<input
 					type={"radio"}
 					name={"shippingType"}
-					value={"Odbiór osobisty"}
+					value={personalCollection}
 				/>{" "}
 				Odbiór osobisty
-			</div>
+			</form>
+			<h3>Metoda płatności:</h3>
+			<form onChange={(e) => setPaymentType(e.target.value)}>
+				<input
+					type={"radio"}
+					name={"paymentType"}
+					value={"Karta"}
+					defaultChecked
+				/>{" "}
+				Karta
+				<input type={"radio"} name={"paymentType"} value={"BLIK"} /> BLIK
+				<input type={"radio"} name={"paymentType"} value={"Przelew"} />{" "}
+				Przelew
+				<input
+					type={"radio"}
+					name={"paymentType"}
+					value={payWithCash}
+					disabled={shippingType !== personalCollection}
+				/>{" "}
+				Gotówka na miejscu
+			</form>
+			<h3>Adres dostawy:</h3>
+			<AddressChooser idx={shippingIdx} SetIdx={setShippingIdx} />
 			<h3>Adres na fakturze:</h3>
 			<AddressChooser idx={invoiceIdx} SetIdx={setInvoiceIdx} />
-			<button disabled={!addresses} onClick={OnBuy}>
+			<button
+				disabled={!addresses}
+				onClick={() => NewOrder("orders/create", METHOD.POST, newOrderBody)}
+			>
 				Potwierdzam zakup
 			</button>
 		</div>
