@@ -26,19 +26,25 @@ const SingleProduct = ({ product }) => {
 					></Img64Base>
 				</NavLink>
 			</figure>
-			<div>{product.category}</div>
-			<NavLink end to={route}>
-				<div>{product.name}</div>
-			</NavLink>
-			<div>{product.price} zł</div>
-			<div>{product.amount > 0 ? "Dostępny" : "Niedostępny"}</div>
-			<button
-				className="addToCartButton"
-				onClick={OnButtonClick}
-				disabled={product.amount < 1 || isLoading}
-			>
-				Dodaj do koszyka
-			</button>
+			<div className="productInfo">
+				<span>{product.category}</span>
+				<NavLink end to={route}>
+					<b>
+						<span>{product.name}</span>
+					</b>
+				</NavLink>
+				<span>{product.price} zł</span>
+				<span>{product.amount > 0 ? "Dostępny" : "Niedostępny"}</span>
+				<div className="hiddenButtonContainer">
+					<button
+						className="addToCartButton"
+						onClick={OnButtonClick}
+						disabled={product.amount < 1 || isLoading}
+					>
+						Dodaj do koszyka
+					</button>
+				</div>
+			</div>
 		</div>
 	);
 };

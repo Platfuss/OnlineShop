@@ -24,12 +24,14 @@ const Home = () => {
 
 	return (
 		<>
-			<div className="wholePage">
-				<h1>Nowości!</h1>
+			<h1>Nowości!</h1>
+			<div className="listOfItems">
 				{newests?.map((item) => (
 					<SingleProduct key={item.id} product={item} />
 				))}
-				<h1>Rekomendowane</h1>
+			</div>
+			<h1>Rekomendowane</h1>
+			<div className="listOfItems">
 				{recommended?.map((item) => (
 					<SingleProduct key={item.id} product={item} />
 				))}
