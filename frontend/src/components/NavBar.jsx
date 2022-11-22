@@ -4,25 +4,23 @@ import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
 	return (
-		<nav>
-			<ul className="menu">
-				<li>
-					<div>Menu</div>
-					<MenuExpander />
-				</li>
-				{/* <li>
-					<div>Nowości</div>
-				</li> */}
-				{/* <li>
-					<div>Promocje</div>
-				</li> */}
-				<li className="contact">
-					<NavLink end to={"/contact"}>
-						Kontakt
-					</NavLink>
-				</li>
-			</ul>
-		</nav>
+		<ul className="menuBar">
+			<li>
+				<div>Menu</div>
+				<MenuExpander />
+			</li>
+			<li>
+				<div>Nowości</div>
+			</li>
+			<li>
+				<div>Promocje</div>
+			</li>
+			<li className="contact">
+				<NavLink end to={"/contact"}>
+					Kontakt
+				</NavLink>
+			</li>
+		</ul>
 	);
 };
 

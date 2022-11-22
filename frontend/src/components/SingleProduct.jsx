@@ -4,6 +4,7 @@ import Img64Base from "../utils/Img64Base";
 import useAuthFetch, { METHOD } from "../utils/useAuthFetch";
 
 const SingleProduct = ({ product }) => {
+	var isAvailable = product.amount;
 	const route = `/products/details/${product.id}`;
 	const body = JSON.stringify({
 		itemId: product.id,
@@ -34,10 +35,12 @@ const SingleProduct = ({ product }) => {
 					</b>
 				</NavLink>
 				<span>{product.price} zł</span>
-				<span>{product.amount > 0 ? "Dostępny" : "Niedostępny"}</span>
+				<div>
+					<div className={`dot ${isAvailable ? "available" : ""}`}></div>
+					{isAvailable ? "Dostępny" : "Niedostępny"}{" "}
+				</div>
 				<div className="hiddenButtonContainer">
 					<button
-						className="addToCartButton"
 						onClick={OnButtonClick}
 						disabled={product.amount < 1 || isLoading}
 					>

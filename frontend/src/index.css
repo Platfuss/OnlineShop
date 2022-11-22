@@ -5,7 +5,7 @@
 }
 
 :root {
-	--MAX-WIDTH: 1500px;
+	--MAX-WIDTH: 1000px;
 }
 
 body {
@@ -14,7 +14,6 @@ body {
 		"Helvetica Neue", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	font-size: 1rem;
 	background-color: #ecf0f1;
 	color: #666;
 	font-family: "Roboto Condensed", sans-serif;
@@ -43,24 +42,21 @@ button:disabled {
 /* Main Content */
 
 .wholePage {
-	background-color: green;
 	display: flex;
-	min-height: 75vh;
+	min-height: 50vh;
 	justify-content: center;
 	padding-top: 1rem;
 }
 
 main {
-	padding: 0 1rem;
 	display: flex;
 	max-width: var(--MAX-WIDTH);
-	background-color: blue;
 	flex-wrap: wrap;
 	justify-content: center;
+	margin-bottom: 5vh;
 }
 
 .listOfItems {
-	background-color: yellow;
 	gap: 1rem;
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
@@ -96,8 +92,26 @@ main {
 	text-decoration: none;
 }
 
-.productInfo span:nth-child(3) {
+.productInfo :nth-child(3) {
 	margin-top: 1rem;
+}
+
+.productInfo :nth-child(4) {
+	display: flex;
+	align-items: center;
+	justify-content: left;
+}
+
+.productInfo .dot {
+	height: 7px;
+	width: 7px;
+	background-color: orangered;
+	border-radius: 50%;
+	margin-right: 5px;
+}
+
+.productInfo .available {
+	background-color: yellowgreen;
 }
 
 .hiddenButtonContainer {
@@ -134,7 +148,7 @@ main {
 	visibility: visible;
 }
 
-.addToCartButton {
+main button {
 	background-color: green;
 	padding: 1rem;
 	border: none;
@@ -143,15 +157,15 @@ main {
 	height: 50px;
 }
 
-.addToCartButton:disabled {
+main button:disabled {
 	background-color: #bbb;
 }
 
 main h1 {
 	font-size: xx-large;
-	margin: 2rem 0 1rem 0;
+	margin: 2rem 0rem 0.5rem 0;
 	width: 100%;
-	background-color: red;
+	/* transform: rotate(-1.5deg); */
 }
 
 main h1:first-child {
@@ -196,76 +210,140 @@ main h1:first-child {
 		border-bottom: 3px solid rgba(0, 0, 0, 0.1);
 		margin-bottom: 0;
 	}
+
+	.singleProductImage {
+		width: 350px;
+		max-height: 350px;
+	}
 }
 
 /* Header and navigations */
 
-nav a {
+header {
+	background-color: #2c3e50;
+	/* padding: 1rem 5px 1rem 5px; */
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+header > div {
+	max-width: var(--MAX-WIDTH);
+	width: 100%;
+}
+
+.header-up {
+	margin-top: 5px;
+	font-size: small;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	color: #c2cbce;
+}
+
+.header-up a {
+	font-size: medium;
+	margin-left: auto;
+	color: inherit;
+}
+
+.header-up span {
+	display: inline-block;
+	margin-right: 2vw;
+}
+
+.header-middle {
+	display: flex;
+	margin: 1rem 0 1rem 0;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.header-middle a {
 	text-decoration: none;
 }
 
-nav a.active {
+.goToCartButton {
+	margin-left: auto;
+}
+
+.goToCartButton a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.goToCartButton p {
+	align-self: flex-start;
+	color: #c2cbce;
+	font-size: 0.8rem;
+	margin: 3px 0 0 0.5rem;
+}
+
+.goToCartButton img {
+	height: 3rem;
+}
+
+/* Navigation */
+
+.menuBar a {
+	text-decoration: none;
+}
+
+.menuBar a.active {
 	font-weight: bold;
+}
+
+.menuBar li.contact a.active {
+	font-weight: normal;
 }
 
 ul {
 	list-style: none;
 }
 
-header {
-	background-color: #2c3e50;
-	padding: 1rem 2rem;
-	position: sticky;
-	top: 0;
-	z-index: 10;
-}
-
-nav {
-	max-width: var(--MAX-WIDTH);
-	margin: 0 auto;
-	display: flex;
-	justify-content: left;
-	align-items: center;
-}
-
-.menu > li,
-.menu > div {
-	display: inline-block;
-}
-
-.menu li {
+.menuBar li {
 	position: relative;
 }
 
-.menu div,
-.menu a,
-.menu {
+.menuBar {
+	display: flex;
+}
+
+.menuBar div,
+.menuBar a {
 	text-decoration: none;
 	color: #bbb;
+	font-size: large;
 	display: block;
-	padding: 10px 1.5rem;
+	padding: 1rem 1.5rem;
 	transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-li.contact {
-	position: absolute;
-	right: 20rem;
-	text-align: right;
+.menuBar li:nth-child(2),
+.menuBar li:nth-child(3) {
+	border-left: 2px solid rgba(0, 0, 0, 0.2);
 }
 
-.menu div:hover,
-.menu a:hover {
+li.contact {
+	margin-left: auto;
+}
+
+/* .menuBar li:first-child {
+	background-color: red;
+} */
+
+.menuBar div:hover,
+.menuBar a:hover {
 	background-color: #f34949;
 	color: #fff;
 }
 
 .logo {
-	font-size: 1.5rem;
 	color: #fff;
-	font-weight: 700;
-	left: 1rem;
-	position: relative;
-	max-width: 500px;
 }
 
 .submenu {
@@ -285,12 +363,12 @@ li.contact {
 	display: none;
 }
 
-.menu li:hover > .submenu {
+.menuBar li:hover > .submenu {
 	display: block;
 	animation: slideUp 0.4s ease;
 }
 
-.menu li:hover > .submenu2 {
+.menuBar li:hover > .submenu2 {
 	display: block;
 	animation: slideLeft 0.4s ease;
 }

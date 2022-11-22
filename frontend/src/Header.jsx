@@ -19,7 +19,10 @@ const Header = () => {
 
 	return (
 		<header>
-			<div>
+			<div className="header-up">
+				<span>Darmowa dostawa od 300zł </span>
+				<span>Szybka wysyłka i dobrze zabezpieczone zamówienie</span>
+				<span>Sklep stacjonarny we Wrocławiu</span>
 				{auth ? (
 					<div>
 						<NavLink end to={"/account"}>
@@ -33,16 +36,21 @@ const Header = () => {
 					</NavLink>
 				)}
 			</div>
-			<div>
+			<div className="header-middle">
 				<NavLink end to={"/"}>
 					<h1 className="logo">Misz Masz</h1>
 				</NavLink>
-				<NavLink end to={"/cart"}>
-					<button>Koszyk</button>
-				</NavLink>
+				<div className="goToCartButton">
+					<NavLink end to={"/cart"}>
+						<img src="cart.png" alt="" />
+						<p>Twój koszyk</p>
+					</NavLink>
+				</div>
 			</div>
 
-			<NavBar />
+			<div className="header-bottom">
+				<NavBar />
+			</div>
 		</header>
 	);
 };
