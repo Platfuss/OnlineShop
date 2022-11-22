@@ -32,6 +32,14 @@ textarea {
 	font: inherit;
 }
 
+button {
+	cursor: pointer;
+}
+
+button:disabled {
+	cursor: default;
+}
+
 /* Main Content */
 
 .wholePage {
@@ -57,32 +65,17 @@ main {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	grid-auto-rows: 1fr;
-}
-
-@media only screen and (max-width: 1200px) {
-	.listOfItems {
-		grid-template-columns: repeat(3, 1fr);
-	}
-}
-
-@media only screen and (max-width: 900px) {
-	.listOfItems {
-		grid-template-columns: repeat(2, 1fr);
-	}
-}
-
-@media only screen and (max-width: 500px) {
-	.listOfItems {
-		grid-template-columns: 1fr;
-	}
+	position: relative;
+	z-index: 0;
 }
 
 .singleProduct {
 	display: flex;
-	border: 4px solid #333;
+	border: 1px solid black;
+	margin: 2px 2px 0 2px;
 	padding: 1rem 2rem;
 	flex-direction: column;
-	background-color: magenta;
+	background-color: white;
 	justify-content: space-between;
 	position: relative;
 }
@@ -108,20 +101,36 @@ main {
 }
 
 .hiddenButtonContainer {
+	height: 75px;
 	visibility: hidden;
 	display: flex;
 	justify-content: center;
 	position: absolute;
-	left: 0;
+	width: calc(100% + 6px);
+	left: -3px;
 	right: 0;
 	bottom: 0;
-	transition: bottom 1s;
-	background-color: green;
+	transition: bottom 0.25s;
 	border-radius: 0 0 10px 10px;
+	background-color: white;
+	z-index: -2;
+	border: 3px solid rgba(0, 0, 0, 0.1);
+	border-top: none;
+}
+
+.listOfItems > .singleProduct:not(:hover) {
+	z-index: -3;
+}
+
+.singleProduct:hover {
+	border: 3px solid rgba(0, 0, 0, 0.1);
+	border-bottom: none;
+	margin: 0;
+	margin-bottom: 1px;
 }
 
 .singleProduct:hover .hiddenButtonContainer {
-	bottom: -50px;
+	bottom: -75px;
 	visibility: visible;
 }
 
@@ -131,6 +140,11 @@ main {
 	border: none;
 	color: white;
 	border-radius: 10px;
+	height: 50px;
+}
+
+.addToCartButton:disabled {
+	background-color: #bbb;
 }
 
 main h1 {
@@ -142,6 +156,46 @@ main h1 {
 
 main h1:first-child {
 	margin-top: 0;
+}
+
+@media only screen and (max-width: 1200px) {
+	.listOfItems {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media only screen and (max-width: 900px) {
+	.listOfItems {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media only screen and (max-width: 650px) {
+	.listOfItems {
+		grid-template-columns: 1fr;
+	}
+
+	.hiddenButtonContainer {
+		visibility: visible;
+		z-index: 0;
+		position: relative;
+		height: auto;
+		margin-top: 1rem;
+		border: none;
+	}
+
+	.singleProduct:hover .hiddenButtonContainer {
+		bottom: 0px;
+	}
+
+	.singleProduct {
+		margin-bottom: 2px;
+	}
+
+	.singleProduct:hover {
+		border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+		margin-bottom: 0;
+	}
 }
 
 /* Header and navigations */
