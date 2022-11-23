@@ -244,10 +244,24 @@ header > div {
 	color: #c2cbce;
 }
 
-.header-up a {
+.header-up a,
+.header-up .loggedUser {
 	font-size: medium;
 	margin-left: auto;
 	color: inherit;
+}
+
+.loggedUser {
+	display: inline-flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+button.textualize {
+	background-color: transparent;
+	color: inherit;
+	border: none;
+	text-decoration: underline;
 }
 
 .header-up span {
@@ -281,6 +295,7 @@ header > div {
 	color: #c2cbce;
 	font-size: 0.8rem;
 	margin: 3px 0 0 0.5rem;
+	text-align: right;
 }
 
 .goToCartButton img {
@@ -323,18 +338,14 @@ ul {
 	transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-.menuBar li:nth-child(2),
-.menuBar li:nth-child(3) {
-	border-left: 2px solid rgba(0, 0, 0, 0.2);
+.menuBar li:nth-child(1),
+.menuBar li:nth-child(2) {
+	border-right: 2px solid rgba(0, 0, 0, 0.2);
 }
 
 li.contact {
 	margin-left: auto;
 }
-
-/* .menuBar li:first-child {
-	background-color: red;
-} */
 
 .menuBar div:hover,
 .menuBar a:hover {

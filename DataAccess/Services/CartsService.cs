@@ -38,6 +38,19 @@ public class CartsService : ICartsService
         return output;
     }
 
+    public async Task<decimal> GetCartTotalPriceAsync()
+    {
+        var customerId = await _userService.GetCustomerIdAsync();
+        var userCart = await _db.Carts.Where(cart => cart.CustomerId == customerId).Include(c => c.Item).ToListAsync();
+        var totalPrice = 0m;
+        foreach(var item in userCart)
+        {
+            totalPrice += item.Amount * item.Item.Price;
+        }
+
+        return totalPrice;
+    }
+
     public async Task<bool> AddToCartAsync(CartRequest request)
     {
         var customerId = await _userService.GetCustomerIdAsync();

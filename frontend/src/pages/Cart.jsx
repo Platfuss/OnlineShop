@@ -3,6 +3,7 @@ import { METHOD } from "../utils/useFetch";
 import useAuthFetch from "../utils/useAuthFetch";
 import Img64Base from "../utils/Img64Base";
 import { useNavigate, NavLink } from "react-router-dom";
+import useAuth from "../utils/useAuth";
 
 const Cart = () => {
 	const Navigate = useNavigate();
@@ -14,6 +15,9 @@ const Cart = () => {
 		isLoading: isUpdatingEntry,
 		data: wasValidAmount,
 	} = useAuthFetch();
+	const { CallApi: GetCartTotalPrice, data: cartTotalPrice } = useAuthFetch();
+
+	const { setCartTotal } = useAuth();
 	//const [serverItemAmounts, setServerItemAmounts] = useState({});
 	const [webItemAmounts, setWebItemAmounts] = useState({});
 
@@ -25,13 +29,21 @@ const Cart = () => {
 
 	useEffect(
 		() => {
-			if (isUpdatingEntry || isDeletingEntry === false) {
+			if (isUpdatingEntry === false || isDeletingEntry === false) {
 				GetItemsInCart("carts/get", METHOD.GET);
+				GetCartTotalPrice("carts/total-price", METHOD.GET);
 			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[isUpdatingEntry, isDeletingEntry]
 	);
+
+	useEffect(() => {
+		if (cartTotalPrice === 0 || cartTotalPrice) {
+			setCartTotal(cartTotalPrice);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [cartTotalPrice]);
 
 	useEffect(() => {
 		if (wasValidAmount === false)

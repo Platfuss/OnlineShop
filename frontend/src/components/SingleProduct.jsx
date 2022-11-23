@@ -1,6 +1,9 @@
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Img64Base from "../utils/Img64Base";
+import useAuth from "../utils/useAuth";
 import useAuthFetch, { METHOD } from "../utils/useAuthFetch";
 
 const SingleProduct = ({ product }) => {
@@ -11,11 +14,29 @@ const SingleProduct = ({ product }) => {
 		amount: 1,
 	});
 
-	const { CallApi, isLoading } = useAuthFetch();
+	const [wasButtonClicked, setWasButtonClicked] = useState(false);
+	const { setCartTotal } = useAuth();
+	const { CallApi: AddItem, isLoading: isAddingItem } = useAuthFetch();
+	const { CallApi: GetCartTotalPrice, data: cartTotalPrice } = useAuthFetch();
 
 	const OnButtonClick = () => {
-		CallApi("carts/add-item", METHOD.POST, body);
+		AddItem("carts/add-item", METHOD.POST, body);
+		setWasButtonClicked(true);
 	};
+
+	useEffect(() => {
+		if (wasButtonClicked && isAddingItem === false) {
+			GetCartTotalPrice("carts/total-price", METHOD.GET);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isAddingItem]);
+
+	useEffect(() => {
+		if (cartTotalPrice === 0 || cartTotalPrice) {
+			setCartTotal(cartTotalPrice);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [cartTotalPrice]);
 
 	return (
 		<div className="singleProduct">
@@ -42,7 +63,7 @@ const SingleProduct = ({ product }) => {
 				<div className="hiddenButtonContainer">
 					<button
 						onClick={OnButtonClick}
-						disabled={product.amount < 1 || isLoading}
+						disabled={product.amount < 1 || isAddingItem}
 					>
 						Dodaj do koszyka
 					</button>

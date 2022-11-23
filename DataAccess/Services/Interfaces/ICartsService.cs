@@ -9,4 +9,5 @@ public interface ICartsService
     Task<IEnumerable<CartResponse>> GetUserCartAsync();
     Task<bool> AddToCartAsync(CartRequest request);
     Task<bool> UpdateCartAsync(CartRequest request);
+    Task<decimal> GetCartTotalPriceAsync();
 }

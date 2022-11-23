@@ -15,10 +15,11 @@ const LoginRegister = () => {
 	const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState("");
 
 	const Navigate = useNavigate();
-	const { auth, setAuth } = useAuth();
+	const { auth, setAuth, setCartTotal } = useAuth();
 
 	const { CallApi: Login, status: loginStatus } = useAuthFetch();
 	const { CallApi: Register, status: registerStatus } = useAuthFetch();
+	const { CallApi: GetCartTotalPrice, data: cartTotalPrice } = useAuthFetch();
 
 	useEffect(() => {
 		if (loginStatus === 200 || registerStatus === 200) {
@@ -29,10 +30,18 @@ const LoginRegister = () => {
 
 	useEffect(() => {
 		if (auth) {
-			Navigate(-1, { replace: true });
+			GetCartTotalPrice("carts/total-price", METHOD.GET);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [auth]);
+
+	useEffect(() => {
+		if (cartTotalPrice === 0 || cartTotalPrice) {
+			setCartTotal(cartTotalPrice);
+			Navigate(-1, { replace: true });
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [cartTotalPrice]);
 
 	const OnLoginClick = () => {
 		Login(

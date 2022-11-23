@@ -16,6 +16,12 @@ public class CartsController : ControllerBase
     [HttpGet("get")]
     public async Task<IEnumerable<CartResponse>> GetUserCart() => await _cartsService.GetUserCartAsync();
 
+    [HttpGet("total-price")]
+    public async Task<decimal> GetTotalPrice()
+    {
+        return await _cartsService.GetCartTotalPriceAsync();
+    }
+
     [HttpPost("add-item")]
     public async Task<bool> AddItemToCart(CartRequest request)
     {

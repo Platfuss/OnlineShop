@@ -6,7 +6,7 @@ import useAuthFetch, { METHOD } from "./utils/useAuthFetch";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-	const { auth, setAuth } = useAuth();
+	const { auth, setAuth, cartTotal, setCartTotal } = useAuth();
 	const { CallApi } = useAuthFetch();
 
 	const Navigate = useNavigate();
@@ -14,6 +14,7 @@ const Header = () => {
 	const OnLogOut = () => {
 		CallApi("authentication/revoke-access", METHOD.DELETE);
 		setAuth(false);
+		setCartTotal(0);
 		Navigate("/");
 	};
 
@@ -24,11 +25,13 @@ const Header = () => {
 				<span>Szybka wysyłka i dobrze zabezpieczone zamówienie</span>
 				<span>Sklep stacjonarny we Wrocławiu</span>
 				{auth ? (
-					<div>
+					<div className="loggedUser">
 						<NavLink end to={"/account"}>
 							Moje konto
 						</NavLink>
-						<button onClick={OnLogOut}>Wyloguj</button>
+						<button className="textualize" onClick={OnLogOut}>
+							Wyloguj
+						</button>
 					</div>
 				) : (
 					<NavLink end to={"/login-register"}>
@@ -43,7 +46,15 @@ const Header = () => {
 				<div className="goToCartButton">
 					<NavLink end to={"/cart"}>
 						<img src="cart.png" alt="" />
-						<p>Twój koszyk</p>
+						<div>
+							<p>Twój koszyk</p>
+							<p>
+								{new Intl.NumberFormat("pl-PL", {
+									style: "currency",
+									currency: "PLN",
+								}).format(cartTotal)}
+							</p>
+						</div>
 					</NavLink>
 				</div>
 			</div>
