@@ -53,7 +53,7 @@ main {
 	max-width: var(--MAX-WIDTH);
 	flex-wrap: wrap;
 	justify-content: center;
-	margin-bottom: 5vh;
+	margin-bottom: 15vh;
 }
 
 .listOfItems {
@@ -402,4 +402,43 @@ li.contact {
 	100% {
 		opacity: 1;
 	}
+}
+
+/* Footer */
+
+footer {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 5rem;
+	flex-wrap: wrap;
+}
+
+footer .content {
+	flex-wrap: wrap;
+	display: flex;
+	max-width: var(--MAX-WIDTH);
+	width: 100%;
+	gap: 2vh 5vh;
+}
+
+footer .content div:last-child {
+	margin-left: auto;
+}
+
+.content div h3:nth-of-type(n + 2) {
+	margin-top: 0.75rem;
+}
+
+.content div:last-child {
+	text-align: right;
+}
+
+.content div:last-child h3 {
+	font-size: 2rem;
+}
+
+.line {
+	border-top: 2px solid black;
+	width: 100%;
+	display: block;
 }

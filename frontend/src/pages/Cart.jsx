@@ -29,7 +29,7 @@ const Cart = () => {
 
 	useEffect(
 		() => {
-			if (isUpdatingEntry === false || isDeletingEntry === false) {
+			if (isUpdatingEntry === false && isDeletingEntry === false) {
 				GetItemsInCart("carts/get", METHOD.GET);
 				GetCartTotalPrice("carts/total-price", METHOD.GET);
 			}
