@@ -1,3 +1,4 @@
+//TODO: alert with not enough items pops up to often
 import React, { useEffect, useState } from "react";
 import { METHOD } from "../utils/useFetch";
 import useAuthFetch from "../utils/useAuthFetch";
@@ -73,57 +74,89 @@ const Cart = () => {
 	};
 
 	return (
-		<div className="wholePage">
+		<div className="cart">
 			<h1>Koszyk</h1>
 			{itemsInCart?.length ? (
-				<>
-					{itemsInCart?.map((it) => {
-						return (
-							<div key={it.itemId}>
-								<Img64Base
-									className="singleProductImage"
-									src={it.image}
-								></Img64Base>
-								<NavLink end to={`/products/details/${it.itemId}`}>
-									{it.name}
-								</NavLink>
-								<input
-									type={"number"}
-									min={0}
-									max={99}
-									value={webItemAmounts[it.itemId] || 0}
-									onBlur={() => OnAmountConfirmed(it.itemId)}
-									onChange={(e) => {
-										var newAmounts = {
-											...webItemAmounts,
-											[it.itemId]: parseInt(e.target.value),
-										};
-										setWebItemAmounts(newAmounts);
-									}}
-								></input>
-								<button
-									onClick={() =>
-										DeleteItemFromCart(
-											`carts/${it.itemId}`,
-											METHOD.DELETE
-										)
-									}
-								>
-									X
-								</button>
-								<p>{it.amount}</p>
-								<p>{it.price}</p>
-								<p>{it.price * it.amount}</p>
-							</div>
-						);
-					})}
+				<div className="tableContainer">
+					<table>
+						<tr>
+							<th></th>
+							<th>Produkt</th>
+							<th>Cena</th>
+							<th>Ilość</th>
+							<th>Wartość</th>
+							<th></th>
+						</tr>
+						{itemsInCart?.map((it) => {
+							return (
+								<tr key={it.itemId}>
+									<td>
+										<Img64Base src={it.image}></Img64Base>
+									</td>
+
+									<td>
+										<NavLink
+											end
+											to={`/products/details/${it.itemId}`}
+										>
+											{it.name}
+										</NavLink>
+									</td>
+
+									<td>
+										{new Intl.NumberFormat("pl-PL", {
+											style: "currency",
+											currency: "PLN",
+										}).format(it.price)}
+									</td>
+
+									<td>
+										<input
+											type={"number"}
+											min={0}
+											max={99}
+											value={webItemAmounts[it.itemId] || 0}
+											onBlur={() => OnAmountConfirmed(it.itemId)}
+											onChange={(e) => {
+												var newAmounts = {
+													...webItemAmounts,
+													[it.itemId]: parseInt(e.target.value),
+												};
+												setWebItemAmounts(newAmounts);
+											}}
+										></input>
+									</td>
+
+									<td>
+										{new Intl.NumberFormat("pl-PL", {
+											style: "currency",
+											currency: "PLN",
+										}).format(it.price * it.amount)}
+									</td>
+
+									<td>
+										<button
+											onClick={() =>
+												DeleteItemFromCart(
+													`carts/${it.itemId}`,
+													METHOD.DELETE
+												)
+											}
+										>
+											X
+										</button>
+									</td>
+								</tr>
+							);
+						})}
+					</table>
 					<button
 						disabled={Object.keys(webItemAmounts).length === 0}
 						onClick={() => Navigate("/create-order")}
 					>
 						Zamawiam
 					</button>
-				</>
+				</div>
 			) : (
 				<>
 					<h3>Twój koszyk jest pusty</h3>

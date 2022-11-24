@@ -60,7 +60,7 @@ const LoginRegister = () => {
 	};
 
 	return (
-		<div className="loginPage">
+		<>
 			<div className="formContainer">
 				<h1>Zaloguj się</h1>
 				<form>
@@ -108,7 +108,7 @@ const LoginRegister = () => {
 						/>
 					</label>
 					<label>
-						Potwierdź hasło
+						Powtórz hasło
 						<input
 							type={"password"}
 							value={registerPasswordConfirm}
@@ -132,7 +132,7 @@ const LoginRegister = () => {
 					Załóż konto
 				</button>
 			</div>
-		</div>
+		</>
 	);
 };
 

@@ -5,7 +5,7 @@
 }
 
 :root {
-	--MAX-WIDTH: 1000px;
+	--MAX-WIDTH: 1300px;
 }
 
 body {
@@ -51,6 +51,7 @@ button:disabled {
 main {
 	display: flex;
 	max-width: var(--MAX-WIDTH);
+	width: 100%;
 	flex-wrap: wrap;
 	justify-content: center;
 	margin-bottom: 15vh;
@@ -176,7 +177,8 @@ main h1 {
 	width: 100%;
 }
 
-main div:first-of-type h1 {
+main div:first-of-type h1:first-of-type,
+main > h1 {
 	margin-top: 0;
 }
 
@@ -360,6 +362,10 @@ li.contact {
 	margin-left: auto;
 }
 
+.menuBar li:first-child {
+	cursor: default;
+}
+
 .menuBar div:hover,
 .menuBar a:hover {
 	background-color: #f34949;
@@ -456,20 +462,13 @@ footer .content div:last-child {
 	display: block;
 }
 
-/* Login Page */
-
-.loginPage {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 5vw;
-}
-
 /* Forms */
 
 .formContainer {
 	margin: 1rem;
-	min-width: 350px;
+	/* min-width: 350px; */
+	width: 45%;
+	min-width: 330px;
 	display: inline-flex;
 	flex-direction: column;
 	padding: 2rem;
@@ -478,7 +477,12 @@ footer .content div:last-child {
 }
 
 .formContainer * {
-	display: block;
+	display: flex;
+	flex-direction: column;
+}
+
+.formContainer h1 {
+	margin-top: 0.25rem;
 }
 
 .formContainer label {
@@ -486,11 +490,12 @@ footer .content div:last-child {
 }
 
 .formContainer input {
-	width: 80%;
+	width: 70%;
 	margin-bottom: 0.5rem;
 	border: 1px solid rgb(7, 115, 216);
 	padding: 5px;
 	background-color: rgba(1, 130, 250, 0.12);
+	align-self: flex-end;
 }
 
 .formContainer form {
@@ -499,4 +504,75 @@ footer .content div:last-child {
 
 .formContainer button {
 	margin-top: auto;
+}
+
+/* Shopping Cart */
+.cart {
+	width: inherit;
+}
+
+.tableContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.tableContainer > button {
+	width: 20%;
+	align-self: flex-end;
+	margin-top: 2rem;
+}
+
+.cart table {
+	width: 100%;
+	text-align: left;
+	border-collapse: collapse;
+}
+
+.cart tr:first-of-type {
+	border-bottom: 2px solid rgba(0, 0, 0, 0.35);
+}
+
+.cart tr:nth-of-type(n + 2) {
+	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.cart tr {
+	margin-bottom: 1rem;
+}
+
+.cart td:last-of-type {
+	text-align: center;
+}
+
+.cart img {
+	max-width: 100px;
+	margin: 0.3em;
+}
+
+.cart th:nth-child(2) {
+	width: 40%;
+}
+
+.cart th:first-of-type,
+.cart th:last-of-type {
+	width: 5%;
+}
+
+.cart td button {
+	min-width: 0;
+	width: 40px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type="number"] {
+	text-align: right;
+	padding: 2px;
+	-moz-appearance: textfield;
 }
