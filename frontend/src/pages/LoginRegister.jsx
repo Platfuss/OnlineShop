@@ -60,71 +60,78 @@ const LoginRegister = () => {
 	};
 
 	return (
-		<div className="wholePage">
-			<h1>Logowanie</h1>
-			<form>
-				<label>
-					Email
-					<input
-						value={loginEmail}
-						onChange={(e) => setLoginEmail(e.target.value)}
-					/>
-				</label>
-				<label>
-					Hasło
-					<input
-						type={"password"}
-						value={loginPassword}
-						onChange={(e) => setLoginPassword(e.target.value)}
-					/>
-				</label>
-			</form>
-			<button
-				onClick={() => OnLoginClick()}
-				disabled={!(loginEmail && loginPassword)}
-			>
-				Zaloguj
-			</button>
+		<div className="loginPage">
+			<div className="formContainer">
+				<h1>Zaloguj się</h1>
+				<form>
+					<label>
+						Email
+						<input
+							value={loginEmail}
+							onChange={(e) => setLoginEmail(e.target.value)}
+						/>
+					</label>
+					<label>
+						Hasło
+						<input
+							type={"password"}
+							value={loginPassword}
+							onChange={(e) => setLoginPassword(e.target.value)}
+						/>
+					</label>
+				</form>
+				<button
+					onClick={() => OnLoginClick()}
+					disabled={!(loginEmail && loginPassword)}
+				>
+					Zaloguj się
+				</button>
+			</div>
 
-			<h1>Nie masz konta? Zarejestruj się!</h1>
-			<form>
-				<label>
-					Email
-					<input
-						value={registerEmail}
-						onChange={(e) => setRegisterEmail(e.target.value)}
-					/>
-				</label>
-				<label>
-					Hasło
-					<input
-						type={"password"}
-						value={registerPassword}
-						onChange={(e) => setRegisterPassword(e.target.value)}
-					/>
-				</label>
-				<label>
-					Potwierdź hasło
-					<input
-						type={"password"}
-						value={registerPasswordConfirm}
-						onChange={(e) => setRegisterPasswordConfirm(e.target.value)}
-					/>
-				</label>
-			</form>
+			<div className="formContainer">
+				<h1>Nie masz konta?</h1>
+				<h1> Zarejestruj się!</h1>
+				<form>
+					<label>
+						Email
+						<input
+							value={registerEmail}
+							onChange={(e) => setRegisterEmail(e.target.value)}
+						/>
+					</label>
+					<label>
+						Hasło
+						<input
+							type={"password"}
+							value={registerPassword}
+							onChange={(e) => setRegisterPassword(e.target.value)}
+						/>
+					</label>
+					<label>
+						Potwierdź hasło
+						<input
+							type={"password"}
+							value={registerPasswordConfirm}
+							onChange={(e) =>
+								setRegisterPasswordConfirm(e.target.value)
+							}
+						/>
+					</label>
+				</form>
 
-			<button
-				onClick={() => OnRegisterClick()}
-				disabled={
-					!(
-						emailPattern.test(registerEmail) &&
-						registerPassword.length >= 3 &&
-						registerPassword === registerPasswordConfirm
-					)
-				}
-			>
-				Zarejestruj
-			</button>
+				<button
+					onClick={() => OnRegisterClick()}
+					disabled={
+						!(
+							emailPattern.test(registerEmail) &&
+							registerPassword.length >= 3 &&
+							registerPassword === registerPasswordConfirm
+						)
+					}
+				>
+					Załóż konto
+				</button>
+			</div>
 		</div>
 	);
 };

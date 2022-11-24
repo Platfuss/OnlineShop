@@ -76,6 +76,10 @@ main {
 	position: relative;
 }
 
+.imageContainer {
+	min-height: 275px;
+}
+
 .singleProductImage {
 	width: 250px;
 	max-height: 250px;
@@ -132,6 +136,10 @@ main {
 	border-top: none;
 }
 
+.listOfItems:hover {
+	z-index: 5;
+}
+
 .listOfItems > .singleProduct:not(:hover) {
 	z-index: -3;
 }
@@ -155,6 +163,7 @@ main button {
 	color: white;
 	border-radius: 10px;
 	height: 50px;
+	min-width: 100px;
 }
 
 main button:disabled {
@@ -165,11 +174,16 @@ main h1 {
 	font-size: xx-large;
 	margin: 2rem 0rem 0.5rem 0;
 	width: 100%;
-	/* transform: rotate(-1.5deg); */
 }
 
-main h1:first-child {
+main div:first-of-type h1 {
 	margin-top: 0;
+}
+
+@media only screen and (min-width: 1200px) {
+	.imageContainer {
+		min-height: 190px;
+	}
 }
 
 @media only screen and (max-width: 1200px) {
@@ -221,7 +235,6 @@ main h1:first-child {
 
 header {
 	background-color: #2c3e50;
-	/* padding: 1rem 5px 1rem 5px; */
 	position: sticky;
 	top: 0;
 	z-index: 100;
@@ -441,4 +454,49 @@ footer .content div:last-child {
 	border-top: 2px solid black;
 	width: 100%;
 	display: block;
+}
+
+/* Login Page */
+
+.loginPage {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 5vw;
+}
+
+/* Forms */
+
+.formContainer {
+	margin: 1rem;
+	min-width: 350px;
+	display: inline-flex;
+	flex-direction: column;
+	padding: 2rem;
+	border: 2px solid rgba(0, 0, 0, 0.4);
+	border-radius: 10px;
+}
+
+.formContainer * {
+	display: block;
+}
+
+.formContainer label {
+	font-size: larger;
+}
+
+.formContainer input {
+	width: 80%;
+	margin-bottom: 0.5rem;
+	border: 1px solid rgb(7, 115, 216);
+	padding: 5px;
+	background-color: rgba(1, 130, 250, 0.12);
+}
+
+.formContainer form {
+	margin: 1rem 0 2rem 0;
+}
+
+.formContainer button {
+	margin-top: auto;
 }
