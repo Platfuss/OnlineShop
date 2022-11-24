@@ -538,10 +538,6 @@ footer .content div:last-child {
 	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
-.cart tr {
-	margin-bottom: 1rem;
-}
-
 .cart td:last-of-type {
 	text-align: center;
 }
@@ -549,6 +545,7 @@ footer .content div:last-child {
 .cart img {
 	max-width: 100px;
 	margin: 0.3em;
+	margin-right: 0.75rem;
 }
 
 .cart th:nth-child(2) {
@@ -568,6 +565,7 @@ footer .content div:last-child {
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
 	-webkit-appearance: none;
+	appearance: none;
 	margin: 0;
 }
 
@@ -575,4 +573,32 @@ input[type="number"] {
 	text-align: right;
 	padding: 2px;
 	-moz-appearance: textfield;
+	appearance: none;
+}
+
+/* Account Page */
+
+.orderHiddenContainer {
+	visibility: hidden;
+}
+
+.accountPage {
+	width: inherit;
+}
+
+.orderTable {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.orderTable span {
+	display: inline-block;
+	width: 25%;
+}
+
+.tableHead,
+.orderHiddenContainer {
+	width: 100%;
 }

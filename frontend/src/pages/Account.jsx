@@ -23,26 +23,48 @@ const Account = () => {
 	};
 
 	return (
-		<div className="wholePage">
-			<h2>Twoje zamówienia</h2>
-			{orders &&
-				orders.map((o) => {
-					return (
-						<div key={o.id}>
-							Zamówienie nr {String(o.id).padStart(4, "0")}
-							{o.totalPrice}zł
-							{o.status}
-							{new Date(o.creationDate).toISOString().split("T")[0]}
-							<OrderHiddenInfo order={o} />
-						</div>
-					);
-				})}
-			<h2>Twój profil</h2>
+		<div className="accountPage">
+			<h1>Twoje zamówienia</h1>
+			<div className="orderTable">
+				<div className="tableHead">
+					<span>Numer zam.</span>
+					<span>Wartość</span>
+					<span>Status</span>
+					<span>Data złożenia</span>
+				</div>
+				{orders &&
+					orders.map((o) => {
+						return (
+							<>
+								<span>
+									Zamówienie nr {String(o.id).padStart(4, "0")}
+								</span>
+								<span>
+									{new Intl.NumberFormat("pl-PL", {
+										style: "currency",
+										currency: "PLN",
+									}).format(o.totalPrice)}
+								</span>
+								<span>{o.status}</span>
+								<span>
+									{
+										new Date(o.creationDate)
+											.toISOString()
+											.split("T")[0]
+									}
+								</span>
+								<OrderHiddenInfo order={o} />
+							</>
+						);
+					})}
+			</div>
+
+			<h1>Twój profil</h1>
 			{userBasicInfo?.name}
 			{userBasicInfo?.surname}
 			<button onClick={() => Navigate("/profil")}>Edytuj profil</button>
 
-			<h2>Twoje adresy</h2>
+			<h1>Twoje adresy</h1>
 			{addresses &&
 				addresses.map((a) => {
 					return (

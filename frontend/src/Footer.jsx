@@ -30,7 +30,7 @@ const Footer = () => {
 						<sup>00</sup>
 					</p>
 					<p>
-						Sobota: 9<sup>00</sup> - 16
+						Sobota - niedziela: 9<sup>00</sup> - 16
 						<sup>00</sup>
 					</p>
 
