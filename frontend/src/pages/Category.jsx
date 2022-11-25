@@ -5,55 +5,65 @@ import SingleProduct from "../components/SingleProduct";
 import { useState } from "react";
 
 const Category = () => {
-	const amountPerPage = 1;
-	const param = useParams();
-	const { CallApi: GetPages, data: numOfPages } = useFetch();
-	const { CallApi: GetItems, data: items } = useFetch();
-	const [page, setPage] = useState(0);
+  const amountPerPage = 8;
+  const params = useParams();
+  const { CallApi: GetPages, data: numOfPages } = useFetch();
+  const { CallApi: GetItems, data: items } = useFetch();
+  const [page, setPage] = useState(0);
 
-	useEffect(() => {
-		GetPages(
-			`items/number-of-pages/${amountPerPage}?category=${param.category}`,
-			METHOD.GET
-		);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [amountPerPage, param]);
+  const category = params.category ?? null;
 
-	useEffect(
-		() =>
-			GetItems(
-				`items/group/${amountPerPage}/${page}?category=${param.category}`,
-				METHOD.GET
-			),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[numOfPages, page, param]
-	);
+  useEffect(() => {
+    GetPages(
+      `items/group/number-of-pages/${amountPerPage}${
+        category ? `?category=${category}` : ""
+      }`,
+      METHOD.GET
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [amountPerPage, params]);
 
-	const OnChangePage = (number) => {
-		setPage(number);
-	};
+  useEffect(
+    () =>
+      GetItems(
+        `items/group/${amountPerPage}/${page}${
+          category ? `?category=${category}` : ""
+        }`,
+        METHOD.GET
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [numOfPages, page, params]
+  );
 
-	const SpawnButtons = () => {
-		if (numOfPages) {
-			var buttonPattern = Array.from(Array(numOfPages).keys());
-			return buttonPattern.map((num) => (
-				<button key={num} onClick={() => OnChangePage(num)}>
-					{num + 1}
-				</button>
-			));
-		}
-	};
+  const OnChangePage = (number) => {
+    setPage(number);
+  };
 
-	return (
-		<>
-			<div className="wholePage">
-				{items?.map((item) => {
-					return <SingleProduct key={item.id} product={item} />;
-				})}
-				<SpawnButtons />
-			</div>
-		</>
-	);
+  const SpawnButtons = () => {
+    if (numOfPages) {
+      var buttonPattern = Array.from(Array(numOfPages).keys());
+      return buttonPattern.map((num) => (
+        <div className="buttonList">
+          <button key={num} onClick={() => OnChangePage(num)}>
+            {num + 1}
+          </button>
+        </div>
+      ));
+    }
+  };
+
+  return (
+    <>
+      <SpawnButtons />
+      <div className="listOfItems">
+        {items?.map((item) => {
+          return <SingleProduct key={item.id} product={item} />;
+        })}
+      </div>
+      <div className="breakLine"></div>
+      <SpawnButtons />
+    </>
+  );
 };
 
 export default Category;

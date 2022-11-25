@@ -30,7 +30,7 @@ public class ItemsController : ControllerBase
         return await _itemsService.GetItemsByPagesAsync(amount, page, category, onlyRecommended, descendingOrderByDate);
     }
 
-    [HttpGet("number-of-pages/{amountPerPage}")]
+    [HttpGet("group/number-of-pages/{amountPerPage}")]
     public async Task<int> HowManyPages([Range(1, int.MaxValue)]int amountPerPage, string category, bool onlyRecommended = false)
     {
         return await _itemsService.HowManyPagesAsync(amountPerPage, category, onlyRecommended);

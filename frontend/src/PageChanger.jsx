@@ -16,32 +16,32 @@ import LoginRegister from "./pages/LoginRegister";
 import ProfilEditor from "./pages/ProfilEditor";
 
 const PageChanger = () => {
-	useScrollToTop();
-	return (
-		<div className="wholePage">
-			<main>
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/contact" element={<Contact />} />
-					<Route path="/products" element={<Products />} />
-					<Route path="/products/:category" element={<Category />} />
-					<Route
-						path="/products/details/:id"
-						element={<SingleProductDetails />}
-					/>
-					<Route path="/profil" element={<ProfilEditor />} />
-					<Route path="/create-order" element={<CreateOrder />} />
-					<Route path="/order-confirm" element={<OrderConfirm />} />
-					<Route path="/address/:id" element={<AddressEditor />} />
-					<Route path="/address/new" element={<AddressEditor />} />
-					<Route path="/account" element={<Account />} />
-					<Route path="/login-register" element={<LoginRegister />} />
-					<Route path="/cart" element={<Cart />} />
-					<Route path="*" element={<Error />} />
-				</Routes>
-			</main>
-		</div>
-	);
+  useScrollToTop();
+  return (
+    <div className="wholePage">
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/products" element={<Category />} />
+          <Route path="/products/:category" element={<Category />} />
+          <Route
+            path="/products/details/:id"
+            element={<SingleProductDetails />}
+          />
+          <Route path="/profil" element={<ProfilEditor />} />
+          <Route path="/create-order" element={<CreateOrder />} />
+          <Route path="/order-confirm" element={<OrderConfirm />} />
+          <Route path="/address/:id" element={<AddressEditor />} />
+          <Route path="/address/new" element={<AddressEditor />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/login-register" element={<LoginRegister />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<Error />} />
+        </Routes>
+      </main>
+    </div>
+  );
 };
 
 export default PageChanger;
