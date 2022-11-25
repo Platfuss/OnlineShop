@@ -38,7 +38,7 @@ const ProfilEditor = () => {
 	}, [profilSubmitStatus]);
 
 	return (
-		<div className="wholePage">
+		<div className="formContainer">
 			<h1>Edycja profilu</h1>
 			<form>
 				<label>
@@ -60,6 +60,7 @@ const ProfilEditor = () => {
 					/>
 				</label>
 			</form>
+			<div>
 			<button
 				onClick={() =>
 					SubmitProfil("customers/update", METHOD.PATCH, profilBody)
@@ -69,6 +70,7 @@ const ProfilEditor = () => {
 				Aktualizuj
 			</button>
 			<button onClick={() => Navigate(-1)}>Powrót</button>
+			</div>
 		</div>
 	);
 };

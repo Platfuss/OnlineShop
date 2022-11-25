@@ -2,12 +2,14 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../utils/useAuth";
 import useAuthFetch, { METHOD } from "../utils/useAuthFetch";
 
 const personalCollection = "Odbiór osobisty";
 const payWithCash = "Gotówka na miejscu";
 
 const CreateOrder = () => {
+	const {setCartTotal} = useAuth();
 	const { CallApi: GetProfil, data: profil } = useAuthFetch();
 	const { CallApi: GetAddresses, data: addresses } = useAuthFetch();
 	const { CallApi: NewOrder, data: newOrderData } = useAuthFetch();
@@ -33,6 +35,7 @@ const CreateOrder = () => {
 
 	useEffect(() => {
 		if (newOrderData) {
+			setCartTotal(0);
 			Navigate("/order-confirm");
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
