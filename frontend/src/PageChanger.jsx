@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import useScrollToTop from "./utils/useScrollToTop";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
-import Products from "./pages/Products";
 import Error from "./pages/Error";
 import Category from "./pages/Category";
 import SingleProductDetails from "./pages/SingleProductDetails";
