@@ -3,7 +3,6 @@ import useFetch, { METHOD } from "../utils/useFetch";
 import useAuthFetch from "../utils/useAuthFetch";
 import { useNavigate, useParams } from "react-router-dom";
 import Img64Base from "../utils/Img64Base";
-import { useState } from "react";
 
 const SingleProductDetails = () => {
 	const Navigate = useNavigate();
@@ -23,7 +22,6 @@ const SingleProductDetails = () => {
 			GetDetails(`items/${params.id}`, METHOD.GET);
 			return () => {
 				timeoutsIds.current.forEach((ti) => {
-					console.log(ti);
 					clearTimeout(ti);
 				});
 			};
@@ -42,6 +40,11 @@ const SingleProductDetails = () => {
 				"visible"
 			);
 			imagePool.current[nextId].classList.add("next");
+		} else if (imagePool.current.length === 1) {
+			imagePool.current[visibleImageId.current].classList.add(
+				"choosen",
+				"visible"
+			);
 		}
 	}, [product]);
 
@@ -60,7 +63,6 @@ const SingleProductDetails = () => {
 				slidingButtons.current[1].disabled = false;
 			}, 550)
 		);
-		console.log(timeoutsIds.current);
 	};
 
 	const OnGoPrevious = () => {
