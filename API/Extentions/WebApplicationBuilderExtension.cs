@@ -35,7 +35,7 @@ public static class WebApplicationBuilderExtension
             options.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
                 x => x.MigrationsAssembly("DataAccess"));
         });
-        //TODO: check Corses
+
         builder.Services.AddCors(options =>
         {
             options.AddPolicy(policyName,
@@ -45,7 +45,7 @@ public static class WebApplicationBuilderExtension
                     policy.AllowAnyHeader();
                     policy.AllowCredentials();
                     policy.SetIsOriginAllowed(origin => true);
-                    policy.WithOrigins("http://localhost:3000");
+                    policy.WithOrigins("https://misz-masz.netlify.app/");
                 });
         });
 
