@@ -80,7 +80,11 @@ public class ItemsService : IItemsService
     {
         nameFromPath = nameFromPath.ToLower();
 
-        var nameMap = new Dictionary<string, string>() { { "zywnosc", "Żywność" } };
+        var nameMap = new Dictionary<string, string>() { 
+            { "board-games", "Gry planszowe" }, 
+            { "music", "Muzyka" },
+            { "cakes", "Ciasta"},
+            { "sweets", "Cukierki"} };
         nameMap.TryGetValue(nameFromPath, out string mappedPathName);
 
         return mappedPathName ?? nameFromPath;

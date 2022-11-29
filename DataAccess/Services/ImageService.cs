@@ -18,28 +18,28 @@ public class ImageService : IFileService
 
     public void Save(string path, List<IFormFile> images)
     {
-        var directory = Path.Combine(_startingDirectory, path);
+        //var directory = Path.Combine(_startingDirectory, path);
 
-        if (!Directory.Exists(directory))
-        {
-            Directory.CreateDirectory(directory);
-        }
+        //if (!Directory.Exists(directory))
+        //{
+        //    Directory.CreateDirectory(directory);
+        //}
 
-        var existingIndexes = Directory.EnumerateFiles(directory).ToList().Select(name =>
-        {
-            var fileName = Path.GetFileName(name);
-            return int.Parse(fileName[..5]);
-        });
+        //var existingIndexes = Directory.EnumerateFiles(directory).ToList().Select(name =>
+        //{
+        //    var fileName = Path.GetFileName(name);
+        //    return int.Parse(fileName[..5]);
+        //});
 
-        int index = existingIndexes.Max() + 1;
-        images.ForEach(async file =>
-        {
-            var format = file.FileName.Split('.')[^1];
-            var newFileName = $"{index++:D5}_{Guid.NewGuid()}.{format}";
-            var fullFilePath = Path.Combine(directory, newFileName);
-            using var fileStream = new FileStream(fullFilePath, FileMode.Create);
-            await file.CopyToAsync(fileStream);
-        });
+        //int index = existingIndexes.Max() + 1;
+        //images.ForEach(async file =>
+        //{
+        //    var format = file.FileName.Split('.')[^1];
+        //    var newFileName = $"{index++:D5}_{Guid.NewGuid()}.{format}";
+        //    var fullFilePath = Path.Combine(directory, newFileName);
+        //    using var fileStream = new FileStream(fullFilePath, FileMode.Create);
+        //    await file.CopyToAsync(fileStream);
+        //});
     }
 
     public async Task<List<byte[]>> ReadAsync(string path, bool onlyFirst)
