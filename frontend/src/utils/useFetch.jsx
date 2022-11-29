@@ -45,7 +45,7 @@ const useFetch = () => {
 	return { CallApi, data, isLoading, error, status };
 };
 
-const beginning = "https://localhost:7177/api";
+const beginning = "https://www.platfus-api.somee.com/api";
 
 const apiEndpoints = (url) => {
 	let address = beginning;
