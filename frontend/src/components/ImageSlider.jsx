@@ -11,8 +11,9 @@ const ImageSlider = ({ images }) => {
 	const imgCount = imgsLen === 2 ? 4 : imgsLen;
 
 	useEffect(() => {
+		const toClear = timeoutsIds.current;
 		return () => {
-			timeoutsIds.current.forEach((ti) => {
+			toClear.forEach((ti) => {
 				clearTimeout(ti);
 			});
 		};
@@ -34,6 +35,7 @@ const ImageSlider = ({ images }) => {
 				"visible"
 			);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [images]);
 
 	const DisableButtons = () => {
@@ -114,9 +116,9 @@ const ImageSlider = ({ images }) => {
 			);
 		});
 
-		if (images.length == 2) {
+		if (images.length === 2) {
 			images.map((img, idx) => {
-				imgs.push(
+				return imgs.push(
 					<Img64Base
 						src={img}
 						key={idx + 2}
