@@ -5,12 +5,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import ImageSlider from "../components/ImageSlider";
 import { useMemo } from "react";
 import useAuth from "../utils/useAuth";
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 const SingleProductDetails = () => {
 	const Navigate = useNavigate();
 	const params = useParams();
 	const { setCartTotal } = useAuth();
-	const { CallApi: GetDetails, data: product } = useFetch();
+	const {
+		CallApi: GetDetails,
+		data: product,
+		isLoading: isGettingDetails,
+	} = useFetch();
 	const { CallApi: AddToCart, isLoading: isAddingToCart } = useAuthFetch();
 	const { CallApi: GetCartTotalPrice, data: cartTotalPrice } = useAuthFetch();
 	const [wasButtonClicked, setWasButtonClicked] = useState(false);
@@ -45,30 +50,36 @@ const SingleProductDetails = () => {
 	}, [cartTotalPrice]);
 
 	return (
-		<div className="singleProductPage">
-			{product && (
-				<>
-					{MemorizedSlider}
-					<div className="productOverview">
-						<h3>{product.category}</h3>
-						<h1>{product.name}</h1>
-						<div>Cena: {product.price} zł</div>
-						<button
-							className="addToCartButton"
-							onClick={OnButtonClick}
-							disabled={isAddingToCart}
-						>
-							Dodaj do koszyka
-						</button>
-					</div>
-					<div className="breakLine"></div>
-					<h3>Opis produktu</h3>
-					<textarea disabled value={product.description} />
-					<div className="breakLine"></div>
-					<button onClick={() => Navigate(-1)}>Powrót</button>
-				</>
+		<>
+			<PropagateLoader loading={isGettingDetails} />
+
+			{!isGettingDetails && (
+				<div className="singleProductPage">
+					{product && (
+						<>
+							{MemorizedSlider}
+							<div className="productOverview">
+								<h3>{product.category}</h3>
+								<h1>{product.name}</h1>
+								<div>Cena: {product.price} zł</div>
+								<button
+									className="addToCartButton"
+									onClick={OnButtonClick}
+									disabled={isAddingToCart}
+								>
+									Dodaj do koszyka
+								</button>
+							</div>
+							<div className="breakLine"></div>
+							<h3>Opis produktu</h3>
+							<textarea disabled value={product.description} />
+							<div className="breakLine"></div>
+							<button onClick={() => Navigate(-1)}>Powrót</button>
+						</>
+					)}
+				</div>
 			)}
-		</div>
+		</>
 	);
 };
 export default SingleProductDetails;
