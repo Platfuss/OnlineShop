@@ -31,7 +31,6 @@ public static class WebApplicationBuilderExtension
 
         builder.Services.AddDbContext<DataContext>(options =>
         {
-            options.EnableSensitiveDataLogging();
             options.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
                 x => x.MigrationsAssembly("DataAccess"));
         });
