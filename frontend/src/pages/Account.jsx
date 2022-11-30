@@ -45,32 +45,29 @@ const Account = () => {
 						{orders &&
 							orders.map((o) => {
 								return (
-									<>
-										<button
-											key={o.id}
-											className="orderBasicInfo"
-											onClick={() => setChoosenOrder(o)}
-										>
-											<span>
-												Zamówienie nr{" "}
-												{String(o.id).padStart(4, "0")}
-											</span>
-											<span>
-												{new Intl.NumberFormat("pl-PL", {
-													style: "currency",
-													currency: "PLN",
-												}).format(o.totalPrice)}
-											</span>
-											<span>{o.status}</span>
-											<span>
-												{
-													new Date(o.creationDate)
-														.toISOString()
-														.split("T")[0]
-												}
-											</span>
-										</button>
-									</>
+									<button
+										key={o.id}
+										className="orderBasicInfo"
+										onClick={() => setChoosenOrder(o)}
+									>
+										<span>
+											Zamówienie nr {String(o.id).padStart(4, "0")}
+										</span>
+										<span>
+											{new Intl.NumberFormat("pl-PL", {
+												style: "currency",
+												currency: "PLN",
+											}).format(o.totalPrice)}
+										</span>
+										<span>{o.status}</span>
+										<span>
+											{
+												new Date(o.creationDate)
+													.toISOString()
+													.split("T")[0]
+											}
+										</span>
+									</button>
 								);
 							})}
 						{choosenOrder && <OrderHiddenInfo order={choosenOrder} />}

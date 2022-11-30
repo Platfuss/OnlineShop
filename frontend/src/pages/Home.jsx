@@ -4,16 +4,26 @@ import useFetch, { METHOD } from "../utils/useFetch";
 import PropagateLoader from "react-spinners/PropagateLoader";
 
 const Home = () => {
-	const { CallApi: FetchNewests, data: newests } = useFetch();
+	const {
+		CallApi: FetchNewests,
+		data: newests,
+		isLoading: isFetchingNewests,
+	} = useFetch();
 	const { CallApi: FetchRecommended, data: recommended } = useFetch();
 
 	const isAllLoaded = !!newests && !!recommended;
 
 	useEffect(() => {
 		FetchNewests("items/group/8/0", METHOD.GET);
-		FetchRecommended("items/group/8/0?onlyrecommended=true", METHOD.GET);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		if (!isFetchingNewests && newests) {
+			FetchRecommended("items/group/8/0?onlyrecommended=true", METHOD.GET);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isFetchingNewests]);
 
 	return (
 		<div>

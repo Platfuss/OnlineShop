@@ -4,11 +4,14 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        const string policyName = "DevelopmentPolicy";
+        const string policyName = "MyPolicy";
         var builder = WebApplication.CreateBuilder(args);
         builder.Configure(policyName);
 
         var app = builder.Build();
+
+        app.UseCors(policyName);
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -16,8 +19,6 @@ internal class Program
         }
 
         app.UseHttpsRedirection();
-
-        app.UseCors(policyName);
 
         app.UseAuthentication();
         app.UseAuthorization();

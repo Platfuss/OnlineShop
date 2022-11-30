@@ -44,7 +44,7 @@ public static class WebApplicationBuilderExtension
                     policy.AllowAnyHeader();
                     policy.AllowCredentials();
                     policy.SetIsOriginAllowed(origin => true);
-                    policy.WithOrigins("https://misz-masz.netlify.app/");
+                    policy.WithOrigins("https://misz-masz.netlify.app");
                 });
         });
 
