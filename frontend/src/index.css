@@ -61,17 +61,13 @@ main {
 	margin-bottom: 15vh;
 }
 
-.homeContent {
+.mainContent {
 	width: 100%;
 }
 
 .loaderHolder {
 	display: flex;
 	justify-content: center;
-	width: 100%;
-}
-
-.loaderHolder {
 	width: 100%;
 }
 
@@ -104,6 +100,8 @@ main {
 	width: 250px;
 	max-height: 250px;
 	margin-bottom: 1rem;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .productInfo {
@@ -363,6 +361,7 @@ ul {
 
 .menuBar div,
 .menuBar a {
+	width: 100%;
 	text-decoration: none;
 	color: #bbb;
 	background-color: #2535464f;
@@ -372,8 +371,8 @@ ul {
 	transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-.menuBar li:nth-child(1),
-.menuBar li:nth-child(2) {
+.menuBar > li:nth-child(1),
+.menuBar > li:nth-child(2) {
 	border-right: 2px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -395,12 +394,16 @@ li.contact {
 	color: #fff;
 }
 
-.submenu {
+.submenu,
+.submenu2 {
 	position: absolute;
-	background-color: #2c3e50;
 	width: 200px;
-	left: 0;
 	display: none;
+}
+
+.submenu {
+	background-color: #2c3e50;
+	left: 0;
 }
 
 .submenu .allItems {
@@ -408,12 +411,9 @@ li.contact {
 }
 
 .submenu2 {
-	position: absolute;
 	left: 100%;
-	width: 200px;
 	top: 0;
 	background-color: #1f2d3b;
-	display: none;
 }
 
 .menuBar li:hover > .submenu {
@@ -892,10 +892,11 @@ label:has(input[type="radio"]:disabled) {
 	width: 100%;
 	display: flex;
 	justify-content: center;
+	gap: 0.2rem;
 }
 
 .buttonList button {
-	margin: 1rem 0.1rem;
+	margin: 1rem 0;
 	min-width: 20px;
 }
 
@@ -998,7 +999,7 @@ textarea {
 .middleLoader {
 	width: 100%;
 	display: flex;
-	min-height: 20vh;
+	min-height: 45vh;
 	justify-content: center;
-	justify-items: center;
+	align-items: center;
 }

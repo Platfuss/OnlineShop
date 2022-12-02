@@ -28,7 +28,7 @@ const Home = () => {
 	}, [isFetchingNewests]);
 
 	return (
-		<div className="homeContent">
+		<div className="mainContent">
 			<div>
 				<h1>Nowości!</h1>
 				<div className="loaderHolder">
