@@ -46,6 +46,7 @@ const useFetch = () => {
 };
 
 const beginning = "https://Platfus.bsite.net/api";
+// const beginning = "https://localhost:7177/api";
 
 const apiEndpoints = (url) => {
 	let address = beginning;

@@ -51,6 +51,54 @@ public class CartsService : ICartsService
         return totalPrice;
     }
 
+    public async Task<List<string>> ValidateAmountOfItemsAsync()
+    {
+        var customerId = await _userService.GetCustomerIdAsync();
+        var itemsInCart = await _db.Carts.Include(c => c.Item).Where(c => c.CustomerId == customerId).ToListAsync();
+        var notEnoughItems = new List<string>();
+
+        foreach (var wantedItem in itemsInCart)
+        {
+            if (wantedItem.Amount > wantedItem.Item.Amount)
+            {
+                notEnoughItems.Add(wantedItem.Item.Name);
+            }
+        }
+
+        return notEnoughItems;
+    }
+
+    public async Task<CartValidationResponse> ValidateAmountOfItemsAsync(List<CartRequest> cartRequests)
+    {
+        var customerId = await _userService.GetCustomerIdAsync();
+        var requestedItemsIds = cartRequests.Select(cr => cr.ItemId).ToList();
+        var availableItems = await _db.Items
+            .Where(i => requestedItemsIds.Contains(i.Id))
+            .ToListAsync();
+        var output = new CartValidationResponse();
+
+        foreach (var wantedItem in cartRequests)
+        {
+            var dbItem = availableItems.Single(ai => ai.Id == wantedItem.ItemId);
+            if (wantedItem.Amount > dbItem.Amount)
+            {
+                var notEnough = new Dictionary<string, uint> { { dbItem.Name, dbItem.Amount } };
+                output.Items.Add(notEnough);
+            }
+            else
+            {
+                await UpdateCartAsync(wantedItem);
+            }
+        }
+
+        if (output.Items.Count == 0)
+        {
+            output.Success = true;
+        }
+
+        return output;
+    }
+
     public async Task<bool> AddToCartAsync(CartRequest request)
     {
         var customerId = await _userService.GetCustomerIdAsync();

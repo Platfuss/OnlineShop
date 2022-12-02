@@ -547,6 +547,18 @@ div:has(.cart) {
 	width: 100%;
 }
 
+.cart .errorMessageBox {
+	margin: 1rem;
+	padding: 1rem;
+	color: white;
+	font-size: large;
+	background-color: #d9042b;
+}
+
+.cart .errorMessageBox > p:nth-child(3) {
+	height: 0.5rem;
+}
+
 .tableContainer {
 	display: flex;
 	flex-direction: column;
@@ -566,11 +578,11 @@ div:has(.cart) {
 	border-collapse: collapse;
 }
 
-.cart tr:first-of-type {
+.cart thead tr {
 	border-bottom: 2px solid rgba(0, 0, 0, 0.35);
 }
 
-.cart tr:nth-of-type(n + 2) {
+.cart tr {
 	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -1002,4 +1014,8 @@ textarea {
 	min-height: 45vh;
 	justify-content: center;
 	align-items: center;
+}
+
+.middleLoader.placeholder {
+	margin-top: calc(50px + 2rem);
 }

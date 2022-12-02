@@ -6,42 +6,57 @@ import Img64Base from "../utils/Img64Base";
 import { useNavigate, NavLink } from "react-router-dom";
 import useAuth from "../utils/useAuth";
 import PropagateLoader from "react-spinners/PropagateLoader";
+import { useRef } from "react";
+import ErrorMessageBox from "../components/ErrorMessageBox";
 
 const Cart = () => {
 	const Navigate = useNavigate();
+
+	const triedToCreateOrder = useRef(false);
+
+	const { setCartTotal } = useAuth();
+
+	const [itemAmounts, setItemAmounts] = useState({});
+
+	let validationBody = [];
+	for (const [key, value] of Object.entries(itemAmounts)) {
+		validationBody.push({ itemId: key, Amount: value });
+	}
+	validationBody = JSON.stringify(validationBody);
+
 	const {
 		CallApi: GetItemsInCart,
 		data: itemsInCart,
 		isLoading: isItemsInCartLoading,
 	} = useAuthFetch();
+
 	const { CallApi: DeleteItemFromCart, isLoading: isDeletingEntry } =
 		useAuthFetch();
+
 	const {
-		CallApi: UpdateEntry,
-		isLoading: isUpdatingEntry,
-		data: wasValidAmount,
+		CallApi: GetCartTotalPrice,
+		data: cartTotalPrice,
+		isLoading: isUpdatingTotalPrice,
 	} = useAuthFetch();
-	const { CallApi: GetCartTotalPrice, data: cartTotalPrice } = useAuthFetch();
 
-	const { setCartTotal } = useAuth();
-	//const [serverItemAmounts, setServerItemAmounts] = useState({});
-	const [webItemAmounts, setWebItemAmounts] = useState({});
+	const {
+		CallApi: ValidateCart,
+		data: validationResponse,
+		isLoading: isValidating,
+	} = useAuthFetch();
 
-	useEffect(
-		() => GetItemsInCart("carts/get", METHOD.GET),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
-	);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(() => GetItemsInCart("carts/get", METHOD.GET), []);
 
 	useEffect(
 		() => {
-			if (isUpdatingEntry === false && isDeletingEntry === false) {
+			if (isDeletingEntry === false && isValidating === false) {
 				GetItemsInCart("carts/get", METHOD.GET);
 				GetCartTotalPrice("carts/total-price", METHOD.GET);
 			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[isUpdatingEntry, isDeletingEntry]
+		[isDeletingEntry, isValidating]
 	);
 
 	useEffect(() => {
@@ -52,13 +67,6 @@ const Cart = () => {
 	}, [cartTotalPrice]);
 
 	useEffect(() => {
-		if (wasValidAmount === false) {
-			// alert("Przekroczono liczbę dostępnych produktów");
-			//TODO: check whats wrong
-		}
-	}, [wasValidAmount]);
-
-	useEffect(() => {
 		let itemAmounts = {};
 		if (itemsInCart) {
 			for (const itemIndex in itemsInCart) {
@@ -66,18 +74,29 @@ const Cart = () => {
 				itemAmounts[item.itemId] = item.amount;
 			}
 		}
-		setWebItemAmounts(itemAmounts);
+		setItemAmounts(itemAmounts);
 	}, [itemsInCart]);
 
-	const OnAmountConfirmed = (itemId) => {
-		UpdateEntry(
-			"carts/update",
-			METHOD.PATCH,
-			JSON.stringify({
-				itemId: itemId,
-				amount: webItemAmounts[itemId],
-			})
-		);
+	useEffect(() => {
+		if (
+			validationResponse?.success === true &&
+			isUpdatingTotalPrice === false
+		) {
+			if (triedToCreateOrder.current === true) {
+				Navigate("/create-order");
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isUpdatingTotalPrice]);
+
+	const EnforceMinMax = (entryNumber, min, max) => {
+		var outputNumber = Number(entryNumber ? entryNumber : 0).toString();
+		if (outputNumber < min) {
+			return min;
+		} else if (outputNumber > max) {
+			return max;
+		}
+		return outputNumber;
 	};
 
 	return (
@@ -89,6 +108,11 @@ const Cart = () => {
 			{itemsInCart && (
 				<div className="cart">
 					<h1>Koszyk</h1>
+					{validationResponse?.success === false && (
+						<ErrorMessageBox
+							lackingItems={validationResponse.items}
+						></ErrorMessageBox>
+					)}
 					{itemsInCart?.length ? (
 						<div className="tableContainer">
 							<table>
@@ -125,24 +149,24 @@ const Cart = () => {
 														currency: "PLN",
 													}).format(it.price)}
 												</td>
-
 												<td>
 													<input
 														type={"number"}
 														min={0}
-														max={99}
-														value={webItemAmounts[it.itemId] || 0}
-														onBlur={() =>
-															OnAmountConfirmed(it.itemId)
-														}
+														max={999}
+														value={EnforceMinMax(
+															itemAmounts[it.itemId],
+															0,
+															999
+														)}
 														onChange={(e) => {
 															var newAmounts = {
-																...webItemAmounts,
+																...itemAmounts,
 																[it.itemId]: parseInt(
 																	e.target.value
 																),
 															};
-															setWebItemAmounts(newAmounts);
+															setItemAmounts(newAmounts);
 														}}
 													></input>
 												</td>
@@ -171,9 +195,29 @@ const Cart = () => {
 									})}
 								</tbody>
 							</table>
+
 							<button
-								disabled={Object.keys(webItemAmounts).length === 0}
-								onClick={() => Navigate("/create-order")}
+								onClick={() => {
+									triedToCreateOrder.current = false;
+									ValidateCart(
+										"carts/validate",
+										METHOD.POST,
+										validationBody
+									);
+								}}
+							>
+								Przelicz
+							</button>
+
+							<button
+								onClick={() => {
+									triedToCreateOrder.current = true;
+									ValidateCart(
+										"carts/validate",
+										METHOD.POST,
+										validationBody
+									);
+								}}
 							>
 								Zamawiam
 							</button>

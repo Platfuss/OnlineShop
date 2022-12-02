@@ -74,7 +74,7 @@ const Category = () => {
 	return (
 		<>
 			{isNumOfPagesLoading ? (
-				<div className="middleLoader">
+				<div className="middleLoader placeholder">
 					<RiseLoader />
 				</div>
 			) : (
