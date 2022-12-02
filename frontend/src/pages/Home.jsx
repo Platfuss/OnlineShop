@@ -9,9 +9,11 @@ const Home = () => {
 		data: newests,
 		isLoading: isFetchingNewests,
 	} = useFetch();
-	const { CallApi: FetchRecommended, data: recommended } = useFetch();
-
-	const isAllLoaded = !!newests && !!recommended;
+	const {
+		CallApi: FetchRecommended,
+		data: recommended,
+		isLoading: isFetchingRecommended,
+	} = useFetch();
 
 	useEffect(() => {
 		FetchNewests("items/group/8/0", METHOD.GET);
@@ -26,30 +28,30 @@ const Home = () => {
 	}, [isFetchingNewests]);
 
 	return (
-		<div>
-			<PropagateLoader loading={!isAllLoaded} />
-
-			{isAllLoaded && (
-				<div>
-					<div>
-						<h1>Nowości!</h1>
-						<div className="listOfItems">
-							{newests?.map((item) => (
-								<SingleProduct key={item.id} product={item} />
-							))}
-						</div>
-					</div>
-
-					<div>
-						<h1>Rekomendowane</h1>
-						<div className="listOfItems">
-							{recommended?.map((item) => (
-								<SingleProduct key={item.id} product={item} />
-							))}
-						</div>
-					</div>
+		<div className="homeContent">
+			<div>
+				<h1>Nowości!</h1>
+				<div className="loaderHolder">
+					<PropagateLoader loading={isFetchingNewests} />
 				</div>
-			)}
+				<div className="listOfItems">
+					{newests?.map((item) => (
+						<SingleProduct key={item.id} product={item} />
+					))}
+				</div>
+			</div>
+
+			<div>
+				{newests && <h1>Rekomendowane</h1>}
+				<div className="loaderHolder">
+					<PropagateLoader loading={isFetchingRecommended} />
+				</div>
+				<div className="listOfItems">
+					{recommended?.map((item) => (
+						<SingleProduct key={item.id} product={item} />
+					))}
+				</div>
+			</div>
 		</div>
 	);
 };

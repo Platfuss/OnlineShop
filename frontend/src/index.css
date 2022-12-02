@@ -61,6 +61,20 @@ main {
 	margin-bottom: 15vh;
 }
 
+.homeContent {
+	width: 100%;
+}
+
+.loaderHolder {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.loaderHolder {
+	width: 100%;
+}
+
 .listOfItems {
 	gap: 1rem;
 	display: grid;
