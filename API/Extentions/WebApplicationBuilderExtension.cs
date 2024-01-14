@@ -31,9 +31,9 @@ public static class WebApplicationBuilderExtension
 
         string connectionStringType =
 #if DEBUG
-            "Default";
+            "Development";
 #else
-            "Somee";
+            "Production";
 #endif
         builder.Services.AddDbContext<DataContext>(options =>
         {
