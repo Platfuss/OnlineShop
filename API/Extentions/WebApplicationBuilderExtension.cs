@@ -29,9 +29,15 @@ public static class WebApplicationBuilderExtension
             opts.OperationFilter<SecurityRequirementsOperationFilter>();
         });
 
+        string connectionStringType =
+#if DEBUG
+            "Default";
+#else
+            "Somee";
+#endif
         builder.Services.AddDbContext<DataContext>(options =>
         {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
+            options.UseSqlServer(builder.Configuration.GetConnectionString(connectionStringType),
                 x => x.MigrationsAssembly("DataAccess"));
         });
 
