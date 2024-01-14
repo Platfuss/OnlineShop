@@ -2,4 +2,4 @@
 
 ## Deployment
 
-Deployed site is awailable at https://misz-masz.netlify.app/
+Deployed site is available at https://misz-masz.netlify.app/
