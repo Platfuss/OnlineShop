@@ -48,7 +48,7 @@ const useFetch = () => {
 const beginning =
 	!process.env.NODE_ENV || process.env.NODE_ENV === "development"
 		? "https://localhost:7177/api"
-		: "https://platfus.bsite.net/api";
+		: "https://misz-masz.somee.com/api";
 
 const apiEndpoints = (url) => {
 	let address = beginning;
