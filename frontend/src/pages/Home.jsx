@@ -16,7 +16,7 @@ const Home = () => {
 	} = useFetch();
 
 	useEffect(() => {
-		FetchNewests("items/group/6/0", METHOD.GET);
+		FetchNewests("items/group/3/0", METHOD.GET);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
