@@ -6,7 +6,7 @@ import { useState } from "react";
 import RiseLoader from "react-spinners/RiseLoader";
 
 const Category = () => {
-	const amountPerPage = 8;
+	const amountPerPage = 6;
 	const params = useParams();
 
 	const {
