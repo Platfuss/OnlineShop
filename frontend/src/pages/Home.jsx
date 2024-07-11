@@ -16,13 +16,13 @@ const Home = () => {
 	} = useFetch();
 
 	useEffect(() => {
-		FetchNewests("items/group/8/0", METHOD.GET);
+		FetchNewests("items/group/6/0", METHOD.GET);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		if (!isFetchingNewests && newests) {
-			FetchRecommended("items/group/8/0?onlyrecommended=true", METHOD.GET);
+			FetchRecommended("items/group/3/1?onlyrecommended=true", METHOD.GET);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isFetchingNewests]);
